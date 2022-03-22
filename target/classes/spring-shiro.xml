@@ -24,6 +24,7 @@
 		<property name="loginUrl" value="/main/goLogin" />
 		<property name="filterChainDefinitions">
 			<value>
+				/deviceMgmt/**=anon
 				/main/**=anon
 				/resource/**=anon
 				/**=authc
