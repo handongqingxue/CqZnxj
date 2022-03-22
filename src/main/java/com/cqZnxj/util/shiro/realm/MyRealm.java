@@ -1,4 +1,4 @@
-package com.zyHlRydw.util.shiro.realm;
+package com.cqZnxj.util.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
