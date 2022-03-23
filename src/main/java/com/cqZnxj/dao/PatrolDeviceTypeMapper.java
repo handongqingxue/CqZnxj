@@ -7,9 +7,11 @@ import org.apache.ibatis.annotations.Param;
 import com.cqZnxj.entity.*;
 
 public interface PatrolDeviceTypeMapper {
+	
+	int add(PatrolDeviceType pdt);
 
-	int queryForInt(@Param("mc") String mc);
+	int queryForInt(@Param("name") String name);
 
-	List<PatrolDeviceType> queryList(@Param("mc") String mc, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
+	List<PatrolDeviceType> queryList(@Param("name") String name, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 }

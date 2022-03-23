@@ -6,8 +6,10 @@ import com.cqZnxj.entity.*;
 
 public interface PatrolDeviceTypeService {
 
-	int queryForInt(String mc);
+	int add(PatrolDeviceType pdt);
 
-	List<PatrolDeviceType> queryList(String mc, int page, int rows, String sort, String order);
+	int queryForInt(String name);
+
+	List<PatrolDeviceType> queryList(String name, int page, int rows, String sort, String order);
 
 }

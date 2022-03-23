@@ -28,8 +28,39 @@
 var path='<%=basePath %>';
 var deviceMgmtPath=path+'deviceMgmt/';
 $(function(){
+	initSearchLB();
+	initAddLB();
+	initRemoveLB();
 	initTab1();
 });
+
+function initSearchLB(){
+	$("#search_but").linkbutton({
+		iconCls:"icon-search",
+		onClick:function(){
+			var name=$("#toolbar #name").val();
+			tab1.datagrid("load",{name:name});
+		}
+	});
+}
+
+function initAddLB(){
+	$("#add_but").linkbutton({
+		iconCls:"icon-add",
+		onClick:function(){
+			location.href=deviceMgmtPath+"type/new";
+		}
+	});
+}
+
+function initRemoveLB(){
+	removeLB=$("#remove_but").linkbutton({
+		iconCls:"icon-remove",
+		onClick:function(){
+			//checkIfExistWuZiByLxIds();
+		}
+	});
+}
 
 function initTab1(){
 	tab1=$("#tab1").datagrid({
@@ -40,8 +71,8 @@ function initTab1(){
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"mame",title:"类名",width:150},
-			{field:"createTime",title:"创建时间",width:150},
+			{field:"name",title:"类名",width:150},
+			{field:"createTime",title:"创建时间",width:180},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
             		+"<a href=\"detail?id="+value+"\">详情</a>";
@@ -50,8 +81,8 @@ function initTab1(){
 	    ]],
         onLoadSuccess:function(data){
 			if(data.total==0){
-				$(this).datagrid("appendRow",{mame:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"mame",colspan:3});
+				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:3});
 				data.total=0;
 			}
 			
