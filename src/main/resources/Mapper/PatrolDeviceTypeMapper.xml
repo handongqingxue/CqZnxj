@@ -51,4 +51,7 @@
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceType">
 		select * from patrol_device_type where id=#{id}
 	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDeviceType">
+		select id,name from patrol_device_type order by sort
+	</select>
 </mapper>

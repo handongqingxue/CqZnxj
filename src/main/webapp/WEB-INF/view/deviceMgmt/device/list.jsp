@@ -12,18 +12,11 @@
 .tab1_div .toolbar{
 	height:32px;
 }
-.tab1_div .toolbar .name_span{
+.tab1_div .toolbar .name_span,.tab1_div .toolbar .pdtName_span,.tab1_div .toolbar .search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .name_inp{
+.tab1_div .toolbar .name_inp,.tab1_div .toolbar .pdtName_inp{
 	width: 120px;height: 25px;
-}
-.tab1_div .toolbar .search_but{
-	margin-left: 13px;
-}
-a {
-  color: #333;
-  text-decoration: none;
 }
 </style>
 <title>Insert title here</title>
@@ -42,8 +35,9 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var name=$("#toolbar #name").val();
-			tab1.datagrid("load",{name:name});
+			var mc=$("#toolbar #mc_inp").val();
+			var wzlxmc=$("#toolbar #wzlxmc_inp").val();
+			tab1.datagrid("load",{mc:mc,wzlxmc:wzlxmc});
 		}
 	});
 }
@@ -52,7 +46,7 @@ function initAddLB(){
 	$("#add_but").linkbutton({
 		iconCls:"icon-add",
 		onClick:function(){
-			location.href=deviceMgmtPath+"type/new";
+			location.href=deviceMgmtPath+"device/new";
 		}
 	});
 }
@@ -61,22 +55,23 @@ function initRemoveLB(){
 	removeLB=$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			//checkIfExistWuZiByLxIds();
+			deleteByIds();
 		}
 	});
 }
 
 function initTab1(){
 	tab1=$("#tab1").datagrid({
-		title:"设备类型查询",
-		url:deviceMgmtPath+"queryTypeList",
+		title:"设备查询",
+		url:deviceMgmtPath+"queryList",
 		toolbar:"#toolbar",
 		width:setFitWidthInParent("body"),
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"name",title:"类名",width:150},
-			{field:"createTime",title:"创建时间",width:180},
+			{field:"name",title:"名称",width:200},
+            {field:"pdtName",title:"设备类型",width:200},
+			{field:"bjsj",title:"编辑时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
             		+"<a href=\"detail?id="+value+"\">详情</a>";
@@ -86,7 +81,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:3});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:4});
 				data.total=0;
 			}
 			
@@ -94,6 +89,38 @@ function initTab1(){
 			$(".panel-header .panel-title").css("font-size","15px");
 			$(".panel-header .panel-title").css("padding-left","10px");
 			$(".panel-header, .panel-body").css("border-color","#ddd");
+		}
+	});
+}
+
+function deleteByIds() {
+	var rows=tab1.datagrid("getSelections");
+	if (rows.length == 0) {
+		$.messager.alert("提示","请选择要删除的信息！","warning");
+		return false;
+	}
+	
+	$.messager.confirm("提示","确定要删除吗？",function(r){
+		if(r){
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += "," + rows[i].id;
+			}
+			ids=ids.substring(1);
+			
+			$.post(wzglPath + "deleteWuZi",
+				{ids:ids},
+				function(result){
+					if(result.status==1){
+						alert(result.msg);
+						location.href = location.href;
+					}
+					else{
+						alert(result.msg);
+					}
+				}
+			,"json");
+			
 		}
 	});
 }
@@ -108,8 +135,10 @@ function setFitWidthInParent(o){
 <%@include file="../../inc/side.jsp"%>
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
-		<span class="name_span">类名：</span>
-		<input type="text" class="name_inp" id="name" placeholder="请输入类名"/>
+		<span class="name_span">名称：</span>
+		<input type="text" class="name_inp" id="name_inp" placeholder="请输入名称"/>
+		<span class="pdtName_span">设备类型：</span>
+		<input type="text" class="pdtName_inp" id="pdtName_inp" placeholder="请输入设备类型"/>
 		<a class="search_but" id="search_but">查询</a>
 		<a id="add_but">添加</a>
 		<a id="remove_but">删除</a>

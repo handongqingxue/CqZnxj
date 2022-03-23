@@ -18,4 +18,6 @@ public interface PatrolDeviceTypeMapper {
 
 	PatrolDeviceType selectById(String id);
 
+	List<PatrolDeviceType> queryCBBList();
+
 }

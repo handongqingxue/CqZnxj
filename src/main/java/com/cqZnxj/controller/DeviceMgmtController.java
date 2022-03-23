@@ -24,6 +24,8 @@ import com.cqZnxj.service.*;
 public class DeviceMgmtController {
 
 	@Autowired
+	private PatrolDeviceService patrolDeviceService;
+	@Autowired
 	private PatrolDeviceTypeService patrolDeviceTypeService;
 	public static final String MODULE_NAME="deviceMgmt";
 	//http://localhost:8080/CqZnxj/deviceMgmt/type/list
@@ -49,6 +51,29 @@ public class DeviceMgmtController {
 	public String goTypeList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/type/list";
+	}
+
+	@RequestMapping(value="/type/detail")
+	public String goTypeDetail(HttpServletRequest request) {
+		
+		//publicService.selectNav(request);
+		String id = request.getParameter("id");
+		PatrolDeviceType pdt=patrolDeviceTypeService.selectById(id);
+		request.setAttribute("pdt", pdt);
+		
+		return MODULE_NAME+"/type/detail";
+	}
+	
+	@RequestMapping(value="/device/new")
+	public String goDeviceNew(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/device/new";
+	}
+	
+	@RequestMapping(value="/device/list")
+	public String goDeviceList(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/device/list";
 	}
 	
 	@RequestMapping(value="/newType")
@@ -103,6 +128,39 @@ public class DeviceMgmtController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryList")
+	@ResponseBody
+	public Map<String, Object> queryList(String name,String pdtName,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = patrolDeviceService.queryForInt(name,pdtName);
+			List<PatrolDeviceType> pdList=patrolDeviceService.queryList(name, pdtName, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", pdList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryTypeCBBList")
+	@ResponseBody
+	public Map<String, Object> queryTypeCBBList() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolDeviceType> pdtList=patrolDeviceTypeService.queryCBBList();
+		
+		jsonMap.put("rows", pdtList);
 		
 		return jsonMap;
 	}

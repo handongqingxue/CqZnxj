@@ -16,4 +16,6 @@ public interface PatrolDeviceTypeService {
 
 	PatrolDeviceType selectById(String id);
 
+	List<PatrolDeviceType> queryCBBList();
+
 }
