@@ -21,6 +21,12 @@ public class PatrolDeviceType {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public Integer getSort() {
 		return sort;
 	}
@@ -35,6 +41,7 @@ public class PatrolDeviceType {
 	}
 	private String name;
 	private String createTime;
+	private String updateTime;
 	private Integer sort;
 	private String memo;
 }

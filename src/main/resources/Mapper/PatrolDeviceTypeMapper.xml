@@ -31,6 +31,9 @@
 			</if>
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatrolDeviceType">
+		update patrol_device_type set name=#{name},updateTime=now(),sort=#{sort},memo=#{memo} where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_device_type where 1=1
 		<if test="name!=''&amp;name!=null">
@@ -44,5 +47,8 @@
 		</if>
 		order by createTime
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceType">
+		select * from patrol_device_type where id=#{id}
 	</select>
 </mapper>

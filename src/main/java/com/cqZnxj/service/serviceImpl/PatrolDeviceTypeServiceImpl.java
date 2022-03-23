@@ -20,6 +20,11 @@ public class PatrolDeviceTypeServiceImpl implements PatrolDeviceTypeService {
 		return patrolDeviceTypeDao.add(pdt);
 	}
 
+	public int edit(PatrolDeviceType pdt) {
+		// TODO Auto-generated method stub
+		return patrolDeviceTypeDao.edit(pdt);
+	}
+
 	public int queryForInt(String name) {
 		// TODO Auto-generated method stub
 		return patrolDeviceTypeDao.queryForInt(name);
@@ -28,5 +33,10 @@ public class PatrolDeviceTypeServiceImpl implements PatrolDeviceTypeService {
 	public List<PatrolDeviceType> queryList(String name, int page, int rows, String sort, String order) {
 		// TODO Auto-generated method stub
 		return patrolDeviceTypeDao.queryList(name, (page-1)*rows, rows, sort, order);
+	}
+
+	public PatrolDeviceType selectById(String id) {
+		// TODO Auto-generated method stub
+		return patrolDeviceTypeDao.selectById(id);
 	}
 }

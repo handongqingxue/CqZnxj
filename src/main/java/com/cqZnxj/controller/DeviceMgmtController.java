@@ -33,6 +33,17 @@ public class DeviceMgmtController {
 		
 		return MODULE_NAME+"/type/new";
 	}
+
+	@RequestMapping(value="/type/edit")
+	public String goTypeEdit(HttpServletRequest request) {
+		
+		//publicService.selectNav(request);
+		String id = request.getParameter("id");
+		PatrolDeviceType pdt=patrolDeviceTypeService.selectById(id);
+		request.setAttribute("pdt", pdt);
+		
+		return MODULE_NAME+"/type/edit";
+	}
 	
 	@RequestMapping(value="/type/list")
 	public String goTypeList(HttpServletRequest request) {
@@ -54,6 +65,24 @@ public class DeviceMgmtController {
 		else {
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "创建设备类型失败！");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/editType")
+	@ResponseBody
+	public Map<String, Object> editType(PatrolDeviceType pdt) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolDeviceTypeService.edit(pdt);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "编辑设备类型成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "编辑设备类型失败！");
 		}
 		return jsonMap;
 	}
