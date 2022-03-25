@@ -85,6 +85,16 @@ public class DeviceMgmtController {
 		return MODULE_NAME+"/device/list";
 	}
 	
+	@RequestMapping(value="/device/detail")
+	public String goDeviceDetail(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolDevice pd=patrolDeviceService.selectById(id);
+		request.setAttribute("pd", pd);
+		
+		return MODULE_NAME+"/device/detail";
+	}
+	
 	@RequestMapping(value="/newType")
 	@ResponseBody
 	public Map<String, Object> newType(PatrolDeviceType pdt) {
