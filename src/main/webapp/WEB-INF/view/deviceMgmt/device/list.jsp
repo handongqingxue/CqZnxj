@@ -18,6 +18,10 @@
 .tab1_div .toolbar .name_inp,.tab1_div .toolbar .pdtName_inp{
 	width: 120px;height: 25px;
 }
+a {
+  color: #333;
+  text-decoration: none;
+}
 </style>
 <title>Insert title here</title>
 <%@include file="../../inc/js.jsp"%>
@@ -35,9 +39,9 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var mc=$("#toolbar #mc_inp").val();
-			var wzlxmc=$("#toolbar #wzlxmc_inp").val();
-			tab1.datagrid("load",{mc:mc,wzlxmc:wzlxmc});
+			var name=$("#toolbar #name_inp").val();
+			var pdtName=$("#toolbar #pdtName_inp").val();
+			tab1.datagrid("load",{name:name,pdtName:pdtName});
 		}
 	});
 }
@@ -63,7 +67,7 @@ function initRemoveLB(){
 function initTab1(){
 	tab1=$("#tab1").datagrid({
 		title:"设备查询",
-		url:deviceMgmtPath+"queryList",
+		url:deviceMgmtPath+"queryDeviceList",
 		toolbar:"#toolbar",
 		width:setFitWidthInParent("body"),
 		pagination:true,
@@ -71,7 +75,7 @@ function initTab1(){
 		columns:[[
 			{field:"name",title:"名称",width:200},
             {field:"pdtName",title:"设备类型",width:200},
-			{field:"bjsj",title:"编辑时间",width:200},
+			{field:"makeDate",title:"创建时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
             		+"<a href=\"detail?id="+value+"\">详情</a>";
@@ -108,7 +112,7 @@ function deleteByIds() {
 			}
 			ids=ids.substring(1);
 			
-			$.post(wzglPath + "deleteWuZi",
+			$.post(deviceMgmtPath + "deleteDevice",
 				{ids:ids},
 				function(result){
 					if(result.status==1){

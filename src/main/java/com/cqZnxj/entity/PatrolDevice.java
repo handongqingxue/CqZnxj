@@ -15,6 +15,12 @@ public class PatrolDevice {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getPdtName() {
+		return pdtName;
+	}
+	public void setPdtName(String pdtName) {
+		this.pdtName = pdtName;
+	}
 	public String getSpecs() {
 		return specs;
 	}
@@ -40,6 +46,7 @@ public class PatrolDevice {
 		this.level = level;
 	}
 	private String name;
+	private String pdtName;
 	private String specs;
 	private Integer typeId;
 	private String makeDate;

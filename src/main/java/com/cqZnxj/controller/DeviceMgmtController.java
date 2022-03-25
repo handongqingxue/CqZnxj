@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cqZnxj.entity.*;
 import com.cqZnxj.service.*;
+import com.cqZnxj.util.*;
 
 /**
  * 设备管理类
@@ -39,7 +40,6 @@ public class DeviceMgmtController {
 	@RequestMapping(value="/type/edit")
 	public String goTypeEdit(HttpServletRequest request) {
 		
-		//publicService.selectNav(request);
 		String id = request.getParameter("id");
 		PatrolDeviceType pdt=patrolDeviceTypeService.selectById(id);
 		request.setAttribute("pdt", pdt);
@@ -56,7 +56,6 @@ public class DeviceMgmtController {
 	@RequestMapping(value="/type/detail")
 	public String goTypeDetail(HttpServletRequest request) {
 		
-		//publicService.selectNav(request);
 		String id = request.getParameter("id");
 		PatrolDeviceType pdt=patrolDeviceTypeService.selectById(id);
 		request.setAttribute("pdt", pdt);
@@ -68,6 +67,16 @@ public class DeviceMgmtController {
 	public String goDeviceNew(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/device/new";
+	}
+	
+	@RequestMapping(value="/device/edit")
+	public String goDeviceEdit(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolDevice pd=patrolDeviceService.selectById(id);
+		request.setAttribute("pd", pd);
+		
+		return MODULE_NAME+"/device/edit";
 	}
 	
 	@RequestMapping(value="/device/list")
@@ -132,9 +141,65 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 	
-	@RequestMapping(value="/queryList")
+	@RequestMapping(value="/newDevice")
 	@ResponseBody
-	public Map<String, Object> queryList(String name,String pdtName,int page,int rows,String sort,String order) {
+	public Map<String, Object> newDevice(PatrolDevice pd) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolDeviceService.add(pd);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建设备成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建设备失败！");
+		}
+		return jsonMap;
+	}
+
+	@RequestMapping(value="/deleteDevice",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteDevice(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patrolDeviceService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除设备失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除设备成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+
+	@RequestMapping(value="/editDevice")
+	@ResponseBody
+	public Map<String, Object> editDevice(PatrolDevice pd) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolDeviceService.edit(pd);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "编辑设备成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "编辑设备失败！");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryDeviceList")
+	@ResponseBody
+	public Map<String, Object> queryDeviceList(String name,String pdtName,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		

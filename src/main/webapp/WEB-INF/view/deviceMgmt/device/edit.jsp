@@ -29,62 +29,62 @@ var path='<%=basePath %>';
 var deviceMgmtPath=path+'deviceMgmt/';
 var dialogTop=30;
 var dialogLeft=20;
-var ndNum=0;
+var edNum=0;
 $(function(){
-	initNewDialog();//0
+	initEditDialog();//0
 
 	initDialogPosition();//将不同窗体移动到主要内容区域
 });
 
 function initDialogPosition(){
 	//基本属性组
-	var ndpw=$("body").find(".panel.window").eq(ndNum);
-	var ndws=$("body").find(".window-shadow").eq(ndNum);
+	var edpw=$("body").find(".panel.window").eq(edNum);
+	var edws=$("body").find(".window-shadow").eq(edNum);
 
 	var ccDiv=$("#center_con_div");
-	ccDiv.append(ndpw);
-	ccDiv.append(ndws);
+	ccDiv.append(edpw);
+	ccDiv.append(edws);
 	ccDiv.css("width",setFitWidthInParent("body","center_con_div")+"px");
 }
 
-function initNewDialog(){
+function initEditDialog(){
 	dialogTop+=20;
-	$("#new_div").dialog({
+	$("#edit_div").dialog({
 		title:"设备信息",
-		width:setFitWidthInParent("body","new_div"),
+		width:setFitWidthInParent("body","edit_div"),
 		height:200,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
            {text:"保存",id:"ok_but",iconCls:"icon-ok",handler:function(){
-        	   checkNew();
+        	   checkEdit();
            }}
         ]
 	});
 
-	$("#new_div table").css("width",(setFitWidthInParent("body","new_div_table"))+"px");
-	$("#new_div table").css("magin","-100px");
-	$("#new_div table td").css("padding-left","50px");
-	$("#new_div table td").css("padding-right","20px");
-	$("#new_div table td").css("font-size","15px");
-	$("#new_div table .td1").css("width","15%");
-	$("#new_div table .td2").css("width","30%");
-	$("#new_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#new_div table tr").css("height","45px");
+	$("#edit_div table").css("width",(setFitWidthInParent("body","edit_div_table"))+"px");
+	$("#edit_div table").css("magin","-100px");
+	$("#edit_div table td").css("padding-left","50px");
+	$("#edit_div table td").css("padding-right","20px");
+	$("#edit_div table td").css("font-size","15px");
+	$("#edit_div table .td1").css("width","15%");
+	$("#edit_div table .td2").css("width","30%");
+	$("#edit_div table tr").css("border-bottom","#CAD9EA solid 1px");
+	$("#edit_div table tr").css("height","45px");
 
-	$(".panel.window").eq(ndNum).css("margin-top","20px");
-	$(".panel.window .panel-title").eq(ndNum).css("color","#000");
-	$(".panel.window .panel-title").eq(ndNum).css("font-size","15px");
-	$(".panel.window .panel-title").eq(ndNum).css("padding-left","10px");
+	$(".panel.window").eq(edNum).css("margin-top","20px");
+	$(".panel.window .panel-title").eq(edNum).css("color","#000");
+	$(".panel.window .panel-title").eq(edNum).css("font-size","15px");
+	$(".panel.window .panel-title").eq(edNum).css("padding-left","10px");
 	
 	$(".panel-header, .panel-body").css("border-color","#ddd");
 	
 	//以下的是表格下面的面板
-	$(".window-shadow").eq(ndNum).css("margin-top","20px");
-	$(".window,.window .window-body").eq(ndNum).css("border-color","#ddd");
+	$(".window-shadow").eq(edNum).css("margin-top","20px");
+	$(".window,.window .window-body").eq(edNum).css("border-color","#ddd");
 
-	$("#new_div #ok_but").css("left","45%");
-	$("#new_div #ok_but").css("position","absolute");
+	$("#edit_div #ok_but").css("left","45%");
+	$("#edit_div #ok_but").css("position","absolute");
 	
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
@@ -99,10 +99,13 @@ function initLevelCBB(){
 	data.push({"value":"1","text":"一级"});
 	data.push({"value":"2","text":"二级"});
 	data.push({"value":"3","text":"三级"});
-	levelCBB=$("#new_div #level_cbb").combobox({
+	levelCBB=$("#edit_div #level_cbb").combobox({
 		valueField:"value",
 		textField:"text",
-		data:data
+		data:data,
+		onLoadSuccess:function(){
+			$(this).combobox("setValue",'${requestScope.pd.level }');
+		}
 	});
 }
 
@@ -115,37 +118,40 @@ function initTypeCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
-			typeCBB=$("#new_div #type_cbb").combobox({
+			typeCBB=$("#edit_div #type_cbb").combobox({
 				valueField:"value",
 				textField:"text",
-				data:data
+				data:data,
+				onLoadSuccess:function(){
+					$(this).combobox("setValue",'${requestScope.pd.typeId }');
+				}
 			});
 		}
 	,"json");
 }
 
-function checkNew(){
+function checkEdit(){
 	if(checkName()){
 		if(checkSpecs()){
 			if(checkLevelId()){
 				if(checkTypeId()){
-					newDevice();
+					editDevice();
 				}
 			}
 		}
 	}
 }
 
-function newDevice(){
+function editDevice(){
 	var level=levelCBB.combobox("getValue");
-	$("#new_div #level").val(level);
+	$("#edit_div #level").val(level);
 	var typeId=typeCBB.combobox("getValue");
-	$("#new_div #typeId").val(typeId);
+	$("#edit_div #typeId").val(typeId);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
 		type:"post",
-		url:deviceMgmtPath+"newDevice",
+		url:deviceMgmtPath+"editDevice",
 		dataType: "json",
 		data:formData,
 		cache: false,
@@ -231,10 +237,10 @@ function setFitWidthInParent(parent,self){
 	case "center_con_div":
 		space=205;
 		break;
-	case "new_div":
+	case "edit_div":
 		space=340;
 		break;
-	case "new_div_table":
+	case "edit_div_table":
 	case "panel_window":
 		space=355;
 		break;
@@ -247,23 +253,24 @@ function setFitWidthInParent(parent,self){
 <body>
 <%@include file="../../inc/side.jsp"%>
 <div class="center_con_div" id="center_con_div">
-	<div class="page_location_div">设备查询-添加</div>
+	<div class="page_location_div">设备查询-编辑</div>
 	
-	<div id="new_div">
+	<div id="edit_div">
 		<form id="form1" name="form1" method="post" action="" enctype="multipart/form-data">
+		<input type="hidden" id="id" name="id" value="${requestScope.pd.id }"/>
 		<table>
 		  <tr>
 			<td class="td1" align="right">
 				名称
 			</td>
 			<td class="td2">
-				<input type="text" class="name_inp" id="name" name="name" placeholder="请输入名称" onfocus="focusName()" onblur="checkName()"/>
+				<input type="text" class="name_inp" id="name" name="name" value="${requestScope.pd.name }" placeholder="请输入名称" onfocus="focusName()" onblur="checkName()"/>
 			</td>
 			<td class="td1" align="right">
 				规格
 			</td>
 			<td class="td2">
-				<input type="text" class="specs_inp" id="specs" name="specs" placeholder="请输入名称" onfocus="focusSpecs()" onblur="checkSpecs()"/>
+				<input type="text" class="specs_inp" id="specs" name="specs" value="${requestScope.pd.specs }" placeholder="请输入名称" onfocus="focusSpecs()" onblur="checkSpecs()"/>
 			</td>
 		  </tr>
 		  <tr>
@@ -272,14 +279,14 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				<input id="level_cbb"/>
-				<input type="hidden" id="level" name="level"/>
+				<input type="hidden" id="level" name="level" value="${requestScope.pd.level }"/>
 			</td>
 			<td class="td1" align="right">
 				设备类型
 			</td>
 			<td class="td2">
 				<input id="type_cbb"/>
-				<input type="hidden" id="typeId" name="typeId"/>
+				<input type="hidden" id="typeId" name="typeId" value="${requestScope.pd.typeId }"/>
 			</td>
 		  </tr>
 		</table>
