@@ -66,6 +66,6 @@
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDevice">
-		select * from patrol_device where id=#{id}
+		select pd.*,pdt.name pdtName from patrol_device pd,patrol_device_type pdt where pd.typeId=pdt.id and pd.id=#{id}
 	</select>
 </mapper>
