@@ -18,4 +18,6 @@ public interface PatrolDeviceTypeService {
 
 	List<PatrolDeviceType> queryCBBList();
 
+	int deleteByIds(String ids);
+
 }

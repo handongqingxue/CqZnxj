@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,5 +49,22 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 	public int edit(PatrolDevice pd) {
 		// TODO Auto-generated method stub
 		return patrolDeviceDao.edit(pd);
+	}
+
+	public List<PatrolDeviceType> checkIfExistByTypeIds(String typeIds, String typeNames) {
+		// TODO Auto-generated method stub
+		List<PatrolDeviceType> pdtList=new ArrayList<PatrolDeviceType>();
+		String[] typeIdArr = typeIds.split(",");
+		String[] typeNameArr = typeNames.split(",");
+		for (int i = 0; i < typeIdArr.length; i++) {
+			String typeId = typeIdArr[i];
+			if(patrolDeviceDao.getCountByTypeId(typeId)>0) {
+				PatrolDeviceType pdt=new PatrolDeviceType();
+				pdt.setId(Integer.valueOf(typeId));
+				pdt.setName(typeNameArr[i]);
+				pdtList.add(pdt);
+			}
+		}
+		return pdtList;
 	}
 }

@@ -21,4 +21,6 @@ public interface PatrolDeviceMapper {
 
 	int edit(PatrolDevice pd);
 
+	int getCountByTypeId(@Param("typeId") String typeId);
+
 }

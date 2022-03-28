@@ -18,4 +18,6 @@ public interface PatrolDeviceService {
 
 	PatrolDevice selectById(String id);
 
+	List<PatrolDeviceType> checkIfExistByTypeIds(String typeIds, String typeNames);
+
 }

@@ -20,4 +20,6 @@ public interface PatrolDeviceTypeMapper {
 
 	List<PatrolDeviceType> queryCBBList();
 
+	int deleteByIds(List<String> idList);
+
 }

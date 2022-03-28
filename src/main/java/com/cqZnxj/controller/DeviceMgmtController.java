@@ -113,6 +113,54 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/checkIfExistDeviceByTypeIds",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String checkIfExistDeviceByTypeIds(String typeIds,String typeNames) {
+		//TODO 针对分类的动态进行实时调整更新
+		List<PatrolDeviceType> pdtList=patrolDeviceService.checkIfExistByTypeIds(typeIds,typeNames);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(pdtList.size()>0) {
+			plan.setStatus(1);
+			StringBuilder msgSB=new StringBuilder();
+			for (int i = 0; i < pdtList.size(); i++) {
+				PatrolDeviceType pdt = pdtList.get(i);
+				msgSB.append(",");
+				msgSB.append(pdt.getName());
+			}
+			msgSB.append("类型下有设备，请先删除设备");
+			String msgStr = msgSB.toString();
+			plan.setMsg(msgStr.substring(1, msgStr.length()));
+			plan.setData(pdtList);
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(0);
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+
+	@RequestMapping(value="/deleteType",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteType(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patrolDeviceTypeService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除设备类型失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除设备类型成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+	
 	@RequestMapping(value="/editType")
 	@ResponseBody
 	public Map<String, Object> editType(PatrolDeviceType pdt) {

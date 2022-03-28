@@ -61,7 +61,7 @@ function initRemoveLB(){
 	removeLB=$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			//checkIfExistWuZiByLxIds();
+			checkIfExistDeviceByTypeIds();
 		}
 	});
 }
@@ -96,6 +96,80 @@ function initTab1(){
 			$(".panel-header, .panel-body").css("border-color","#ddd");
 		}
 	});
+}
+
+//验证设备类型id下是否存在设备
+function checkIfExistDeviceByTypeIds() {
+	var rows=tab1.datagrid("getSelections");
+	if (rows.length == 0) {
+		$.messager.alert("提示","请选择要删除的信息！","warning");
+		return false;
+	}
+	
+	$.messager.confirm("提示","确定要删除吗？",function(r){
+		if(r){
+			var ids = "";
+			var names = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += "," + rows[i].id;
+				names += "," + rows[i].name;
+			}
+			ids=ids.substring(1);
+			names=names.substring(1);
+
+			$.post(deviceMgmtPath + "checkIfExistDeviceByTypeIds",
+				{typeIds:ids,typeNames:names},
+				function(result){
+					if(result.status==1){
+						alert(result.msg);
+						var delIds="";
+						var idArr=ids.split(",");
+						var pdtList=result.data;
+						for (var i = 0; i < idArr.length; i++){
+							var id=idArr[i];
+							if(!checkTypeIdInList(id,pdtList)){//若不存在，则说明该类型下没有设备，就得删除掉
+								delIds+=","+id;
+							}
+						}
+						delIds=delIds.substring(1);
+						if(delIds!="")//若有没有设备的设备类型id，则删除
+							deleteByIds(delIds);
+					}
+					else{
+						deleteByIds(ids);
+					}
+				}
+			,"json");
+			
+		}
+	});
+}
+
+function deleteByIds(ids){
+	$.post(deviceMgmtPath + "deleteType",
+		{ids:ids},
+		function(result){
+			if(result.status==1){
+				alert(result.msg);
+				tab1.datagrid("load");
+			}
+			else{
+				alert(result.msg);
+			}
+		}
+	,"json");
+}
+
+//验证设备类型id是否存在于集合里
+function checkTypeIdInList(typeId,pdtList){
+	var flag=false;
+	for (var i = 0; i < pdtList.length; i++){
+		if(typeId==pdtList[i].id){
+			flag=true;
+			break;
+		}
+	}
+	return flag;
 }
 
 function setFitWidthInParent(o){
