@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqZnxj.dao.PatrolDeviceAccountMapper">
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from patrol_device_account pda,patrol_device pd,patrol_device_type pdt where 1=1 and pda.deviceId=pd.id and pd.typeId=pdt.id
+		<if test="deviceNo!=''&amp;deviceNo!=null">
+			and pda.deviceNo like CONCAT('%',#{deviceNo},'%')
+		</if>
+		<if test="pdName!=''&amp;pdName!=null">
+			and pd.name like CONCAT('%',#{pdName},'%')
+		</if>
+		<if test="pdtName!=''&amp;pdtName!=null">
+			and pdt.name like CONCAT('%',#{pdtName},'%')
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and pda.createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
+		<if test="startTimeStart!=''&amp;startTimeStart!=null&amp;startTimeEnd!=''&amp;startTimeEnd!=null">
+			and pda.startTime between #{startTimeStart} and #{startTimeEnd}
+		</if>
+	</select>
+	<select id="queryList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
+		select pda.*,pd.name deviceName,pdt.name deviceTypeName from patrol_device_account pda,patrol_device pd,patrol_device_type pdt where 1=1 and pda.deviceId=pd.id and pd.typeId=pdt.id
+		<if test="deviceNo!=''&amp;deviceNo!=null">
+			and pda.deviceNo like CONCAT('%',#{deviceNo},'%')
+		</if>
+		<if test="pdName!=''&amp;pdName!=null">
+			and pd.name like CONCAT('%',#{pdName},'%')
+		</if>
+		<if test="pdtName!=''&amp;pdtName!=null">
+			and pdt.name like CONCAT('%',#{pdtName},'%')
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and pda.createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
+		<if test="startTimeStart!=''&amp;startTimeStart!=null&amp;startTimeEnd!=''&amp;startTimeEnd!=null">
+			and pda.startTime between #{startTimeStart} and #{startTimeEnd}
+		</if>
+		order by pda.createTime desc
+		limit #{rowNum},#{rows}
+	</select>
+</mapper>
