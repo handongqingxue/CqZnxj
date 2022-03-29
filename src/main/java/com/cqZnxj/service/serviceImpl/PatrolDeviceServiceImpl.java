@@ -67,4 +67,9 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 		}
 		return pdtList;
 	}
+
+	public List<PatrolDevice> queryCBBList(String typeId) {
+		// TODO Auto-generated method stub
+		return patrolDeviceDao.queryCBBList(typeId);
+	}
 }

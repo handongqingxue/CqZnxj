@@ -20,4 +20,6 @@ public interface PatrolDeviceService {
 
 	List<PatrolDeviceType> checkIfExistByTypeIds(String typeIds, String typeNames);
 
+	List<PatrolDevice> queryCBBList(String typeId);
+
 }

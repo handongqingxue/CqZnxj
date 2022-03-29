@@ -17,4 +17,8 @@ public interface PatrolDeviceAccountMapper {
 			@Param("startTimeStart") String startTimeStart, @Param("startTimeEnd") String startTimeEnd, 
 			@Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
+	int add(PatrolDeviceAccount pda);
+
+	int getCountByDeviceNo(@Param("deviceNo") String deviceNo);
+
 }

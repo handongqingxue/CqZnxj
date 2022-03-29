@@ -289,6 +289,31 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/newAccount")
+	@ResponseBody
+	public Map<String, Object> newAccount(PatrolDeviceAccount pda) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		String deviceNo = pda.getDeviceNo();
+		String fileName = deviceNo + ".jpg";
+		String avaPath="/CqZnxj/upload/devAcc"+fileName;
+		String path = "D:/resource/CqZnxj/devAcc";
+        QrcodeUtil.createQrCode(deviceNo, path, fileName);
+		
+        pda.setQrcodeUrl(avaPath);
+		int count=patrolDeviceAccountService.add(pda);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建设备台账成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建设备台账失败！");
+		}
+		return jsonMap;
+	}
+	
 	@RequestMapping(value="/queryAccountList")
 	@ResponseBody
 	public Map<String, Object> queryAccountList(String deviceNo,String pdName,String pdtName,String createTimeStart,String createTimeEnd,
@@ -309,6 +334,24 @@ public class DeviceMgmtController {
 		
 		return jsonMap;
 	}
+
+	@RequestMapping(value="/checkDeviceNoIfExist",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String checkDdhIfExist(String deviceNo) {
+		boolean exist=patrolDeviceAccountService.checkDeviceNoIfExist(deviceNo);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(exist) {
+			plan.setStatus(0);
+			plan.setMsg("设备编号已存在");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
 	
 	@RequestMapping(value="/queryTypeCBBList")
 	@ResponseBody
@@ -319,6 +362,19 @@ public class DeviceMgmtController {
 		List<PatrolDeviceType> pdtList=patrolDeviceTypeService.queryCBBList();
 		
 		jsonMap.put("rows", pdtList);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryDeviceCBBList")
+	@ResponseBody
+	public Map<String, Object> queryDeviceCBBList(String typeId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolDevice> pdList=patrolDeviceService.queryCBBList(typeId);
+		
+		jsonMap.put("rows", pdList);
 		
 		return jsonMap;
 	}

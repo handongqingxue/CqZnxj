@@ -23,4 +23,6 @@ public interface PatrolDeviceMapper {
 
 	int getCountByTypeId(@Param("typeId") String typeId);
 
+	List<PatrolDevice> queryCBBList(@Param("typeId") String typeId);
+
 }

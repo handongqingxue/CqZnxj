@@ -13,4 +13,8 @@ public interface PatrolDeviceAccountService {
 			String createTimeStart, String createTimeEnd, String startTimeStart, String startTimeEnd, int page,
 			int rows, String sort, String order);
 
+	int add(PatrolDeviceAccount pda);
+
+	boolean checkDeviceNoIfExist(String deviceNo);
+
 }

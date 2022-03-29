@@ -29,4 +29,17 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 		return patrolDeviceAccountDao.queryList(deviceNo, pdName, pdtName, createTimeStart, createTimeEnd, 
 				startTimeStart, startTimeEnd, (page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public int add(PatrolDeviceAccount pda) {
+		// TODO Auto-generated method stub
+		return patrolDeviceAccountDao.add(pda);
+	}
+
+	@Override
+	public boolean checkDeviceNoIfExist(String deviceNo) {
+		// TODO Auto-generated method stub
+		int count=patrolDeviceAccountDao.getCountByDeviceNo(deviceNo);
+		return count==0?false:true;
+	}
 }

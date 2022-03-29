@@ -94,7 +94,7 @@ function initAddLB(){
 	$("#add_but").linkbutton({
 		iconCls:"icon-add",
 		onClick:function(){
-			location.href=deviceMgmtPath+"device/new";
+			location.href=deviceMgmtPath+"account/new";
 		}
 	});
 }
@@ -119,7 +119,7 @@ function initTab1(){
 		columns:[[
 			{field:"deviceNo",title:"设备编号",width:200},
 			{field:"deviceName",title:"设备名称",width:200},
-            {field:"pdtName",title:"设备类型",width:200},
+            {field:"deviceTypeName",title:"设备类型",width:200},
 			{field:"createTime",title:"创建时间",width:200},
 			{field:"startTime",title:"启用时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){

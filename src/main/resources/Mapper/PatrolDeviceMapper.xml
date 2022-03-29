@@ -71,4 +71,7 @@
 	<select id="getCountByTypeId" resultType="java.lang.Integer">
 		select count(*) from patrol_device where typeId=#{typeId}
 	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDevice">
+		select id,name from patrol_device where typeId=#{typeId} order by makeDate
+	</select>
 </mapper>
