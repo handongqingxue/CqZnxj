@@ -139,9 +139,9 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/checkIfExistDeviceByPdtIds",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String checkIfExistDeviceByPdtIds(String pdtIds,String typeNames) {
+	public String checkIfExistDeviceByPdtIds(String pdtIds,String pdtNames) {
 		//TODO 针对分类的动态进行实时调整更新
-		List<PatrolDeviceType> pdtList=patrolDeviceService.checkIfExistByPdtIds(pdtIds,typeNames);
+		List<PatrolDeviceType> pdtList=patrolDeviceService.checkIfExistByPdtIds(pdtIds,pdtNames);
 		PlanResult plan=new PlanResult();
 		String json;
 		if(pdtList.size()>0) {

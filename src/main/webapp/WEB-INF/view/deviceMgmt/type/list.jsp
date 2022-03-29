@@ -118,7 +118,7 @@ function checkIfExistDeviceByPdtIds() {
 			names=names.substring(1);
 
 			$.post(deviceMgmtPath + "checkIfExistDeviceByPdtIds",
-				{pdtIds:ids,typeNames:names},
+				{pdtIds:ids,pdtNames:names},
 				function(result){
 					if(result.status==1){
 						alert(result.msg);

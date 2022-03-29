@@ -51,11 +51,11 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 		return patrolDeviceDao.edit(pd);
 	}
 
-	public List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String typeNames) {
+	public List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String pdtNames) {
 		// TODO Auto-generated method stub
 		List<PatrolDeviceType> pdtList=new ArrayList<PatrolDeviceType>();
 		String[] pdtIdArr = pdtIds.split(",");
-		String[] pdtNameArr = typeNames.split(",");
+		String[] pdtNameArr = pdtNames.split(",");
 		for (int i = 0; i < pdtIdArr.length; i++) {
 			String pdtId = pdtIdArr[i];
 			if(patrolDeviceDao.getCountByPdtId(pdtId)>0) {

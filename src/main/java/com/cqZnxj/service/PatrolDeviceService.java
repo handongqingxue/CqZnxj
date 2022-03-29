@@ -18,7 +18,7 @@ public interface PatrolDeviceService {
 
 	PatrolDevice selectById(String id);
 
-	List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String typeNames);
+	List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String pdtNames);
 
 	List<PatrolDevice> queryCBBList(String pdtId);
 
