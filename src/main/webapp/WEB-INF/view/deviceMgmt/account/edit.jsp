@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
 <%@include file="../../inc/js.jsp"%>
+<title>Insert title here</title>
 <style type="text/css">
 .center_con_div{
 	height: 90vh;
@@ -19,78 +19,77 @@
 	margin-left: 20px;
 	font-size: 18px;
 }
-.no_inp{
-	width: 150px;
-	height:30px;
-}
 </style>
 <script type="text/javascript">
 var path='<%=basePath %>';
 var deviceMgmtPath=path+'deviceMgmt/';
 var dialogTop=30;
 var dialogLeft=20;
-var ndNum=0;
+var edNum=0;
 $(function(){
-	initNewDialog();//0
+	initEditDialog();//0
 
 	initDialogPosition();//将不同窗体移动到主要内容区域
 });
 
 function initDialogPosition(){
 	//基本属性组
-	var ndpw=$("body").find(".panel.window").eq(ndNum);
-	var ndws=$("body").find(".window-shadow").eq(ndNum);
+	var edpw=$("body").find(".panel.window").eq(edNum);
+	var edws=$("body").find(".window-shadow").eq(edNum);
 
 	var ccDiv=$("#center_con_div");
-	ccDiv.append(ndpw);
-	ccDiv.append(ndws);
+	ccDiv.append(edpw);
+	ccDiv.append(edws);
 	ccDiv.css("width",setFitWidthInParent("body","center_con_div")+"px");
 }
 
-function initNewDialog(){
+function initEditDialog(){
 	dialogTop+=20;
-	$("#new_div").dialog({
+	$("#edit_div").dialog({
 		title:"设备台账信息",
-		width:setFitWidthInParent("body","new_div"),
+		width:setFitWidthInParent("body","edit_div"),
 		height:200,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
            {text:"保存",id:"ok_but",iconCls:"icon-ok",handler:function(){
-        	   checkNew();
+        	   checkEdit();
            }}
         ]
 	});
 
-	$("#new_div table").css("width",(setFitWidthInParent("body","new_div_table"))+"px");
-	$("#new_div table").css("magin","-100px");
-	$("#new_div table td").css("padding-left","50px");
-	$("#new_div table td").css("padding-right","20px");
-	$("#new_div table td").css("font-size","15px");
-	$("#new_div table .td1").css("width","15%");
-	$("#new_div table .td2").css("width","30%");
-	$("#new_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#new_div table tr").css("height","45px");
+	$("#edit_div table").css("width",(setFitWidthInParent("body","edit_div_table"))+"px");
+	$("#edit_div table").css("magin","-100px");
+	$("#edit_div table td").css("padding-left","50px");
+	$("#edit_div table td").css("padding-right","20px");
+	$("#edit_div table td").css("font-size","15px");
+	$("#edit_div table .td1").css("width","15%");
+	$("#edit_div table .td2").css("width","30%");
+	$("#edit_div table tr").css("border-bottom","#CAD9EA solid 1px");
+	$("#edit_div table tr").css("height","45px");
 
-	$(".panel.window").eq(ndNum).css("margin-top","20px");
-	$(".panel.window .panel-title").eq(ndNum).css("color","#000");
-	$(".panel.window .panel-title").eq(ndNum).css("font-size","15px");
-	$(".panel.window .panel-title").eq(ndNum).css("padding-left","10px");
+	$(".panel.window").eq(edNum).css("margin-top","20px");
+	$(".panel.window .panel-title").eq(edNum).css("color","#000");
+	$(".panel.window .panel-title").eq(edNum).css("font-size","15px");
+	$(".panel.window .panel-title").eq(edNum).css("padding-left","10px");
 	
 	$(".panel-header, .panel-body").css("border-color","#ddd");
 	
 	//以下的是表格下面的面板
-	$(".window-shadow").eq(ndNum).css("margin-top","20px");
-	$(".window,.window .window-body").eq(ndNum).css("border-color","#ddd");
+	$(".window-shadow").eq(edNum).css("margin-top","20px");
+	$(".window,.window .window-body").eq(edNum).css("border-color","#ddd");
 
-	$("#new_div #ok_but").css("left","45%");
-	$("#new_div #ok_but").css("position","absolute");
+	$("#edit_div #ok_but").css("left","45%");
+	$("#edit_div #ok_but").css("position","absolute");
 	
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 
 	initPDTCBB();
 	initPDCBB();
+	setTimeout(function(){
+		loadPDCBBData();
+	},"1000");
 }
 
 function initPDTCBB(){
@@ -102,10 +101,13 @@ function initPDTCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
-			pdtCBB=$("#new_div #pdt_cbb").combobox({
+			pdtCBB=$("#edit_div #pdt_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
+				onLoadSuccess:function(){
+					$(this).combobox("setValue",'${requestScope.pda.pdtId }');
+				},
 				onSelect:function(){
 					loadPDCBBData();
 				}
@@ -117,10 +119,13 @@ function initPDTCBB(){
 function initPDCBB(){
 	var data=[];
 	data.push({"value":"","text":"请选择设备名称"});
-	pdCBB=$("#new_div #pd_cbb").combobox({
+	pdCBB=$("#edit_div #pd_cbb").combobox({
 		valueField:"value",
 		textField:"text",
-		data:data
+		data:data,
+		onLoadSuccess:function(){
+			$(this).combobox("setValue",'${requestScope.pda.pdId }');
+		}
 	});
 }
 
@@ -140,24 +145,22 @@ function loadPDCBBData(){
 	,"json");
 }
 
-function checkNew(){
+function checkEdit(){
 	if(checkPDTId()){
 		if(checkPDName()){
-			if(checkNo()){
-				newAccount();
-			}
+			editAccount();
 		}
 	}
 }
 
-function newAccount(){
+function editAccount(){
 	var pdId=pdCBB.combobox("getValue");
-	$("#new_div #pdId").val(pdId);
+	$("#edit_div #pdId").val(pdId);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
 		type:"post",
-		url:deviceMgmtPath+"newAccount",
+		url:deviceMgmtPath+"editAccount",
 		dataType: "json",
 		data:formData,
 		cache: false,
@@ -173,46 +176,6 @@ function newAccount(){
 			}
 		}
 	});
-}
-
-function focusNo(){
-	var no = $("#no").val();
-	if(no=="设备编号不能为空"||no=="设备编号已存在"){
-		$("#no").val("");
-		$("#no").css("color", "#555555");
-	}
-}
-
-//验证设备编号
-function checkNo(){
-	var flag=false;
-	var no = $("#no").val();
-	if(no==null||no==""||no=="设备编号不能为空"){
-		$("#no").css("color","#E15748");
-    	$("#no").val("设备编号不能为空");
-    	flag=false;
-	}
-	else if(no=="设备编号已存在"){
-		$("#no").css("color","#E15748");
-    	$("#no").val("设备编号已存在");
-    	flag=false;
-	}
-	else{
-		$.ajaxSetup({async:false});
-		$.post(deviceMgmtPath+"checkNoIfExist",
-			{no:no},
-			function(data){
-				if(data.status==1)
-			    	flag=true;
-				else{
-					$("#no").css("color","#E15748");
-			    	$("#no").val(data.msg);
-			    	flag=false;
-				}
-			}
-		,"json");
-	}
-	return flag;
 }
 
 //验证设备类型
@@ -243,10 +206,10 @@ function setFitWidthInParent(parent,self){
 	case "center_con_div":
 		space=205;
 		break;
-	case "new_div":
+	case "edit_div":
 		space=340;
 		break;
-	case "new_div_table":
+	case "edit_div_table":
 	case "panel_window":
 		space=355;
 		break;
@@ -259,10 +222,11 @@ function setFitWidthInParent(parent,self){
 <body>
 <%@include file="../../inc/side.jsp"%>
 <div class="center_con_div" id="center_con_div">
-	<div class="page_location_div">设备台账-添加</div>
+	<div class="page_location_div">设备台账-编辑</div>
 	
-	<div id="new_div">
+	<div id="edit_div">
 		<form id="form1" name="form1" method="post" action="" enctype="multipart/form-data">
+		<input type="hidden" id="id" name="id" value="${requestScope.pda.id }"/>
 		<table>
 		  <tr>
 			<td class="td1" align="right">
@@ -276,7 +240,7 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				<input id="pd_cbb"/>
-				<input type="hidden" id="pdId" name="pdId"/>
+				<input type="hidden" id="pdId" name="pdId" value="${requestScope.pda.pdId }"/>
 			</td>
 		  </tr>
 		  <tr>
@@ -284,7 +248,7 @@ function setFitWidthInParent(parent,self){
 				设备编号
 			</td>
 			<td class="td2">
-				<input type="text" class="no_inp" id="no" name="no" placeholder="请输入设备编号" onfocus="focusNo()" onblur="checkNo()"/>
+				 ${requestScope.pda.no }
 			</td>
 			<td class="td1" align="right">
 			</td>

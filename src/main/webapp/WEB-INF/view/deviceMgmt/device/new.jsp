@@ -90,7 +90,7 @@ function initNewDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	initLevelCBB();
-	initTypeCBB();
+	initPDTCBB();
 }
 
 function initLevelCBB(){
@@ -106,7 +106,7 @@ function initLevelCBB(){
 	});
 }
 
-function initTypeCBB(){
+function initPDTCBB(){
 	var data=[];
 	data.push({"value":"","text":"请选择设备类型"});
 	$.post(deviceMgmtPath+"queryTypeCBBList",
@@ -115,7 +115,7 @@ function initTypeCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
-			typeCBB=$("#new_div #type_cbb").combobox({
+			pdtCBB=$("#new_div #pdt_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data
@@ -128,7 +128,7 @@ function checkNew(){
 	if(checkName()){
 		if(checkSpecs()){
 			if(checkLevelId()){
-				if(checkTypeId()){
+				if(checkPdtId()){
 					newDevice();
 				}
 			}
@@ -139,8 +139,8 @@ function checkNew(){
 function newDevice(){
 	var level=levelCBB.combobox("getValue");
 	$("#new_div #level").val(level);
-	var typeId=typeCBB.combobox("getValue");
-	$("#new_div #typeId").val(typeId);
+	var pdtId=pdtCBB.combobox("getValue");
+	$("#new_div #pdtId").val(pdtId);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
@@ -215,9 +215,9 @@ function checkLevelId(){
 }
 
 //验证设备类型
-function checkTypeId(){
-	var typeId=typeCBB.combobox("getValue");
-	if(typeId==null||typeId==""){
+function checkPdtId(){
+	var pdtId=pdtCBB.combobox("getValue");
+	if(pdtId==null||pdtId==""){
 	  	alert("请选择设备类型");
 	  	return false;
 	}
@@ -278,8 +278,8 @@ function setFitWidthInParent(parent,self){
 				设备类型
 			</td>
 			<td class="td2">
-				<input id="type_cbb"/>
-				<input type="hidden" id="typeId" name="typeId"/>
+				<input id="pdt_cbb"/>
+				<input type="hidden" id="pdtId" name="pdtId"/>
 			</td>
 		  </tr>
 		</table>

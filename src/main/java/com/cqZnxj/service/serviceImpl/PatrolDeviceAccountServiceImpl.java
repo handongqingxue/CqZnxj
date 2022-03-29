@@ -15,18 +15,18 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	@Autowired
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
 
-	public int queryForInt(String deviceNo, String pdName, String pdtName, String createTimeStart,
+	public int queryForInt(String no, String pdName, String pdtName, String createTimeStart,
 			String createTimeEnd, String startTimeStart, String startTimeEnd) {
 		// TODO Auto-generated method stub
-		return patrolDeviceAccountDao.queryForInt(deviceNo, pdName, pdtName, createTimeStart,
+		return patrolDeviceAccountDao.queryForInt(no, pdName, pdtName, createTimeStart,
 				createTimeEnd, startTimeStart, startTimeEnd);
 	}
 
-	public List<PatrolDeviceAccount> queryList(String deviceNo, String pdName, String pdtName,
+	public List<PatrolDeviceAccount> queryList(String no, String pdName, String pdtName,
 			String createTimeStart, String createTimeEnd, String startTimeStart, String startTimeEnd, int page,
 			int rows, String sort, String order) {
 		// TODO Auto-generated method stub
-		return patrolDeviceAccountDao.queryList(deviceNo, pdName, pdtName, createTimeStart, createTimeEnd, 
+		return patrolDeviceAccountDao.queryList(no, pdName, pdtName, createTimeStart, createTimeEnd, 
 				startTimeStart, startTimeEnd, (page-1)*rows, rows, sort, order);
 	}
 
@@ -37,9 +37,21 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	}
 
 	@Override
-	public boolean checkDeviceNoIfExist(String deviceNo) {
+	public boolean checkNoIfExist(String no) {
 		// TODO Auto-generated method stub
-		int count=patrolDeviceAccountDao.getCountByDeviceNo(deviceNo);
+		int count=patrolDeviceAccountDao.getCountByNo(no);
 		return count==0?false:true;
+	}
+
+	@Override
+	public PatrolDeviceAccount selectById(String id) {
+		// TODO Auto-generated method stub
+		return patrolDeviceAccountDao.selectById(id);
+	}
+
+	@Override
+	public int edit(PatrolDeviceAccount pda) {
+		// TODO Auto-generated method stub
+		return patrolDeviceAccountDao.edit(pda);
 	}
 }

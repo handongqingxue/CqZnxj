@@ -27,11 +27,11 @@ public class PatrolDevice {
 	public void setSpecs(String specs) {
 		this.specs = specs;
 	}
-	public Integer getTypeId() {
-		return typeId;
+	public Integer getPdtId() {
+		return pdtId;
 	}
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setPdtId(Integer pdtId) {
+		this.pdtId = pdtId;
 	}
 	public String getMakeDate() {
 		return makeDate;
@@ -48,7 +48,7 @@ public class PatrolDevice {
 	private String name;
 	private String pdtName;
 	private String specs;
-	private Integer typeId;
+	private Integer pdtId;
 	private String makeDate;
 	private Integer level;
 }

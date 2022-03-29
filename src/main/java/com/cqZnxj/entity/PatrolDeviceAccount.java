@@ -9,29 +9,35 @@ public class PatrolDeviceAccount {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getDeviceId() {
-		return deviceId;
+	public String getNo() {
+		return no;
 	}
-	public void setDeviceId(Integer deviceId) {
-		this.deviceId = deviceId;
+	public void setNo(String no) {
+		this.no = no;
 	}
-	public String getDeviceNo() {
-		return deviceNo;
+	public Integer getPdId() {
+		return pdId;
 	}
-	public void setDeviceNo(String deviceNo) {
-		this.deviceNo = deviceNo;
+	public void setPdId(Integer pdId) {
+		this.pdId = pdId;
 	}
-	public String getDeviceName() {
-		return deviceName;
+	public String getPdName() {
+		return pdName;
 	}
-	public void setDeviceName(String deviceName) {
-		this.deviceName = deviceName;
+	public void setPdName(String pdName) {
+		this.pdName = pdName;
 	}
-	public String getDeviceTypeName() {
-		return deviceTypeName;
+	public Integer getPdtId() {
+		return pdtId;
 	}
-	public void setDeviceTypeName(String deviceTypeName) {
-		this.deviceTypeName = deviceTypeName;
+	public void setPdtId(Integer pdtId) {
+		this.pdtId = pdtId;
+	}
+	public String getPdtName() {
+		return pdtName;
+	}
+	public void setPdtName(String pdtName) {
+		this.pdtName = pdtName;
 	}
 	public String getCreateTime() {
 		return createTime;
@@ -57,10 +63,11 @@ public class PatrolDeviceAccount {
 	public void setQrcodeUrl(String qrcodeUrl) {
 		this.qrcodeUrl = qrcodeUrl;
 	}
-	private Integer deviceId;
-	private String deviceNo;
-	private String deviceName;
-	private String deviceTypeName;
+	private String no;
+	private Integer pdId;
+	private String pdName;
+	private Integer pdtId;
+	private String pdtName;
 	private String createTime;
 	private Integer createStaffId;
 	private String startTime;

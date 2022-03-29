@@ -102,6 +102,16 @@ public class DeviceMgmtController {
 		
 		return MODULE_NAME+"/account/new";
 	}
+
+	@RequestMapping(value="/account/edit")
+	public String goAccountEdit(HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+		PatrolDeviceAccount pda=patrolDeviceAccountService.selectById(id);
+		request.setAttribute("pda", pda);
+		
+		return MODULE_NAME+"/account/edit";
+	}
 	
 	@RequestMapping(value="/account/list")
 	public String goAccountList(HttpServletRequest request) {
@@ -127,11 +137,11 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 	
-	@RequestMapping(value="/checkIfExistDeviceByTypeIds",produces="plain/text; charset=UTF-8")
+	@RequestMapping(value="/checkIfExistDeviceByPdtIds",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String checkIfExistDeviceByTypeIds(String typeIds,String typeNames) {
+	public String checkIfExistDeviceByPdtIds(String pdtIds,String typeNames) {
 		//TODO 针对分类的动态进行实时调整更新
-		List<PatrolDeviceType> pdtList=patrolDeviceService.checkIfExistByTypeIds(typeIds,typeNames);
+		List<PatrolDeviceType> pdtList=patrolDeviceService.checkIfExistByPdtIds(pdtIds,typeNames);
 		PlanResult plan=new PlanResult();
 		String json;
 		if(pdtList.size()>0) {
@@ -295,11 +305,11 @@ public class DeviceMgmtController {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 
-		String deviceNo = pda.getDeviceNo();
-		String fileName = deviceNo + ".jpg";
+		String no = pda.getNo();
+		String fileName = no + ".jpg";
 		String avaPath="/CqZnxj/upload/devAcc"+fileName;
 		String path = "D:/resource/CqZnxj/devAcc";
-        QrcodeUtil.createQrCode(deviceNo, path, fileName);
+        QrcodeUtil.createQrCode(no, path, fileName);
 		
         pda.setQrcodeUrl(avaPath);
 		int count=patrolDeviceAccountService.add(pda);
@@ -313,17 +323,35 @@ public class DeviceMgmtController {
 		}
 		return jsonMap;
 	}
+
+	@RequestMapping(value="/editAccount")
+	@ResponseBody
+	public Map<String, Object> editAccount(PatrolDeviceAccount pda) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolDeviceAccountService.edit(pda);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "编辑设备台账成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "编辑设备台账失败！");
+		}
+		return jsonMap;
+	}
 	
 	@RequestMapping(value="/queryAccountList")
 	@ResponseBody
-	public Map<String, Object> queryAccountList(String deviceNo,String pdName,String pdtName,String createTimeStart,String createTimeEnd,
+	public Map<String, Object> queryAccountList(String no,String pdName,String pdtName,String createTimeStart,String createTimeEnd,
 			String startTimeStart,String startTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceAccountService.queryForInt(deviceNo,pdName,pdtName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
-			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(deviceNo,pdName, pdtName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
+			int count = patrolDeviceAccountService.queryForInt(no,pdName,pdtName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
+			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, pdtName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdaList);
@@ -335,10 +363,10 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 
-	@RequestMapping(value="/checkDeviceNoIfExist",produces="plain/text; charset=UTF-8")
+	@RequestMapping(value="/checkNoIfExist",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String checkDdhIfExist(String deviceNo) {
-		boolean exist=patrolDeviceAccountService.checkDeviceNoIfExist(deviceNo);
+	public String checkNoIfExist(String no) {
+		boolean exist=patrolDeviceAccountService.checkNoIfExist(no);
 		PlanResult plan=new PlanResult();
 		String json;
 		if(exist) {
@@ -368,11 +396,11 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryDeviceCBBList")
 	@ResponseBody
-	public Map<String, Object> queryDeviceCBBList(String typeId) {
+	public Map<String, Object> queryDeviceCBBList(String pdtId) {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		List<PatrolDevice> pdList=patrolDeviceService.queryCBBList(typeId);
+		List<PatrolDevice> pdList=patrolDeviceService.queryCBBList(pdtId);
 		
 		jsonMap.put("rows", pdList);
 		

@@ -51,25 +51,25 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 		return patrolDeviceDao.edit(pd);
 	}
 
-	public List<PatrolDeviceType> checkIfExistByTypeIds(String typeIds, String typeNames) {
+	public List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String typeNames) {
 		// TODO Auto-generated method stub
 		List<PatrolDeviceType> pdtList=new ArrayList<PatrolDeviceType>();
-		String[] typeIdArr = typeIds.split(",");
-		String[] typeNameArr = typeNames.split(",");
-		for (int i = 0; i < typeIdArr.length; i++) {
-			String typeId = typeIdArr[i];
-			if(patrolDeviceDao.getCountByTypeId(typeId)>0) {
+		String[] pdtIdArr = pdtIds.split(",");
+		String[] pdtNameArr = typeNames.split(",");
+		for (int i = 0; i < pdtIdArr.length; i++) {
+			String pdtId = pdtIdArr[i];
+			if(patrolDeviceDao.getCountByPdtId(pdtId)>0) {
 				PatrolDeviceType pdt=new PatrolDeviceType();
-				pdt.setId(Integer.valueOf(typeId));
-				pdt.setName(typeNameArr[i]);
+				pdt.setId(Integer.valueOf(pdtId));
+				pdt.setName(pdtNameArr[i]);
 				pdtList.add(pdt);
 			}
 		}
 		return pdtList;
 	}
 
-	public List<PatrolDevice> queryCBBList(String typeId) {
+	public List<PatrolDevice> queryCBBList(String pdtId) {
 		// TODO Auto-generated method stub
-		return patrolDeviceDao.queryCBBList(typeId);
+		return patrolDeviceDao.queryCBBList(pdtId);
 	}
 }

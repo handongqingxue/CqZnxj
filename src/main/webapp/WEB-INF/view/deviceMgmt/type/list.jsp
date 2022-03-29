@@ -61,7 +61,7 @@ function initRemoveLB(){
 	removeLB=$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			checkIfExistDeviceByTypeIds();
+			checkIfExistDeviceByPdtIds();
 		}
 	});
 }
@@ -99,7 +99,7 @@ function initTab1(){
 }
 
 //验证设备类型id下是否存在设备
-function checkIfExistDeviceByTypeIds() {
+function checkIfExistDeviceByPdtIds() {
 	var rows=tab1.datagrid("getSelections");
 	if (rows.length == 0) {
 		$.messager.alert("提示","请选择要删除的信息！","warning");
@@ -117,8 +117,8 @@ function checkIfExistDeviceByTypeIds() {
 			ids=ids.substring(1);
 			names=names.substring(1);
 
-			$.post(deviceMgmtPath + "checkIfExistDeviceByTypeIds",
-				{typeIds:ids,typeNames:names},
+			$.post(deviceMgmtPath + "checkIfExistDeviceByPdtIds",
+				{pdtIds:ids,typeNames:names},
 				function(result){
 					if(result.status==1){
 						alert(result.msg);
@@ -127,7 +127,7 @@ function checkIfExistDeviceByTypeIds() {
 						var pdtList=result.data;
 						for (var i = 0; i < idArr.length; i++){
 							var id=idArr[i];
-							if(!checkTypeIdInList(id,pdtList)){//若不存在，则说明该类型下没有设备，就得删除掉
+							if(!checkPdtIdInList(id,pdtList)){//若不存在，则说明该类型下没有设备，就得删除掉
 								delIds+=","+id;
 							}
 						}
@@ -161,10 +161,10 @@ function deleteByIds(ids){
 }
 
 //验证设备类型id是否存在于集合里
-function checkTypeIdInList(typeId,pdtList){
+function checkPdtIdInList(pdtId,pdtList){
 	var flag=false;
 	for (var i = 0; i < pdtList.length; i++){
-		if(typeId==pdtList[i].id){
+		if(pdtId==pdtList[i].id){
 			flag=true;
 			break;
 		}

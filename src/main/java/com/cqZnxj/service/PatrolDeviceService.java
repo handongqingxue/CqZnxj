@@ -18,8 +18,8 @@ public interface PatrolDeviceService {
 
 	PatrolDevice selectById(String id);
 
-	List<PatrolDeviceType> checkIfExistByTypeIds(String typeIds, String typeNames);
+	List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String typeNames);
 
-	List<PatrolDevice> queryCBBList(String typeId);
+	List<PatrolDevice> queryCBBList(String pdtId);
 
 }

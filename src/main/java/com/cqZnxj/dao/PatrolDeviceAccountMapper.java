@@ -8,17 +8,21 @@ import com.cqZnxj.entity.*;
 
 public interface PatrolDeviceAccountMapper {
 
-	int queryForInt(@Param("deviceNo") String deviceNo, @Param("pdName") String pdName, @Param("pdtName") String pdtName, 
+	int queryForInt(@Param("no") String no, @Param("pdName") String pdName, @Param("pdtName") String pdtName, 
 			@Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd, 
 			@Param("startTimeStart") String startTimeStart, @Param("startTimeEnd") String startTimeEnd);
 
-	List<PatrolDeviceAccount> queryList(@Param("deviceNo") String deviceNo, @Param("pdName") String pdName, @Param("pdtName") String pdtName, 
+	List<PatrolDeviceAccount> queryList(@Param("no") String no, @Param("pdName") String pdName, @Param("pdtName") String pdtName, 
 			@Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd, 
 			@Param("startTimeStart") String startTimeStart, @Param("startTimeEnd") String startTimeEnd, 
 			@Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 	int add(PatrolDeviceAccount pda);
 
-	int getCountByDeviceNo(@Param("deviceNo") String deviceNo);
+	int getCountByNo(@Param("no") String no);
+
+	PatrolDeviceAccount selectById(@Param("id") String id);
+
+	int edit(PatrolDeviceAccount pda);
 
 }

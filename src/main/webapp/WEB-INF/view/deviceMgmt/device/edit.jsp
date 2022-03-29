@@ -90,7 +90,7 @@ function initEditDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	initLevelCBB();
-	initTypeCBB();
+	initPDTCBB();
 }
 
 function initLevelCBB(){
@@ -109,7 +109,7 @@ function initLevelCBB(){
 	});
 }
 
-function initTypeCBB(){
+function initPDTCBB(){
 	var data=[];
 	data.push({"value":"","text":"请选择设备类型"});
 	$.post(deviceMgmtPath+"queryTypeCBBList",
@@ -118,12 +118,12 @@ function initTypeCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
-			typeCBB=$("#edit_div #type_cbb").combobox({
+			pdtCBB=$("#edit_div #pdt_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onLoadSuccess:function(){
-					$(this).combobox("setValue",'${requestScope.pd.typeId }');
+					$(this).combobox("setValue",'${requestScope.pd.pdtId }');
 				}
 			});
 		}
@@ -134,7 +134,7 @@ function checkEdit(){
 	if(checkName()){
 		if(checkSpecs()){
 			if(checkLevelId()){
-				if(checkTypeId()){
+				if(checkPdtId()){
 					editDevice();
 				}
 			}
@@ -145,8 +145,8 @@ function checkEdit(){
 function editDevice(){
 	var level=levelCBB.combobox("getValue");
 	$("#edit_div #level").val(level);
-	var typeId=typeCBB.combobox("getValue");
-	$("#edit_div #typeId").val(typeId);
+	var pdtId=pdtCBB.combobox("getValue");
+	$("#edit_div #pdtId").val(pdtId);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
@@ -221,9 +221,9 @@ function checkLevelId(){
 }
 
 //验证设备类型
-function checkTypeId(){
-	var typeId=typeCBB.combobox("getValue");
-	if(typeId==null||typeId==""){
+function checkPdtId(){
+	var pdtId=pdtCBB.combobox("getValue");
+	if(pdtId==null||pdtId==""){
 	  	alert("请选择设备类型");
 	  	return false;
 	}
@@ -285,8 +285,8 @@ function setFitWidthInParent(parent,self){
 				设备类型
 			</td>
 			<td class="td2">
-				<input id="type_cbb"/>
-				<input type="hidden" id="typeId" name="typeId" value="${requestScope.pd.typeId }"/>
+				<input id="pdt_cbb"/>
+				<input type="hidden" id="pdtId" name="pdtId" value="${requestScope.pd.pdtId }"/>
 			</td>
 		  </tr>
 		</table>

@@ -15,7 +15,7 @@
 .tab1_div .toolbar .row_div{
 	height:32px;
 }
-.tab1_div .toolbar .row_div .deviceNo_span,
+.tab1_div .toolbar .row_div .no_span,
 .tab1_div .toolbar .row_div .pdName_span,
 .tab1_div .toolbar .row_div .pdtName_span,
 .tab1_div .toolbar .row_div .createTime_span,
@@ -23,7 +23,7 @@
 .tab1_div .toolbar .row_div .search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .row_div .deviceNo_inp,
+.tab1_div .toolbar .row_div .no_inp,
 .tab1_div .toolbar .row_div .pdName_inp,
 .tab1_div .toolbar .row_div .pdtName_inp{
 	width: 120px;height: 25px;
@@ -77,14 +77,14 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var deviceNo=$("#toolbar #deviceNo_inp").val();
+			var no=$("#toolbar #no_inp").val();
 			var pdName=$("#toolbar #pdName_inp").val();
 			var pdtName=$("#toolbar #pdtName_inp").val();
 			var createTimeStart=createTimeStDTB.datetimebox("getValue");
 			var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
 			var startTimeStart=startTimeStDTB.datetimebox("getValue");
 			var startTimeEnd=startTimeEtDTB.datetimebox("getValue");
-			tab1.datagrid("load",{deviceNo:deviceNo,pdName:pdName,pdtName:pdtName,createTimeStart:createTimeStart,
+			tab1.datagrid("load",{no:no,pdName:pdName,pdtName:pdtName,createTimeStart:createTimeStart,
 				createTimeEnd:createTimeEnd,startTimeStart:startTimeStart,startTimeEnd:startTimeEnd});
 		}
 	});
@@ -117,9 +117,9 @@ function initTab1(){
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"deviceNo",title:"设备编号",width:200},
-			{field:"deviceName",title:"设备名称",width:200},
-            {field:"deviceTypeName",title:"设备类型",width:200},
+			{field:"no",title:"设备编号",width:200},
+			{field:"pdName",title:"设备名称",width:200},
+            {field:"pdtName",title:"设备类型",width:200},
 			{field:"createTime",title:"创建时间",width:200},
 			{field:"startTime",title:"启用时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
@@ -130,8 +130,8 @@ function initTab1(){
 	    ]],
         onLoadSuccess:function(data){
 			if(data.total==0){
-				$(this).datagrid("appendRow",{deviceNo:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"deviceNo",colspan:6});
+				$(this).datagrid("appendRow",{no:"<div style=\"text-align:center;\">暂无信息<div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"no",colspan:6});
 				data.total=0;
 			}
 			
@@ -186,8 +186,8 @@ function setFitWidthInParent(o){
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
 		<div class="row_div">
-			<span class="deviceNo_span">设备编号：</span>
-			<input type="text" class="deviceNo_inp" id="deviceNo_inp" placeholder="请输入设备编号"/>
+			<span class="no_span">设备编号：</span>
+			<input type="text" class="no_inp" id="no_inp" placeholder="请输入设备编号"/>
 			<span class="pdName_span">设备名称：</span>
 			<input type="text" class="pdName_inp" id="pdName_inp" placeholder="请输入设备名称"/>
 			<span class="pdtName_span">设备类型：</span>
