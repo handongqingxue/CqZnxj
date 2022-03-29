@@ -118,6 +118,16 @@ public class DeviceMgmtController {
 		
 		return MODULE_NAME+"/account/list";
 	}
+
+	@RequestMapping(value="/account/detail")
+	public String goAccountDetail(HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+		PatrolDeviceAccount pda=patrolDeviceAccountService.selectById(id);
+		request.setAttribute("pda", pda);
+		
+		return MODULE_NAME+"/account/detail";
+	}
 	
 	@RequestMapping(value="/newType")
 	@ResponseBody

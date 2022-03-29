@@ -158,7 +158,7 @@ function deleteByIds() {
 			}
 			ids=ids.substring(1);
 			
-			$.post(deviceMgmtPath + "deleteDevice",
+			$.post(deviceMgmtPath + "deleteAccount",
 				{ids:ids},
 				function(result){
 					if(result.status==1){
