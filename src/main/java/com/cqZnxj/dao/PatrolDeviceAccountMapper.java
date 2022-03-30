@@ -25,4 +25,6 @@ public interface PatrolDeviceAccountMapper {
 
 	int edit(PatrolDeviceAccount pda);
 
+	int deleteByIds(List<String> idList);
+
 }

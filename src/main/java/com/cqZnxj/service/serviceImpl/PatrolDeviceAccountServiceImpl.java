@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,14 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	public int edit(PatrolDeviceAccount pda) {
 		// TODO Auto-generated method stub
 		return patrolDeviceAccountDao.edit(pda);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=patrolDeviceAccountDao.deleteByIds(idList);
+		return count;
 	}
 }

@@ -334,6 +334,26 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 
+	@RequestMapping(value="/deleteAccount",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteAccount(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patrolDeviceAccountService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除设备台账失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除设备台账成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+
 	@RequestMapping(value="/editAccount")
 	@ResponseBody
 	public Map<String, Object> editAccount(PatrolDeviceAccount pda) {

@@ -21,4 +21,6 @@ public interface PatrolDeviceAccountService {
 
 	int edit(PatrolDeviceAccount pda);
 
+	int deleteByIds(String ids);
+
 }

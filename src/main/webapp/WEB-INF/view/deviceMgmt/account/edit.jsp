@@ -19,6 +19,10 @@
 	margin-left: 20px;
 	font-size: 18px;
 }
+.qrcodeUrl_img{
+	width: 130px;
+	height: 130px;
+}
 </style>
 <script type="text/javascript">
 var path='<%=basePath %>';
@@ -48,7 +52,7 @@ function initEditDialog(){
 	$("#edit_div").dialog({
 		title:"设备台账信息",
 		width:setFitWidthInParent("body","edit_div"),
-		height:200,
+		height:285,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -66,7 +70,8 @@ function initEditDialog(){
 	$("#edit_div table .td1").css("width","15%");
 	$("#edit_div table .td2").css("width","30%");
 	$("#edit_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#edit_div table tr").css("height","45px");
+	$("#edit_div table tr").eq(0).css("height","45px");
+	$("#edit_div table tr").eq(1).css("height","130px");
 
 	$(".panel.window").eq(edNum).css("margin-top","20px");
 	$(".panel.window .panel-title").eq(edNum).css("color","#000");
@@ -251,8 +256,10 @@ function setFitWidthInParent(parent,self){
 				 ${requestScope.pda.no }
 			</td>
 			<td class="td1" align="right">
+				二维码
 			</td>
 			<td class="td2">
+				 <img class="qrcodeUrl_img" alt="" src="${requestScope.pda.qrcodeUrl }">
 			</td>
 		  </tr>
 		</table>
