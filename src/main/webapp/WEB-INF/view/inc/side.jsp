@@ -67,7 +67,7 @@ function resizeDiv(){
 	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/type/list">设备类型</a>
 	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/device/list">设备查询</a>
 	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/account/list">设备台账</a>
-	<a class="nav_item nav_item_a">设备参数</a>
+	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/param/list">设备参数</a>
 </div>
 <div class="top_div" id="top_div">
 	<span class="client_id_span">admin</span>

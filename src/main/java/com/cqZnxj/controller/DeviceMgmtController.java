@@ -30,6 +30,8 @@ public class DeviceMgmtController {
 	private PatrolDeviceTypeService patrolDeviceTypeService;
 	@Autowired
 	private PatrolDeviceAccountService patrolDeviceAccountService;
+	@Autowired
+	private PatrolDeviceParamService patrolDeviceParamService;
 	public static final String MODULE_NAME="deviceMgmt";
 	//http://localhost:8080/CqZnxj/deviceMgmt/type/list
 	
@@ -127,6 +129,12 @@ public class DeviceMgmtController {
 		request.setAttribute("pda", pda);
 		
 		return MODULE_NAME+"/account/detail";
+	}
+	
+	@RequestMapping(value="/param/list")
+	public String goParamList(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/param/list";
 	}
 	
 	@RequestMapping(value="/newType")
@@ -385,6 +393,27 @@ public class DeviceMgmtController {
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdaList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryParamList")
+	@ResponseBody
+	public Map<String, Object> queryParamList(String pdtName,String pdName,String pdaNo,String name,
+			String createTimeStart,String createTimeEnd,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = patrolDeviceParamService.queryForInt(pdtName,pdName,pdaNo,name,createTimeStart,createTimeEnd);
+			List<PatrolDeviceParam> pdpList=patrolDeviceParamService.queryList(pdtName, pdName, pdaNo, name, createTimeStart, createTimeEnd, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", pdpList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
