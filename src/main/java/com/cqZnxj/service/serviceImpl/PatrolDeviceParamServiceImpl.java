@@ -33,4 +33,16 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 		// TODO Auto-generated method stub
 		return patrolDeviceParamDao.add(pdp);
 	}
+
+	@Override
+	public PatrolDeviceParam selectById(String id) {
+		// TODO Auto-generated method stub
+		return patrolDeviceParamDao.selectById(id);
+	}
+
+	@Override
+	public int edit(PatrolDeviceParam pdp) {
+		// TODO Auto-generated method stub
+		return patrolDeviceParamDao.edit(pdp);
+	}
 }

@@ -15,4 +15,8 @@ public interface PatrolDeviceParamMapper {
 
 	int add(PatrolDeviceParam pdp);
 
+	PatrolDeviceParam selectById(String id);
+
+	int edit(PatrolDeviceParam pdp);
+
 }

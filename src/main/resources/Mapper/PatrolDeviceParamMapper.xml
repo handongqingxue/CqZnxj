@@ -49,6 +49,30 @@
 			</if>
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatrolDeviceParam">
+		update patrol_device_param set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<if test="warnDown!=null">
+				warnDown=#{warnDown},
+			</if>
+			<if test="warnUp!=null">
+				warnUp=#{warnUp},
+			</if>
+			<if test="unit!=null">
+				unit=#{unit},
+			</if>
+			<if test="pdaId!=null">
+				pdaId=#{pdaId},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_device_type pdt
 		 where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.pdtId=pdt.id
@@ -87,5 +111,8 @@
 		</if>
 		order by pdp.createTime desc
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceParam">
+		select pdp.*,pda.no pdaNo,pd.id pdId,pd.name pdName,pdt.id pdtId,pdt.name pdtName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_device_type pdt where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.pdtId=pdt.id and pda.id=#{id}
 	</select>
 </mapper>

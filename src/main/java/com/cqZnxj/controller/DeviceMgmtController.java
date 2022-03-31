@@ -136,6 +136,16 @@ public class DeviceMgmtController {
 		
 		return MODULE_NAME+"/param/new";
 	}
+
+	@RequestMapping(value="/param/edit")
+	public String goParamEdit(HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+		PatrolDeviceParam pdp=patrolDeviceParamService.selectById(id);
+		request.setAttribute("pdp", pdp);
+		
+		return MODULE_NAME+"/param/edit";
+	}
 	
 	@RequestMapping(value="/param/list")
 	public String goParamList(HttpServletRequest request) {
@@ -421,6 +431,24 @@ public class DeviceMgmtController {
 		else {
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "创建设备参数失败！");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/editParam")
+	@ResponseBody
+	public Map<String, Object> editParam(PatrolDeviceParam pdp) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolDeviceParamService.edit(pdp);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "编辑设备参数成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "编辑设备参数失败！");
 		}
 		return jsonMap;
 	}
