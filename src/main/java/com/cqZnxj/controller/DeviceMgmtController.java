@@ -152,6 +152,16 @@ public class DeviceMgmtController {
 		
 		return MODULE_NAME+"/param/list";
 	}
+
+	@RequestMapping(value="/param/detail")
+	public String goParamDetail(HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+		PatrolDeviceParam pdp=patrolDeviceParamService.selectById(id);
+		request.setAttribute("pdp", pdp);
+		
+		return MODULE_NAME+"/param/detail";
+	}
 	
 	@RequestMapping(value="/newType")
 	@ResponseBody
@@ -433,6 +443,26 @@ public class DeviceMgmtController {
 			jsonMap.put("info", "创建设备参数失败！");
 		}
 		return jsonMap;
+	}
+
+	@RequestMapping(value="/deleteParam",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteParam(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patrolDeviceParamService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除设备参数失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除设备参数成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
 	}
 	
 	@RequestMapping(value="/editParam")

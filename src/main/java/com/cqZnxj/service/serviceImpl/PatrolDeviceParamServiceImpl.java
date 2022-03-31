@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,14 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 	public int edit(PatrolDeviceParam pdp) {
 		// TODO Auto-generated method stub
 		return patrolDeviceParamDao.edit(pdp);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=patrolDeviceParamDao.deleteByIds(idList);
+		return count;
 	}
 }

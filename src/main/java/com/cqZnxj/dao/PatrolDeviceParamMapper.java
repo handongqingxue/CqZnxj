@@ -19,4 +19,6 @@ public interface PatrolDeviceParamMapper {
 
 	int edit(PatrolDeviceParam pdp);
 
+	int deleteByIds(List<String> idList);
+
 }

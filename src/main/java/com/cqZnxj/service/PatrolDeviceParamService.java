@@ -17,4 +17,6 @@ public interface PatrolDeviceParamService {
 
 	int edit(PatrolDeviceParam pdp);
 
+	int deleteByIds(String ids);
+
 }

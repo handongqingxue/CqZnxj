@@ -49,6 +49,12 @@
 			</if>
 		</trim>
 	</insert>
+	<delete id="deleteByIds">
+		delete from patrol_device_param where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in (" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.PatrolDeviceParam">
 		update patrol_device_param set 
 		<trim suffixOverrides=",">

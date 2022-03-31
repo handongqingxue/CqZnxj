@@ -90,7 +90,7 @@ function initRemoveLB(){
 	removeLB=$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			
+			deleteByIds();
 		}
 	});
 }
@@ -160,12 +160,12 @@ function deleteByIds(ids){
 			}
 			ids=ids.substring(1);
 			
-			$.post(deviceMgmtPath + "deleteDevice",
+			$.post(deviceMgmtPath + "deleteParam",
 				{ids:ids},
 				function(result){
 					if(result.status==1){
 						alert(result.msg);
-						location.href = location.href;
+						tab1.datagrid("load");
 					}
 					else{
 						alert(result.msg);
