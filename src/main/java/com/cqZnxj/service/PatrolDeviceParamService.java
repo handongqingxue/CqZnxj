@@ -11,4 +11,6 @@ public interface PatrolDeviceParamService {
 	List<PatrolDeviceParam> queryList(String pdtName, String pdName, String pdaNo, String name, 
 			String createTimeStart, String createTimeEnd, int page, int rows, String sort, String order);
 
+	int add(PatrolDeviceParam pdp);
+
 }

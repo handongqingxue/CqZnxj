@@ -27,4 +27,10 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 		// TODO Auto-generated method stub
 		return patrolDeviceParamDao.queryList(pdtName, pdName, pdaNo, name, createTimeStart, createTimeEnd, (page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public int add(PatrolDeviceParam pdp) {
+		// TODO Auto-generated method stub
+		return patrolDeviceParamDao.add(pdp);
+	}
 }

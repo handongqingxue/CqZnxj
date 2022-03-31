@@ -27,4 +27,6 @@ public interface PatrolDeviceAccountMapper {
 
 	int deleteByIds(List<String> idList);
 
+	List<PatrolDeviceAccount> queryCBBList(@Param("pdId") String pdId);
+
 }

@@ -64,4 +64,10 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 		count=patrolDeviceAccountDao.deleteByIds(idList);
 		return count;
 	}
+
+	@Override
+	public List<PatrolDeviceAccount> queryCBBList(String pdId) {
+		// TODO Auto-generated method stub
+		return patrolDeviceAccountDao.queryCBBList(pdId);
+	}
 }

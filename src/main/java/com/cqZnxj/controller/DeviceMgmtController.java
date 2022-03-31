@@ -131,6 +131,12 @@ public class DeviceMgmtController {
 		return MODULE_NAME+"/account/detail";
 	}
 	
+	@RequestMapping(value="/param/new")
+	public String goParamNew(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/param/new";
+	}
+	
 	@RequestMapping(value="/param/list")
 	public String goParamList(HttpServletRequest request) {
 		
@@ -401,6 +407,24 @@ public class DeviceMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/newParam")
+	@ResponseBody
+	public Map<String, Object> newParam(PatrolDeviceParam pdp) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolDeviceParamService.add(pdp);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建设备参数成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建设备参数失败！");
+		}
+		return jsonMap;
+	}
+	
 	@RequestMapping(value="/queryParamList")
 	@ResponseBody
 	public Map<String, Object> queryParamList(String pdtName,String pdName,String pdaNo,String name,
@@ -462,6 +486,19 @@ public class DeviceMgmtController {
 		List<PatrolDevice> pdList=patrolDeviceService.queryCBBList(pdtId);
 		
 		jsonMap.put("rows", pdList);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryAccountCBBList")
+	@ResponseBody
+	public Map<String, Object> queryAccountCBBList(String pdId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryCBBList(pdId);
+		
+		jsonMap.put("rows", pdaList);
 		
 		return jsonMap;
 	}

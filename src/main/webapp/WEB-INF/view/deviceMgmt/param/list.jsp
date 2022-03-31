@@ -108,7 +108,18 @@ function initTab1(){
 			{field:"pdName",title:"设备名称",width:150},
 			{field:"pdaNo",title:"设备编号",width:150},
 			{field:"name",title:"参数名称",width:150},
-			{field:"type",title:"参数类别",width:150},
+			{field:"type",title:"参数类别",width:150,formatter:function(value,row){
+				var str;
+				switch (value) {
+				case 1:
+					str="数值";
+					break;
+				case 2:
+					str="观察";
+					break;
+				}
+				return str+"类";
+			}},
 			{field:"unit",title:"参数单位",width:150},
 			{field:"warnUp",title:"报警上限",width:150},
 			{field:"warnDown",title:"报警下限",width:150},

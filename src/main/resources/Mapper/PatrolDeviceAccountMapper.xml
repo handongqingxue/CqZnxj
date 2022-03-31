@@ -105,4 +105,7 @@
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
 		select pda.*,pd.name pdName,pdt.id pdtId,pdt.name pdtName from patrol_device_account pda,patrol_device pd,patrol_device_type pdt where pda.pdId=pd.id and pd.pdtId=pdt.id and pda.id=#{id}
 	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
+		select id,no from patrol_device_account where pdId=#{pdId} order by createTime
+	</select>
 </mapper>

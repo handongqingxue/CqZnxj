@@ -23,4 +23,6 @@ public interface PatrolDeviceAccountService {
 
 	int deleteByIds(String ids);
 
+	List<PatrolDeviceAccount> queryCBBList(String pdId);
+
 }
