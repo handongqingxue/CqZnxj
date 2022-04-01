@@ -54,10 +54,10 @@ body{
 </style>
 <script type="text/javascript">
 $(function(){
-	resizeDiv();
+	resizeSideDiv();
 });
 
-function resizeDiv(){
+function resizeSideDiv(){
 	var windowWidth=$(window).width();
 	var windowHeight=$(window).height();
 	var leftNavDiv=$("#left_nav_div");
@@ -121,6 +121,14 @@ function resizeDiv(){
 	<a class="nav_item nav_item_a" href="">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡更统计分析</span>
+	</a>
+	<div class="nav_item nav_item_div">
+		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
+		<span class="text_span">报警管理</span>
+	</div>
+	<a class="nav_item nav_item_a" href="">
+		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
+		<span class="text_span">报警统计</span>
 	</a>
 </div>
 <div class="top_div" id="top_div">

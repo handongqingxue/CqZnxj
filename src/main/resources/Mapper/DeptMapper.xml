@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqZnxj.dao.DeptMapper">
+	<select id="queryTreeList" resultType="com.cqZnxj.entity.TreeNode">
+		select deptId id,deptName text from dept
+	</select>
+</mapper>
