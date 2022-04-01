@@ -151,7 +151,7 @@ function deleteByIds() {
 		return false;
 	}
 	
-	$.messager.confirm("提示","确定要删除吗？",function(r){
+	$.messager.confirm("提示","删除设备台账后，与台账有关的设备参数也会删除，确定要删除吗？",function(r){
 		if(r){
 			var ids = "";
 			for (var i = 0; i < rows.length; i++) {
@@ -164,7 +164,7 @@ function deleteByIds() {
 				function(result){
 					if(result.status==1){
 						alert(result.msg);
-						location.href = location.href;
+						tab1.datagrid("load");
 					}
 					else{
 						alert(result.msg);

@@ -21,4 +21,8 @@ public interface PatrolDeviceParamMapper {
 
 	int deleteByIds(List<String> idList);
 
+	int getCountByPdaIdList(@Param("pdaIdList") List<String> pdaIdList);
+
+	int deleteByPdaIdList(@Param("pdaIdList") List<String> pdaIdList);
+
 }

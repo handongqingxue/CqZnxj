@@ -15,6 +15,8 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 
 	@Autowired
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
+	@Autowired
+	private PatrolDeviceParamMapper patrolDeviceParamDao;
 
 	public int queryForInt(String no, String pdName, String pdtName, String createTimeStart,
 			String createTimeEnd, String startTimeStart, String startTimeEnd) {
@@ -62,6 +64,8 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 		int count=0;
 		List<String> idList = Arrays.asList(ids.split(","));
 		count=patrolDeviceAccountDao.deleteByIds(idList);
+		if(patrolDeviceParamDao.getCountByPdaIdList(idList)>0)
+			patrolDeviceParamDao.deleteByPdaIdList(idList);
 		return count;
 	}
 
