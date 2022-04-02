@@ -85,11 +85,11 @@ function resizeDiv(){
 }
 
 function initTree(){
+	//var data=[{id:1,text:"aaa","children":[{id:3,text:"ccc"}]},{id:2,text:"bbb"}];
 	$("#tree").tree({
         url:mainPath+'queryDeptTreeList',
         onClick : function(node) {
             // 展开/折叠
-            console.log(node)
             if (node.state === 'open') {
                 $('#tree').tree('collapse', node.target);
             } else {
@@ -98,7 +98,7 @@ function initTree(){
         },
         onLoadSuccess:function(node, data){// 加载成功后折叠所有节点
         	console.log(data)
-            $('#tree').tree('collapseAll');
+            //$('#tree').tree('collapseAll');
         } 
     });
 }

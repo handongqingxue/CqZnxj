@@ -16,8 +16,17 @@ public class DeptServiceImpl implements DeptService {
 	private DeptMapper deptDao;
 
 	@Override
-	public List<Dept> queryTreeList() {
+	public List<TreeNode> queryTreeList(int parentId) {
 		// TODO Auto-generated method stub
-		return deptDao.queryTreeList();
+		List<TreeNode> tnList = deptDao.queryTreeList(parentId);
+		for (int i = 0; i < tnList.size(); i++) {
+			TreeNode tn = tnList.get(i);
+			int id = tn.getId();
+			if(deptDao.getCountByParentId(id)>0) {
+				List<TreeNode> childTnList = deptDao.queryTreeList(id);
+				tn.setChildren(childTnList);
+			}
+		}
+		return tnList;
 	}
 }

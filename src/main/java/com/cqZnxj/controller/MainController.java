@@ -31,9 +31,9 @@ public class MainController {
 
 	@RequestMapping(value="/queryDeptTreeList")
 	@ResponseBody
-	public List<Dept> queryDeptTreeList() {
+	public List<TreeNode> queryDeptTreeList() {
 
-		List<Dept> deptList=deptService.queryTreeList();
+		List<TreeNode> deptList=deptService.queryTreeList(0);
 		
 		return deptList;
 	}

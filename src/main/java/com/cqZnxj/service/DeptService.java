@@ -6,6 +6,6 @@ import com.cqZnxj.entity.*;
 
 public interface DeptService {
 
-	List<Dept> queryTreeList();
+	List<TreeNode> queryTreeList(int parentId);
 
 }

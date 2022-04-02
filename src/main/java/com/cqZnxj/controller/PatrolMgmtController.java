@@ -12,5 +12,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/patrolMgmt")
 public class PatrolMgmtController {
 
-	//tree²Î¿¼Á´½Ó:https://www.cnblogs.com/new-life/p/9059499.html
 }

@@ -39,6 +39,18 @@ public class PatrolDeviceAccount {
 	public void setPdtName(String pdtName) {
 		this.pdtName = pdtName;
 	}
+	public Integer getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -68,6 +80,8 @@ public class PatrolDeviceAccount {
 	private String pdName;
 	private Integer pdtId;
 	private String pdtName;
+	private Integer deptId;
+	private String deptName;
 	private String createTime;
 	private Integer createStaffId;
 	private String startTime;

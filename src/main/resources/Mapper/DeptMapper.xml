@@ -4,6 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqZnxj.dao.DeptMapper">
 	<select id="queryTreeList" resultType="com.cqZnxj.entity.TreeNode">
-		select deptId id,deptName text from dept
+		select deptId id,deptName text from dept where parentId=#{parentId}
+	</select>
+	<select id="getCountByParentId" resultType="java.lang.Integer">
+		select count(*) from dept where parentId=#{parentId}
 	</select>
 </mapper>
