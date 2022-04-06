@@ -35,7 +35,7 @@
 .tab1_div .toolbar .row_div{
 	height:32px;
 }
-.tab1_div .toolbar .row_div .pdtName_span,
+.tab1_div .toolbar .row_div .deptName_span,
 .tab1_div .toolbar .row_div .pdName_span,
 .tab1_div .toolbar .row_div .pdaNo_span,
 .tab1_div .toolbar .row_div .name_span,
@@ -43,7 +43,7 @@
 .tab1_div .toolbar .row_div .search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .row_div .pdtName_inp,
+.tab1_div .toolbar .row_div .deptName_inp,
 .tab1_div .toolbar .row_div .pdName_inp,
 .tab1_div .toolbar .row_div .pdaNo_inp,
 .tab1_div .toolbar .row_div .name_inp{
@@ -119,13 +119,13 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var pdtName=$("#toolbar #pdtName_inp").val();
+			var deptName=$("#toolbar #deptName_inp").val();
 			var pdName=$("#toolbar #pdName_inp").val();
 			var pdaNo=$("#toolbar #pdaNo_inp").val();
 			var name=$("#toolbar #name").val();
 			var createTimeStart=createTimeStDTB.datetimebox("getValue");
 			var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
-			tab1.datagrid("load",{pdtName:pdtName,pdName:pdName,pdaNo:pdaNo,name:name,
+			tab1.datagrid("load",{deptName:deptName,pdName:pdName,pdaNo:pdaNo,name:name,
 				createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
 		}
 	});
@@ -158,7 +158,7 @@ function initTab1(){
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"pdtName",title:"设备类型",width:150},
+			{field:"deptName",title:"部门",width:150},
 			{field:"pdName",title:"设备名称",width:150},
 			{field:"pdaNo",title:"设备编号",width:150},
 			{field:"name",title:"参数名称",width:150},
@@ -186,8 +186,8 @@ function initTab1(){
 	    ]],
         onLoadSuccess:function(data){
 			if(data.total==0){
-				$(this).datagrid("appendRow",{pdtName:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"pdtName",colspan:10});
+				$(this).datagrid("appendRow",{deptName:"<div style=\"text-align:center;\">暂无信息<div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"deptName",colspan:10});
 				data.total=0;
 			}
 			
@@ -231,11 +231,11 @@ function deleteByIds(ids){
 	});
 }
 
-//验证设备类型id是否存在于集合里
-function checkPdtIdInList(pdtId,pdtList){
+//验证部门id是否存在于集合里
+function checkDeptIdInList(deptId,deptList){
 	var flag=false;
-	for (var i = 0; i < pdtList.length; i++){
-		if(pdtId==pdtList[i].id){
+	for (var i = 0; i < deptList.length; i++){
+		if(deptId==deptList[i].id){
 			flag=true;
 			break;
 		}
@@ -260,8 +260,8 @@ function setFitWidthInParent(o){
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
 		<div class="row_div">
-			<span class="pdtName_span">设备类型：</span>
-			<input type="text" class="pdtName_inp" id="pdtName_inp" placeholder="请输入设备类型"/>
+			<span class="deptName_span">部门：</span>
+			<input type="text" class="deptName_inp" id="deptName_inp" placeholder="请输入部门名称"/>
 			<span class="pdName_span">设备名称：</span>
 			<input type="text" class="pdName_inp" id="pdName_inp" placeholder="请输入设备名称"/>
 			<span class="pdaNo_span">设备编号：</span>

@@ -34,7 +34,6 @@ var deviceMgmtPath=path+'deviceMgmt/';
 $(function(){
 	initSearchLB();
 	initAddLB();
-	initRemoveLB();
 	initTab1();
 });
 
@@ -57,29 +56,19 @@ function initAddLB(){
 	});
 }
 
-function initRemoveLB(){
-	removeLB=$("#remove_but").linkbutton({
-		iconCls:"icon-remove",
-		onClick:function(){
-			checkIfExistDeviceByPdtIds();
-		}
-	});
-}
-
 function initTab1(){
 	tab1=$("#tab1").datagrid({
-		title:"设备类型查询",
-		url:deviceMgmtPath+"queryTypeList",
+		title:"部门查询",
+		url:deviceMgmtPath+"queryDeptList",
 		toolbar:"#toolbar",
 		width:setFitWidthInParent("body"),
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"name",title:"类名",width:150},
+			{field:"deptName",title:"名称",width:150},
 			{field:"createTime",title:"创建时间",width:180},
-            {field:"id",title:"操作",width:110,formatter:function(value,row){
-            	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
-            		+"<a href=\"detail?id="+value+"\">详情</a>";
+            {field:"deptId",title:"操作",width:110,formatter:function(value,row){
+            	var str="<a href=\"detail?deptId="+value+"\">详情</a>";
             	return str;
             }}
 	    ]],
@@ -98,73 +87,11 @@ function initTab1(){
 	});
 }
 
-//验证设备类型id下是否存在设备
-function checkIfExistDeviceByPdtIds() {
-	var rows=tab1.datagrid("getSelections");
-	if (rows.length == 0) {
-		$.messager.alert("提示","请选择要删除的信息！","warning");
-		return false;
-	}
-	
-	$.messager.confirm("提示","确定要删除吗？",function(r){
-		if(r){
-			var ids = "";
-			var names = "";
-			for (var i = 0; i < rows.length; i++) {
-				ids += "," + rows[i].id;
-				names += "," + rows[i].name;
-			}
-			ids=ids.substring(1);
-			names=names.substring(1);
-
-			$.post(deviceMgmtPath + "checkIfExistDeviceByPdtIds",
-				{pdtIds:ids,pdtNames:names},
-				function(result){
-					if(result.status==1){
-						alert(result.msg);
-						var delIds="";
-						var idArr=ids.split(",");
-						var pdtList=result.data;
-						for (var i = 0; i < idArr.length; i++){
-							var id=idArr[i];
-							if(!checkPdtIdInList(id,pdtList)){//若不存在，则说明该类型下没有设备，就得删除掉
-								delIds+=","+id;
-							}
-						}
-						delIds=delIds.substring(1);
-						if(delIds!="")//若有没有设备的设备类型id，则删除
-							deleteByIds(delIds);
-					}
-					else{
-						deleteByIds(ids);
-					}
-				}
-			,"json");
-			
-		}
-	});
-}
-
-function deleteByIds(ids){
-	$.post(deviceMgmtPath + "deleteType",
-		{ids:ids},
-		function(result){
-			if(result.status==1){
-				alert(result.msg);
-				tab1.datagrid("load");
-			}
-			else{
-				alert(result.msg);
-			}
-		}
-	,"json");
-}
-
-//验证设备类型id是否存在于集合里
-function checkPdtIdInList(pdtId,pdtList){
+//验证部门id是否存在于集合里
+function checkDeptIdInList(deptId,deptList){
 	var flag=false;
-	for (var i = 0; i < pdtList.length; i++){
-		if(pdtId==pdtList[i].id){
+	for (var i = 0; i < deptList.length; i++){
+		if(deptId==deptList[i].id){
 			flag=true;
 			break;
 		}
@@ -186,7 +113,6 @@ function setFitWidthInParent(o){
 		<input type="text" class="name_inp" id="name" placeholder="请输入类名"/>
 		<a class="search_but" id="search_but">查询</a>
 		<a id="add_but">添加</a>
-		<a id="remove_but">删除</a>
 	</div>
 	<table id="tab1">
 	</table>

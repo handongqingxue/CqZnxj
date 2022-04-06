@@ -17,16 +17,16 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 	private PatrolDeviceParamMapper patrolDeviceParamDao;
 
 	@Override
-	public int queryForInt(String pdtName, String pdName, String pdaNo, String name, String createTimeStart, String createTimeEnd) {
+	public int queryForInt(String deptName, String pdName, String pdaNo, String name, String createTimeStart, String createTimeEnd) {
 		// TODO Auto-generated method stub
-		return patrolDeviceParamDao.queryForInt(pdtName, pdName, pdaNo, name, createTimeStart, createTimeEnd);
+		return patrolDeviceParamDao.queryForInt(deptName, pdName, pdaNo, name, createTimeStart, createTimeEnd);
 	}
 
 	@Override
-	public List<PatrolDeviceParam> queryList(String pdtName, String pdName, String pdaNo, String name, 
+	public List<PatrolDeviceParam> queryList(String deptName, String pdName, String pdaNo, String name, 
 			String createTimeStart, String createTimeEnd, int page, int rows, String sort, String order) {
 		// TODO Auto-generated method stub
-		return patrolDeviceParamDao.queryList(pdtName, pdName, pdaNo, name, createTimeStart, createTimeEnd, (page-1)*rows, rows, sort, order);
+		return patrolDeviceParamDao.queryList(deptName, pdName, pdaNo, name, createTimeStart, createTimeEnd, (page-1)*rows, rows, sort, order);
 	}
 
 	@Override

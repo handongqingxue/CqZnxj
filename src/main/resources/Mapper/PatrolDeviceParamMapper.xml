@@ -80,10 +80,10 @@
 		where id=#{id}
 	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_device_type pdt
-		 where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.pdtId=pdt.id
-		<if test="pdtName!=''&amp;pdtName!=null">
-			and pdt.name like CONCAT('%',#{pdtName},'%')
+		select count(*) from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,dept d
+		 where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.deptId=d.deptId
+		<if test="deptName!=''&amp;deptName!=null">
+			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if>
 		<if test="pdName!=''&amp;pdName!=null">
 			and pd.name like CONCAT('%',#{pdName},'%')
@@ -99,9 +99,9 @@
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolDeviceParam">
-		select pdp.*,pda.`no` pdaNo,pd.`name` pdName,pdt.`name` pdtName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_device_type pdt where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.pdtId=pdt.id
-		<if test="pdtName!=''&amp;pdtName!=null">
-			and pdt.name like CONCAT('%',#{pdtName},'%')
+		select pdp.*,pda.`no` pdaNo,pd.`name` pdName,d.deptName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,dept d where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.deptId=d.deptId
+		<if test="deptName!=''&amp;deptName!=null">
+			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if>
 		<if test="pdName!=''&amp;pdName!=null">
 			and pd.name like CONCAT('%',#{pdName},'%')
@@ -119,7 +119,7 @@
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceParam">
-		select pdp.*,pda.no pdaNo,pd.id pdId,pd.name pdName,pdt.id pdtId,pdt.name pdtName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_device_type pdt where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.pdtId=pdt.id and pda.id=#{id}
+		select pdp.*,pda.no pdaNo,pd.id pdId,pd.name pdName,d.deptId,d.deptName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,dept d where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.deptId=d.deptId and pda.id=#{id}
 	</select>
 	<select id="getCountByPdaIdList" resultType="java.lang.Integer">
 		select count(*) from patrol_device_param where 1=1

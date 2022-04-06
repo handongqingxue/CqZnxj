@@ -45,17 +45,17 @@ public class PatrolDeviceParam {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public Integer getPdtId() {
-		return pdtId;
+	public Integer getDeptId() {
+		return deptId;
 	}
-	public void setPdtId(Integer pdtId) {
-		this.pdtId = pdtId;
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
 	}
-	public String getPdtName() {
-		return pdtName;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setPdtName(String pdtName) {
-		this.pdtName = pdtName;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public Integer getPdId() {
 		return pdId;
@@ -87,8 +87,8 @@ public class PatrolDeviceParam {
 	private Float warnUp;
 	private String unit;
 	private String createTime;
-	private Integer pdtId;
-	private String pdtName;
+	private Integer deptId;
+	private String deptName;
 	private Integer pdId;
 	private String pdName;
 	private Integer pdaId;

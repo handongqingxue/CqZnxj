@@ -62,15 +62,15 @@
 		where id=#{id}
 	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from patrol_device_account pda,patrol_device pd,patrol_device_type pdt where 1=1 and pda.pdId=pd.id and pd.pdtId=pdt.id
+		select count(*) from patrol_device_account pda,patrol_device pd,dept d where 1=1 and pda.pdId=pd.id and pd.deptId=d.deptId
 		<if test="no!=''&amp;no!=null">
 			and pda.no like CONCAT('%',#{no},'%')
 		</if>
 		<if test="pdName!=''&amp;pdName!=null">
 			and pd.name like CONCAT('%',#{pdName},'%')
 		</if>
-		<if test="pdtName!=''&amp;pdtName!=null">
-			and pdt.name like CONCAT('%',#{pdtName},'%')
+		<if test="deptName!=''&amp;deptName!=null">
+			and d.name like CONCAT('%',#{deptName},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and pda.createTime between #{createTimeStart} and #{createTimeEnd}
@@ -80,15 +80,15 @@
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
-		select pda.*,pd.name pdName,pdt.name pdtName from patrol_device_account pda,patrol_device pd,patrol_device_type pdt where 1=1 and pda.pdId=pd.id and pd.pdtId=pdt.id
+		select pda.*,pd.name pdName,d.deptName from patrol_device_account pda,patrol_device pd,dept d where 1=1 and pda.pdId=pd.id and pd.deptId=d.deptId
 		<if test="no!=''&amp;no!=null">
 			and pda.no like CONCAT('%',#{no},'%')
 		</if>
 		<if test="pdName!=''&amp;pdName!=null">
 			and pd.name like CONCAT('%',#{pdName},'%')
 		</if>
-		<if test="pdtName!=''&amp;pdtName!=null">
-			and pdt.name like CONCAT('%',#{pdtName},'%')
+		<if test="deptName!=''&amp;deptName!=null">
+			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and pda.createTime between #{createTimeStart} and #{createTimeEnd}
@@ -103,7 +103,7 @@
 		select count(*) from patrol_device_account where no=#{no}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
-		select pda.*,pd.name pdName,pdt.id pdtId,pdt.name pdtName from patrol_device_account pda,patrol_device pd,patrol_device_type pdt where pda.pdId=pd.id and pd.pdtId=pdt.id and pda.id=#{id}
+		select pda.*,pd.name pdName,d.deptId,d.deptName from patrol_device_account pda,patrol_device pd,dept d where pda.pdId=pd.id and pd.deptId=d.deptId and pda.id=#{id}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
 		select id,no from patrol_device_account where pdId=#{pdId} order by createTime

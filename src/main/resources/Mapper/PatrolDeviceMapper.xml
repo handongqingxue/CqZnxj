@@ -12,8 +12,8 @@
 			<if test="specs!=null">
 				specs,
 			</if>
-			<if test="pdtId!=null">
-				pdtId,
+			<if test="deptId!=null">
+				deptId,
 			</if>
 				makeDate,
 			<if test="level!=null">
@@ -28,8 +28,8 @@
 			<if test="specs!=null">
 				#{specs},
 			</if>
-			<if test="pdtId!=null">
-				#{pdtId},
+			<if test="deptId!=null">
+				#{deptId},
 			</if>
 				now(),
 			<if test="level!=null">
@@ -44,34 +44,31 @@
 		</foreach>
 	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.PatrolDevice">
-		update patrol_device set name=#{name},specs=#{specs},pdtId=#{pdtId},level=#{level} where id=#{id}
+		update patrol_device set name=#{name},specs=#{specs},deptId=#{deptId},level=#{level} where id=#{id}
 	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from patrol_device_type pdt,patrol_device pd where pdt.id=pd.pdtId
+		select count(*) from dept d,patrol_device pd where d.deptId=pd.deptId
 		<if test="name!=''&amp;name!=null">
 			and pd.name like CONCAT('%',#{name},'%')
 		</if> 
-		<if test="pdtName!=''&amp;pdtName!=null">
-			and pdt.name like CONCAT('%',#{pdtName},'%')
+		<if test="deptName!=''&amp;deptName!=null">
+			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if> 
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolDevice">
-		select pd.id,pd.name,pdt.name pdtName,pd.makeDate from patrol_device_type pdt,patrol_device pd where pdt.id=pd.pdtId
+		select pd.id,pd.name,d.deptName,pd.makeDate from dept d,patrol_device pd where d.deptId=pd.deptId
 		<if test="name!=''&amp;name!=null">
 			and pd.name like CONCAT('%',#{name},'%')
 		</if> 
-		<if test="pdtName!=''&amp;pdtName!=null">
-			and pdt.name like CONCAT('%',#{pdtName},'%')
+		<if test="deptName!=''&amp;deptName!=null">
+			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if> 
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDevice">
-		select pd.*,pdt.name pdtName from patrol_device pd,patrol_device_type pdt where pd.pdtId=pdt.id and pd.id=#{id}
-	</select>
-	<select id="getCountByPdtId" resultType="java.lang.Integer">
-		select count(*) from patrol_device where pdtId=#{pdtId}
+		select pd.*,d.deptName from patrol_device pd,dept d where pd.deptId=d.deptId and pd.id=#{id}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDevice">
-		select id,name from patrol_device where pdtId=#{pdtId} order by makeDate
+		select id,name from patrol_device where deptId=#{deptId} order by makeDate
 	</select>
 </mapper>

@@ -45,7 +45,7 @@ function initDialogPosition(){
 function initDetailDialog(){
 	dialogTop+=20;
 	$("#detail_div").dialog({
-		title:"设备类型信息",
+		title:"部门信息",
 		width:setFitWidthInParent("body","detail_div"),
 		height:250,
 		top:dialogTop,
@@ -98,7 +98,7 @@ function setFitWidthInParent(parent,self){
 <body>
 <%@include file="../../inc/side.jsp"%>
 <div class="center_con_div" id="center_con_div">
-	<div class="page_location_div">设备类型-详情</div>
+	<div class="page_location_div">部门-详情</div>
 	
 	<div id="detail_div">
 		<form id="form1" name="form1" method="post" action="" enctype="multipart/form-data">
@@ -108,13 +108,13 @@ function setFitWidthInParent(parent,self){
 				类名
 			</td>
 			<td class="td2">
-				${requestScope.pdt.name }
+				${requestScope.dept.deptName }
 			</td>
 			<td class="td1" align="right">
-				排序
+				上级部门
 			</td>
 			<td class="td2">
-				${requestScope.pdt.sort }
+				${requestScope.dept.parentId }
 			</td>
 		  </tr>
 		  <tr>
@@ -122,21 +122,21 @@ function setFitWidthInParent(parent,self){
 				创建时间
 			</td>
 			<td class="td2">
-				${requestScope.pdt.createTime }
+				${requestScope.dept.createTime }
 			</td>
 			<td class="td1" align="right">
-				编辑时间
+				负责人
 			</td>
 			<td class="td2">
-				${requestScope.pdt.updateTime }
+				${requestScope.dept.leader }
 			</td>
 		  </tr>
 		  <tr>
 			<td class="td1" align="right">
-				备注
+				电话
 			</td>
 			<td class="td2">
-				${requestScope.pdt.memo }
+				${requestScope.dept.phone }
 			</td>
 			<td class="td1" align="right">
 			</td>

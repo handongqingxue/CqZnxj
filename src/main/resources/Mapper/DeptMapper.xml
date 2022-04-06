@@ -9,4 +9,24 @@
 	<select id="getCountByParentId" resultType="java.lang.Integer">
 		select count(*) from dept where parentId=#{parentId}
 	</select>
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from dept where 1=1
+		<if test="deptName!=''&amp;deptName!=null">
+			and deptName like CONCAT('%',#{deptName},'%')
+		</if>
+	</select>
+	<select id="queryList" resultType="com.cqZnxj.entity.Dept">
+		select * from dept where 1=1
+		<if test="deptName!=''&amp;deptName!=null">
+			and deptName like CONCAT('%',#{deptName},'%')
+		</if>
+		order by createTime
+		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectByDeptId" resultType="com.cqZnxj.entity.Dept">
+		select * from dept where deptId=#{deptId}
+	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.Dept">
+		select deptId,deptName from dept order by createTime desc
+	</select>
 </mapper>

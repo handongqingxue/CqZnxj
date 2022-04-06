@@ -18,18 +18,18 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	@Autowired
 	private PatrolDeviceParamMapper patrolDeviceParamDao;
 
-	public int queryForInt(String no, String pdName, String pdtName, String createTimeStart,
+	public int queryForInt(String no, String pdName, String deptName, String createTimeStart,
 			String createTimeEnd, String startTimeStart, String startTimeEnd) {
 		// TODO Auto-generated method stub
-		return patrolDeviceAccountDao.queryForInt(no, pdName, pdtName, createTimeStart,
+		return patrolDeviceAccountDao.queryForInt(no, pdName, deptName, createTimeStart,
 				createTimeEnd, startTimeStart, startTimeEnd);
 	}
 
-	public List<PatrolDeviceAccount> queryList(String no, String pdName, String pdtName,
+	public List<PatrolDeviceAccount> queryList(String no, String pdName, String deptName,
 			String createTimeStart, String createTimeEnd, String startTimeStart, String startTimeEnd, int page,
 			int rows, String sort, String order) {
 		// TODO Auto-generated method stub
-		return patrolDeviceAccountDao.queryList(no, pdName, pdtName, createTimeStart, createTimeEnd, 
+		return patrolDeviceAccountDao.queryList(no, pdName, deptName, createTimeStart, createTimeEnd, 
 				startTimeStart, startTimeEnd, (page-1)*rows, rows, sort, order);
 	}
 

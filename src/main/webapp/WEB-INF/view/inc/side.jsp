@@ -78,9 +78,9 @@ function resizeSideDiv(){
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">设备管理</span>
 	</div>
-	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/type/list">
+	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/dept/list">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
-		<span class="text_span">设备类型</span>
+		<span class="text_span">部门</span>
 	</a>
 	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/device/list">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">

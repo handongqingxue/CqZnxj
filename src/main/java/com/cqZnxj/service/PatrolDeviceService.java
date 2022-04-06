@@ -8,9 +8,9 @@ public interface PatrolDeviceService {
 
 	int add(PatrolDevice pd);
 
-	int queryForInt(String name, String pdtName);
+	int queryForInt(String name, String deptName);
 
-	List<PatrolDeviceType> queryList(String name, String pdtName, int page, int rows, String sort, String order);
+	List<PatrolDevice> queryList(String name, String deptName, int page, int rows, String sort, String order);
 
 	int deleteByIds(String ids);
 
@@ -18,8 +18,6 @@ public interface PatrolDeviceService {
 
 	PatrolDevice selectById(String id);
 
-	List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String pdtNames);
-
-	List<PatrolDevice> queryCBBList(String pdtId);
+	List<PatrolDevice> queryCBBList(String deptId);
 
 }

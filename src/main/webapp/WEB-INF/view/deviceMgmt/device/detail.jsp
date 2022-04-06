@@ -132,10 +132,10 @@ function setFitWidthInParent(parent,self){
 				<c:if test="${requestScope.pd.level eq 3 }">三级</c:if>
 			</td>
 			<td class="td1" align="right">
-				设备类型
+				部门
 			</td>
 			<td class="td2">
-				${requestScope.pd.pdtName }
+				${requestScope.pd.deptName }
 			</td>
 		  </tr>
 		</table>

@@ -37,4 +37,17 @@ public class MainController {
 		
 		return deptList;
 	}
+	
+	@RequestMapping(value="/queryDeptCBBList")
+	@ResponseBody
+	public Map<String, Object> queryDeptCBBList() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<Dept> deptList=deptService.queryCBBList();
+		
+		jsonMap.put("rows", deptList);
+		
+		return jsonMap;
+	}
 }

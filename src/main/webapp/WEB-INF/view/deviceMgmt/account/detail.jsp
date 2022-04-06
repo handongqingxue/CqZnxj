@@ -115,10 +115,10 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				设备类型
+				部门
 			</td>
 			<td class="td2">
-				${requestScope.pda.pdtName }
+				${requestScope.pda.deptName }
 			</td>
 			<td class="td1" align="right">
 				设备名称

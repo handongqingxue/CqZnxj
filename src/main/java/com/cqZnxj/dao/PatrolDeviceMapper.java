@@ -4,16 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.cqZnxj.entity.PatrolDevice;
-import com.cqZnxj.entity.PatrolDeviceType;
+import com.cqZnxj.entity.*;
 
 public interface PatrolDeviceMapper {
 
 	int add(PatrolDevice pd);
 
-	int queryForInt(@Param("name") String name, @Param("pdtName") String pdtName);
+	int queryForInt(@Param("name") String name, @Param("deptName") String deptName);
 
-	List<PatrolDeviceType> queryList(@Param("name") String name, @Param("pdtName") String pdtName, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
+	List<PatrolDevice> queryList(@Param("name") String name, @Param("deptName") String deptName, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 	int deleteByIds(List<String> idList);
 
@@ -21,8 +20,6 @@ public interface PatrolDeviceMapper {
 
 	int edit(PatrolDevice pd);
 
-	int getCountByPdtId(@Param("pdtId") String pdtId);
-
-	List<PatrolDevice> queryCBBList(@Param("pdtId") String pdtId);
+	List<PatrolDevice> queryCBBList(@Param("deptId") String deptId);
 
 }

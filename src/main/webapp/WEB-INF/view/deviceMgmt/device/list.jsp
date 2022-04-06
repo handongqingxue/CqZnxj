@@ -12,10 +12,10 @@
 .tab1_div .toolbar{
 	height:32px;
 }
-.tab1_div .toolbar .name_span,.tab1_div .toolbar .pdtName_span,.tab1_div .toolbar .search_but{
+.tab1_div .toolbar .name_span,.tab1_div .toolbar .deptName_span,.tab1_div .toolbar .search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .name_inp,.tab1_div .toolbar .pdtName_inp{
+.tab1_div .toolbar .name_inp,.tab1_div .toolbar .deptName_inp{
 	width: 120px;height: 25px;
 }
 a {
@@ -40,8 +40,8 @@ function initSearchLB(){
 		iconCls:"icon-search",
 		onClick:function(){
 			var name=$("#toolbar #name_inp").val();
-			var pdtName=$("#toolbar #pdtName_inp").val();
-			tab1.datagrid("load",{name:name,pdtName:pdtName});
+			var deptName=$("#toolbar #deptName_inp").val();
+			tab1.datagrid("load",{name:name,deptName:deptName});
 		}
 	});
 }
@@ -74,7 +74,7 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"name",title:"名称",width:200},
-            {field:"pdtName",title:"设备类型",width:200},
+            {field:"deptName",title:"部门",width:200},
 			{field:"makeDate",title:"创建时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
@@ -141,8 +141,8 @@ function setFitWidthInParent(o){
 	<div class="toolbar" id="toolbar">
 		<span class="name_span">名称：</span>
 		<input type="text" class="name_inp" id="name_inp" placeholder="请输入名称"/>
-		<span class="pdtName_span">设备类型：</span>
-		<input type="text" class="pdtName_inp" id="pdtName_inp" placeholder="请输入设备类型"/>
+		<span class="deptName_span">部门：</span>
+		<input type="text" class="deptName_inp" id="deptName_inp" placeholder="请输入部门"/>
 		<a class="search_but" id="search_but">查询</a>
 		<a id="add_but">添加</a>
 		<a id="remove_but">删除</a>

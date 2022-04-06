@@ -22,15 +22,15 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 		return patrolDeviceDao.add(pd);
 	}
 
-	public int queryForInt(String name, String pdtName) {
+	public int queryForInt(String name, String deptName) {
 		// TODO Auto-generated method stub
-		return patrolDeviceDao.queryForInt(name, pdtName);
+		return patrolDeviceDao.queryForInt(name, deptName);
 	}
 
-	public List<PatrolDeviceType> queryList(String name, String pdtName, int page, int rows, String sort,
+	public List<PatrolDevice> queryList(String name, String deptName, int page, int rows, String sort,
 			String order) {
 		// TODO Auto-generated method stub
-		return patrolDeviceDao.queryList(name, pdtName, (page-1)*rows, rows, sort, order);
+		return patrolDeviceDao.queryList(name, deptName, (page-1)*rows, rows, sort, order);
 	}
 
 	public int deleteByIds(String ids) {
@@ -51,25 +51,8 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 		return patrolDeviceDao.edit(pd);
 	}
 
-	public List<PatrolDeviceType> checkIfExistByPdtIds(String pdtIds, String pdtNames) {
+	public List<PatrolDevice> queryCBBList(String deptId) {
 		// TODO Auto-generated method stub
-		List<PatrolDeviceType> pdtList=new ArrayList<PatrolDeviceType>();
-		String[] pdtIdArr = pdtIds.split(",");
-		String[] pdtNameArr = pdtNames.split(",");
-		for (int i = 0; i < pdtIdArr.length; i++) {
-			String pdtId = pdtIdArr[i];
-			if(patrolDeviceDao.getCountByPdtId(pdtId)>0) {
-				PatrolDeviceType pdt=new PatrolDeviceType();
-				pdt.setId(Integer.valueOf(pdtId));
-				pdt.setName(pdtNameArr[i]);
-				pdtList.add(pdt);
-			}
-		}
-		return pdtList;
-	}
-
-	public List<PatrolDevice> queryCBBList(String pdtId) {
-		// TODO Auto-generated method stub
-		return patrolDeviceDao.queryCBBList(pdtId);
+		return patrolDeviceDao.queryCBBList(deptId);
 	}
 }

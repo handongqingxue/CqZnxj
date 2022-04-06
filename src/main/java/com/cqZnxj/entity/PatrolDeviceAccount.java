@@ -27,18 +27,6 @@ public class PatrolDeviceAccount {
 	public void setPdName(String pdName) {
 		this.pdName = pdName;
 	}
-	public Integer getPdtId() {
-		return pdtId;
-	}
-	public void setPdtId(Integer pdtId) {
-		this.pdtId = pdtId;
-	}
-	public String getPdtName() {
-		return pdtName;
-	}
-	public void setPdtName(String pdtName) {
-		this.pdtName = pdtName;
-	}
 	public Integer getDeptId() {
 		return deptId;
 	}
@@ -78,8 +66,6 @@ public class PatrolDeviceAccount {
 	private String no;
 	private Integer pdId;
 	private String pdName;
-	private Integer pdtId;
-	private String pdtName;
 	private Integer deptId;
 	private String deptName;
 	private String createTime;

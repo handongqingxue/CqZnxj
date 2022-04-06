@@ -17,7 +17,7 @@
 }
 .tab1_div .toolbar .row_div .no_span,
 .tab1_div .toolbar .row_div .pdName_span,
-.tab1_div .toolbar .row_div .pdtName_span,
+.tab1_div .toolbar .row_div .deptName_span,
 .tab1_div .toolbar .row_div .createTime_span,
 .tab1_div .toolbar .row_div .startTime_span,
 .tab1_div .toolbar .row_div .search_but{
@@ -25,7 +25,7 @@
 }
 .tab1_div .toolbar .row_div .no_inp,
 .tab1_div .toolbar .row_div .pdName_inp,
-.tab1_div .toolbar .row_div .pdtName_inp{
+.tab1_div .toolbar .row_div .deptName_inp{
 	width: 120px;
 	height: 25px;
 }
@@ -80,12 +80,12 @@ function initSearchLB(){
 		onClick:function(){
 			var no=$("#toolbar #no_inp").val();
 			var pdName=$("#toolbar #pdName_inp").val();
-			var pdtName=$("#toolbar #pdtName_inp").val();
+			var deptName=$("#toolbar #deptName_inp").val();
 			var createTimeStart=createTimeStDTB.datetimebox("getValue");
 			var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
 			var startTimeStart=startTimeStDTB.datetimebox("getValue");
 			var startTimeEnd=startTimeEtDTB.datetimebox("getValue");
-			tab1.datagrid("load",{no:no,pdName:pdName,pdtName:pdtName,createTimeStart:createTimeStart,
+			tab1.datagrid("load",{no:no,pdName:pdName,deptName:deptName,createTimeStart:createTimeStart,
 				createTimeEnd:createTimeEnd,startTimeStart:startTimeStart,startTimeEnd:startTimeEnd});
 		}
 	});
@@ -120,7 +120,7 @@ function initTab1(){
 		columns:[[
 			{field:"no",title:"设备编号",width:200},
 			{field:"pdName",title:"设备名称",width:200},
-            {field:"pdtName",title:"设备类型",width:200},
+            {field:"deptName",title:"部门",width:200},
 			{field:"createTime",title:"创建时间",width:200},
 			{field:"startTime",title:"启用时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
@@ -191,8 +191,8 @@ function setFitWidthInParent(o){
 			<input type="text" class="no_inp" id="no_inp" placeholder="请输入设备编号"/>
 			<span class="pdName_span">设备名称：</span>
 			<input type="text" class="pdName_inp" id="pdName_inp" placeholder="请输入设备名称"/>
-			<span class="pdtName_span">设备类型：</span>
-			<input type="text" class="pdtName_inp" id="pdtName_inp" placeholder="请输入设备类型"/>
+			<span class="deptName_span">部门：</span>
+			<input type="text" class="deptName_inp" id="deptName_inp" placeholder="请输入部门"/>
 		</div>
 		<div class="row_div">
 			<span class="createTime_span">创建时间：</span>

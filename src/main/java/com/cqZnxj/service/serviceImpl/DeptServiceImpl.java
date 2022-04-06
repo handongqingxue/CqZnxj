@@ -29,4 +29,25 @@ public class DeptServiceImpl implements DeptService {
 		}
 		return tnList;
 	}
+	
+	public int queryForInt(String deptName) {
+		// TODO Auto-generated method stub
+		return deptDao.queryForInt(deptName);
+	}
+
+	public List<Dept> queryList(String deptName, int page, int rows, String sort, String order) {
+		// TODO Auto-generated method stub
+		return deptDao.queryList(deptName, (page-1)*rows, rows, sort, order);
+	}
+
+	public Dept selectByDeptId(String deptId) {
+		// TODO Auto-generated method stub
+		return deptDao.selectByDeptId(deptId);
+	}
+
+	public List<Dept> queryCBBList() {
+		// TODO Auto-generated method stub
+		return deptDao.queryCBBList();
+	}
+
 }

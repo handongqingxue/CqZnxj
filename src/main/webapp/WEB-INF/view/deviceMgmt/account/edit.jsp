@@ -26,6 +26,7 @@
 </style>
 <script type="text/javascript">
 var path='<%=basePath %>';
+var mainPath=path+'main/';
 var deviceMgmtPath=path+'deviceMgmt/';
 var dialogTop=30;
 var dialogLeft=20;
@@ -90,28 +91,28 @@ function initEditDialog(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 
-	initPDTCBB();
+	initDeptCBB();
 	initPDCBB();
 	setTimeout(function(){
 		loadPDCBBData();
 	},"1000");
 }
 
-function initPDTCBB(){
+function initDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择设备类型"});
-	$.post(deviceMgmtPath+"queryTypeCBBList",
+	data.push({"value":"","text":"请选择部门"});
+	$.post(mainPath+"queryDeptCBBList",
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
-			pdtCBB=$("#edit_div #pdt_cbb").combobox({
+			deptCBB=$("#edit_div #dept_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onLoadSuccess:function(){
-					$(this).combobox("setValue",'${requestScope.pda.pdtId }');
+					$(this).combobox("setValue",'${requestScope.pda.deptId }');
 				},
 				onSelect:function(){
 					loadPDCBBData();
@@ -135,11 +136,11 @@ function initPDCBB(){
 }
 
 function loadPDCBBData(){
-	var pdtId=pdtCBB.combobox("getValue");
+	var deptId=deptCBB.combobox("getValue");
 	var data=[];
 	data.push({"value":"","text":"请选择设备名称"});
 	$.post(deviceMgmtPath+"queryDeviceCBBList",
-		{pdtId:pdtId},
+		{deptId:deptId},
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){
@@ -151,7 +152,7 @@ function loadPDCBBData(){
 }
 
 function checkEdit(){
-	if(checkPDTId()){
+	if(checkDeptId()){
 		if(checkPDName()){
 			editAccount();
 		}
@@ -183,11 +184,11 @@ function editAccount(){
 	});
 }
 
-//验证设备类型
-function checkPDTId(){
-	var pdtId=pdtCBB.combobox("getValue");
-	if(pdtId==null||pdtId==""){
-	  	alert("请选择设备类型");
+//验证部门
+function checkDeptId(){
+	var deptId=deptCBB.combobox("getValue");
+	if(deptId==null||deptId==""){
+	  	alert("请选择部门");
 	  	return false;
 	}
 	else
@@ -235,10 +236,10 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				设备类型
+				部门
 			</td>
 			<td class="td2">
-				<input id="pdt_cbb"/>
+				<input id="dept_cbb"/>
 			</td>
 			<td class="td1" align="right">
 				设备名称

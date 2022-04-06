@@ -15,11 +15,11 @@ public class PatrolDevice {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPdtName() {
-		return pdtName;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setPdtName(String pdtName) {
-		this.pdtName = pdtName;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public String getSpecs() {
 		return specs;
@@ -27,11 +27,11 @@ public class PatrolDevice {
 	public void setSpecs(String specs) {
 		this.specs = specs;
 	}
-	public Integer getPdtId() {
-		return pdtId;
+	public Integer getDeptId() {
+		return deptId;
 	}
-	public void setPdtId(Integer pdtId) {
-		this.pdtId = pdtId;
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
 	}
 	public String getMakeDate() {
 		return makeDate;
@@ -46,9 +46,9 @@ public class PatrolDevice {
 		this.level = level;
 	}
 	private String name;
-	private String pdtName;
+	private String deptName;
 	private String specs;
-	private Integer pdtId;
+	private Integer deptId;
 	private String makeDate;
 	private Integer level;
 }

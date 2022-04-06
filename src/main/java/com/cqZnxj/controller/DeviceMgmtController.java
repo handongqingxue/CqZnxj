@@ -27,7 +27,7 @@ public class DeviceMgmtController {
 	@Autowired
 	private PatrolDeviceService patrolDeviceService;
 	@Autowired
-	private PatrolDeviceTypeService patrolDeviceTypeService;
+	private DeptService deptService;
 	@Autowired
 	private PatrolDeviceAccountService patrolDeviceAccountService;
 	@Autowired
@@ -35,36 +35,20 @@ public class DeviceMgmtController {
 	public static final String MODULE_NAME="deviceMgmt";
 	//http://localhost:8080/CqZnxj/deviceMgmt/type/list
 	
-	@RequestMapping(value="/type/new")
-	public String goTypeNew(HttpServletRequest request) {
+	@RequestMapping(value="/dept/list")
+	public String goDeptList(HttpServletRequest request) {
 		
-		return MODULE_NAME+"/type/new";
+		return MODULE_NAME+"/dept/list";
 	}
 
-	@RequestMapping(value="/type/edit")
-	public String goTypeEdit(HttpServletRequest request) {
+	@RequestMapping(value="/dept/detail")
+	public String goDeptDetail(HttpServletRequest request) {
 		
-		String id = request.getParameter("id");
-		PatrolDeviceType pdt=patrolDeviceTypeService.selectById(id);
-		request.setAttribute("pdt", pdt);
+		String deptId = request.getParameter("deptId");
+		Dept dept=deptService.selectByDeptId(deptId);
+		request.setAttribute("dept", dept);
 		
-		return MODULE_NAME+"/type/edit";
-	}
-	
-	@RequestMapping(value="/type/list")
-	public String goTypeList(HttpServletRequest request) {
-		
-		return MODULE_NAME+"/type/list";
-	}
-
-	@RequestMapping(value="/type/detail")
-	public String goTypeDetail(HttpServletRequest request) {
-		
-		String id = request.getParameter("id");
-		PatrolDeviceType pdt=patrolDeviceTypeService.selectById(id);
-		request.setAttribute("pdt", pdt);
-		
-		return MODULE_NAME+"/type/detail";
+		return MODULE_NAME+"/dept/detail";
 	}
 	
 	@RequestMapping(value="/device/new")
@@ -163,102 +147,18 @@ public class DeviceMgmtController {
 		return MODULE_NAME+"/param/detail";
 	}
 	
-	@RequestMapping(value="/newType")
+	@RequestMapping(value="/queryDeptList")
 	@ResponseBody
-	public Map<String, Object> newType(PatrolDeviceType pdt) {
-		
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		
-		int count=patrolDeviceTypeService.add(pdt);
-		if(count>0) {
-			jsonMap.put("message", "ok");
-			jsonMap.put("info", "创建设备类型成功！");
-		}
-		else {
-			jsonMap.put("message", "no");
-			jsonMap.put("info", "创建设备类型失败！");
-		}
-		return jsonMap;
-	}
-	
-	@RequestMapping(value="/checkIfExistDeviceByPdtIds",produces="plain/text; charset=UTF-8")
-	@ResponseBody
-	public String checkIfExistDeviceByPdtIds(String pdtIds,String pdtNames) {
-		//TODO 针对分类的动态进行实时调整更新
-		List<PatrolDeviceType> pdtList=patrolDeviceService.checkIfExistByPdtIds(pdtIds,pdtNames);
-		PlanResult plan=new PlanResult();
-		String json;
-		if(pdtList.size()>0) {
-			plan.setStatus(1);
-			StringBuilder msgSB=new StringBuilder();
-			for (int i = 0; i < pdtList.size(); i++) {
-				PatrolDeviceType pdt = pdtList.get(i);
-				msgSB.append(",");
-				msgSB.append(pdt.getName());
-			}
-			msgSB.append("类型下有设备，请先删除设备");
-			String msgStr = msgSB.toString();
-			plan.setMsg(msgStr.substring(1, msgStr.length()));
-			plan.setData(pdtList);
-			json=JsonUtil.getJsonFromObject(plan);
-		}
-		else {
-			plan.setStatus(0);
-			json=JsonUtil.getJsonFromObject(plan);
-		}
-		return json;
-	}
-
-	@RequestMapping(value="/deleteType",produces="plain/text; charset=UTF-8")
-	@ResponseBody
-	public String deleteType(String ids) {
-		//TODO 针对分类的动态进行实时调整更新
-		int count=patrolDeviceTypeService.deleteByIds(ids);
-		PlanResult plan=new PlanResult();
-		String json;
-		if(count==0) {
-			plan.setStatus(0);
-			plan.setMsg("删除设备类型失败");
-			json=JsonUtil.getJsonFromObject(plan);
-		}
-		else {
-			plan.setStatus(1);
-			plan.setMsg("删除设备类型成功");
-			json=JsonUtil.getJsonFromObject(plan);
-		}
-		return json;
-	}
-	
-	@RequestMapping(value="/editType")
-	@ResponseBody
-	public Map<String, Object> editType(PatrolDeviceType pdt) {
-		
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		
-		int count=patrolDeviceTypeService.edit(pdt);
-		if(count>0) {
-			jsonMap.put("message", "ok");
-			jsonMap.put("info", "编辑设备类型成功！");
-		}
-		else {
-			jsonMap.put("message", "no");
-			jsonMap.put("info", "编辑设备类型失败！");
-		}
-		return jsonMap;
-	}
-	
-	@RequestMapping(value="/queryTypeList")
-	@ResponseBody
-	public Map<String, Object> queryTypeList(String name,int page,int rows,String sort,String order) {
+	public Map<String, Object> queryDeptList(String deptName,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceTypeService.queryForInt(name);
-			List<PatrolDeviceType> pdtList=patrolDeviceTypeService.queryList(name, page, rows, sort, order);
+			int count = deptService.queryForInt(deptName);
+			List<Dept> deptList=deptService.queryList(deptName, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
-			jsonMap.put("rows", pdtList);
+			jsonMap.put("rows", deptList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -325,13 +225,13 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryDeviceList")
 	@ResponseBody
-	public Map<String, Object> queryDeviceList(String name,String pdtName,int page,int rows,String sort,String order) {
+	public Map<String, Object> queryDeviceList(String name,String deptName,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceService.queryForInt(name,pdtName);
-			List<PatrolDeviceType> pdList=patrolDeviceService.queryList(name, pdtName, page, rows, sort, order);
+			int count = patrolDeviceService.queryForInt(name,deptName);
+			List<PatrolDevice> pdList=patrolDeviceService.queryList(name, deptName, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdList);
@@ -408,14 +308,14 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryAccountList")
 	@ResponseBody
-	public Map<String, Object> queryAccountList(String no,String pdName,String pdtName,String createTimeStart,String createTimeEnd,
+	public Map<String, Object> queryAccountList(String no,String pdName,String deptName,String createTimeStart,String createTimeEnd,
 			String startTimeStart,String startTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceAccountService.queryForInt(no,pdName,pdtName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
-			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, pdtName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
+			int count = patrolDeviceAccountService.queryForInt(no,pdName,deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
+			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdaList);
@@ -485,14 +385,14 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryParamList")
 	@ResponseBody
-	public Map<String, Object> queryParamList(String pdtName,String pdName,String pdaNo,String name,
+	public Map<String, Object> queryParamList(String deptName,String pdName,String pdaNo,String name,
 			String createTimeStart,String createTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceParamService.queryForInt(pdtName,pdName,pdaNo,name,createTimeStart,createTimeEnd);
-			List<PatrolDeviceParam> pdpList=patrolDeviceParamService.queryList(pdtName, pdName, pdaNo, name, createTimeStart, createTimeEnd, page, rows, sort, order);
+			int count = patrolDeviceParamService.queryForInt(deptName,pdName,pdaNo,name,createTimeStart,createTimeEnd);
+			List<PatrolDeviceParam> pdpList=patrolDeviceParamService.queryList(deptName, pdName, pdaNo, name, createTimeStart, createTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdpList);
@@ -522,26 +422,13 @@ public class DeviceMgmtController {
 		return json;
 	}
 	
-	@RequestMapping(value="/queryTypeCBBList")
-	@ResponseBody
-	public Map<String, Object> queryTypeCBBList() {
-
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		
-		List<PatrolDeviceType> pdtList=patrolDeviceTypeService.queryCBBList();
-		
-		jsonMap.put("rows", pdtList);
-		
-		return jsonMap;
-	}
-	
 	@RequestMapping(value="/queryDeviceCBBList")
 	@ResponseBody
-	public Map<String, Object> queryDeviceCBBList(String pdtId) {
+	public Map<String, Object> queryDeviceCBBList(String deptId) {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		List<PatrolDevice> pdList=patrolDeviceService.queryCBBList(pdtId);
+		List<PatrolDevice> pdList=patrolDeviceService.queryCBBList(deptId);
 		
 		jsonMap.put("rows", pdList);
 		
