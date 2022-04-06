@@ -69,6 +69,9 @@
 		<if test="pdName!=''&amp;pdName!=null">
 			and pd.name like CONCAT('%',#{pdName},'%')
 		</if>
+		<if test="deptId!=''&amp;deptId!=null">
+			and d.deptId=#{deptId}
+		</if>
 		<if test="deptName!=''&amp;deptName!=null">
 			and d.name like CONCAT('%',#{deptName},'%')
 		</if>
@@ -86,6 +89,9 @@
 		</if>
 		<if test="pdName!=''&amp;pdName!=null">
 			and pd.name like CONCAT('%',#{pdName},'%')
+		</if>
+		<if test="deptId!=''&amp;deptId!=null">
+			and d.deptId=#{deptId}
 		</if>
 		<if test="deptName!=''&amp;deptName!=null">
 			and d.deptName like CONCAT('%',#{deptName},'%')

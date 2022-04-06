@@ -22,15 +22,15 @@ public class PatrolDeviceServiceImpl implements PatrolDeviceService {
 		return patrolDeviceDao.add(pd);
 	}
 
-	public int queryForInt(String name, String deptName) {
+	public int queryForInt(String name, Integer deptId, String deptName) {
 		// TODO Auto-generated method stub
-		return patrolDeviceDao.queryForInt(name, deptName);
+		return patrolDeviceDao.queryForInt(name, deptId, deptName);
 	}
 
-	public List<PatrolDevice> queryList(String name, String deptName, int page, int rows, String sort,
+	public List<PatrolDevice> queryList(String name, Integer deptId, String deptName, int page, int rows, String sort,
 			String order) {
 		// TODO Auto-generated method stub
-		return patrolDeviceDao.queryList(name, deptName, (page-1)*rows, rows, sort, order);
+		return patrolDeviceDao.queryList(name, deptId, deptName, (page-1)*rows, rows, sort, order);
 	}
 
 	public int deleteByIds(String ids) {

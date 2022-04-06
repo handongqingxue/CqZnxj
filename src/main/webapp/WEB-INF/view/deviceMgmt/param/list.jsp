@@ -61,6 +61,8 @@ a {
 var path='<%=basePath %>';
 var mainPath=path+'main/';
 var deviceMgmtPath=path+'deviceMgmt/';
+var deptId;
+var nav='${param.nav}';
 $(function(){
 	initTree();
 	initCreateTimeStDTB();
@@ -95,10 +97,15 @@ function initTree(){
             } else {
                 $('#tree').tree('expand', node.target);
             }
+        	
+        	deptId=node.id;
+        	loadTab1Data();
         },
         onLoadSuccess:function(node, data){// 加载成功后折叠所有节点
         	console.log(data)
             //$('#tree').tree('collapseAll');
+        	$(".tree-title").css("font-size","15px");
+        	$(".tree-node").css("height","25px");
         } 
     });
 }
@@ -119,23 +126,27 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var deptName=$("#toolbar #deptName_inp").val();
-			var pdName=$("#toolbar #pdName_inp").val();
-			var pdaNo=$("#toolbar #pdaNo_inp").val();
-			var name=$("#toolbar #name").val();
-			var createTimeStart=createTimeStDTB.datetimebox("getValue");
-			var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
-			tab1.datagrid("load",{deptName:deptName,pdName:pdName,pdaNo:pdaNo,name:name,
-				createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
+			loadTab1Data();
 		}
 	});
+}
+
+function loadTab1Data(){
+	var deptName=$("#toolbar #deptName_inp").val();
+	var pdName=$("#toolbar #pdName_inp").val();
+	var pdaNo=$("#toolbar #pdaNo_inp").val();
+	var name=$("#toolbar #name").val();
+	var createTimeStart=createTimeStDTB.datetimebox("getValue");
+	var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
+	tab1.datagrid("load",{deptId:deptId,deptName:deptName,pdName:pdName,pdaNo:pdaNo,name:name,
+		createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
 }
 
 function initAddLB(){
 	$("#add_but").linkbutton({
 		iconCls:"icon-add",
 		onClick:function(){
-			location.href=deviceMgmtPath+"param/new";
+			location.href=deviceMgmtPath+"param/new?nav="+nav;
 		}
 	});
 }
@@ -179,8 +190,8 @@ function initTab1(){
 			{field:"warnDown",title:"报警下限",width:150},
 			{field:"createTime",title:"创建时间",width:180},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
-            	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
-            		+"<a href=\"detail?id="+value+"\">详情</a>";
+            	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
+            		+"<a href=\"detail?id="+value+"&nav="+nav+"\">详情</a>";
             	return str;
             }}
 	    ]],

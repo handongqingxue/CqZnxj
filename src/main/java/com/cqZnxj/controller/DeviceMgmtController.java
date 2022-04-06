@@ -225,13 +225,13 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryDeviceList")
 	@ResponseBody
-	public Map<String, Object> queryDeviceList(String name,String deptName,int page,int rows,String sort,String order) {
+	public Map<String, Object> queryDeviceList(String name,Integer deptId, String deptName,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceService.queryForInt(name,deptName);
-			List<PatrolDevice> pdList=patrolDeviceService.queryList(name, deptName, page, rows, sort, order);
+			int count = patrolDeviceService.queryForInt(name,deptId, deptName);
+			List<PatrolDevice> pdList=patrolDeviceService.queryList(name, deptId, deptName, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdList);
@@ -308,14 +308,14 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryAccountList")
 	@ResponseBody
-	public Map<String, Object> queryAccountList(String no,String pdName,String deptName,String createTimeStart,String createTimeEnd,
+	public Map<String, Object> queryAccountList(String no,String pdName,Integer deptId, String deptName,String createTimeStart,String createTimeEnd,
 			String startTimeStart,String startTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceAccountService.queryForInt(no,pdName,deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
-			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
+			int count = patrolDeviceAccountService.queryForInt(no,pdName,deptId,deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
+			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, deptId,deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdaList);
@@ -385,14 +385,14 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryParamList")
 	@ResponseBody
-	public Map<String, Object> queryParamList(String deptName,String pdName,String pdaNo,String name,
+	public Map<String, Object> queryParamList(Integer deptId, String deptName,String pdName,String pdaNo,String name,
 			String createTimeStart,String createTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceParamService.queryForInt(deptName,pdName,pdaNo,name,createTimeStart,createTimeEnd);
-			List<PatrolDeviceParam> pdpList=patrolDeviceParamService.queryList(deptName, pdName, pdaNo, name, createTimeStart, createTimeEnd, page, rows, sort, order);
+			int count = patrolDeviceParamService.queryForInt(deptId,deptName,pdName,pdaNo,name,createTimeStart,createTimeEnd);
+			List<PatrolDeviceParam> pdpList=patrolDeviceParamService.queryList(deptId,deptName, pdName, pdaNo, name, createTimeStart, createTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdpList);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,7 +19,8 @@ body{
 	color:#fff;
 	font-size: 15px;
 }
-.left_nav_div .nav_item:hover{
+.left_nav_div .nav_item:hover,
+.left_nav_div .selected{
 	background-color:#5A62FF;
 }
 .left_nav_div .nav_item .nav_img{
@@ -45,6 +47,10 @@ body{
 	margin-left: 200px;
 	background-color: #18459A;
 	border-bottom: #eee solid 1px;
+}
+.top_div .nav_location_span{
+	color:#fff;
+	margin-left: 20px;
 }
 .top_div .client_id_span{
 	margin-right: 30px;
@@ -78,19 +84,19 @@ function resizeSideDiv(){
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">设备管理</span>
 	</div>
-	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/dept/list">
+	<a class="nav_item nav_item_a${param.nav eq 'bmcx'?' selected':'' }" href="<%=basePath%>deviceMgmt/dept/list?nav=bmcx">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
-		<span class="text_span">部门</span>
+		<span class="text_span">部门查询</span>
 	</a>
-	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/device/list">
+	<a class="nav_item nav_item_a${param.nav eq 'sbcx'?' selected':'' }" href="<%=basePath%>deviceMgmt/device/list?nav=sbcx">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">设备查询</span>
 	</a>
-	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/account/list">
+	<a class="nav_item nav_item_a${param.nav eq 'sbtz'?' selected':'' }" href="<%=basePath%>deviceMgmt/account/list?nav=sbtz">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">设备台账</span>
 	</a>
-	<a class="nav_item nav_item_a" href="<%=basePath%>deviceMgmt/param/list">
+	<a class="nav_item nav_item_a${param.nav eq 'sbcs'?' selected':'' }" href="<%=basePath%>deviceMgmt/param/list?nav=sbcs">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">设备参数</span>
 	</a>
@@ -132,6 +138,20 @@ function resizeSideDiv(){
 	</a>
 </div>
 <div class="top_div" id="top_div">
+	<span class="nav_location_span">
+	<c:if test="${param.nav eq 'bmcx' }">
+		设备管理>部门查询
+	</c:if>
+	<c:if test="${param.nav eq 'sbcx' }">
+		设备管理>设备查询
+	</c:if>
+	<c:if test="${param.nav eq 'sbtz' }">
+		设备管理>设备台账
+	</c:if>
+	<c:if test="${param.nav eq 'sbcs' }">
+		设备管理>设备参数
+	</c:if>
+	</span>
 	<span class="client_id_span">admin</span>
 </div>
 </body>

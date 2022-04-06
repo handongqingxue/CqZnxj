@@ -5,9 +5,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
+.tree_div{
+	width:300px;
+	margin-left: 200px;
+	padding:1px;
+	background-color: #F2F1F0;
+}
+.tree_div .title_div{
+	height: 50px;
+	line-height: 50px;
+	margin: 20px 20px 0 20px;
+	padding:0 20px 0 20px;
+	background-color: #fff;
+}
+.tree{
+	background-color: #fff;
+}
+.tree_div .space_div{
+	height: 20px;
+	margin: 0 20px 0 20px;
+	background-color: #fff;
+}
 .tab1_div{
-	margin-top:30px;
-	margin-left: 220px;
+	margin-left: 520px;
 }
 .tab1_div .toolbar{
 	height:64px;
@@ -38,8 +58,12 @@ a {
 <%@include file="../../inc/js.jsp"%>
 <script type="text/javascript">
 var path='<%=basePath %>';
+var mainPath=path+'main/';
 var deviceMgmtPath=path+'deviceMgmt/';
+var deptId;
+var nav='${param.nav}';
 $(function(){
+	initTree();
 	initCreateTimeStDTB();
 	initCreateTimeEtDTB();
 	initStartTimeStDTB();
@@ -48,7 +72,42 @@ $(function(){
 	initAddLB();
 	initRemoveLB();
 	initTab1();
+	resizeDiv();
 });
+
+function resizeDiv(){
+	var windowHeight=$(window).height();
+	var treeDiv=$("#tree_div");
+	treeDiv.css("height",windowHeight-46+"px");
+	
+	var tree=$("#tree");
+	tree.css("margin","0 20px 0 20px");
+	
+	var treeDivHeight=$("#tree_div").height();
+	$("#tab1_div").css("margin-top",-(treeDivHeight-20)+"px");
+}
+
+function initTree(){
+	//var data=[{id:1,text:"aaa","children":[{id:3,text:"ccc"}]},{id:2,text:"bbb"}];
+	$("#tree").tree({
+        url:mainPath+'queryDeptTreeList',
+        onClick : function(node) {
+            // 展开/折叠
+            if (node.state === 'open') {
+                $('#tree').tree('collapse', node.target);
+            } else {
+                $('#tree').tree('expand', node.target);
+            }
+        	
+        	deptId=node.id;
+			loadTab1Data();
+        },
+        onLoadSuccess:function(node, data){// 加载成功后折叠所有节点
+        	$(".tree-title").css("font-size","15px");
+        	$(".tree-node").css("height","25px");
+        } 
+    });
+}
 
 function initCreateTimeStDTB(){
 	createTimeStDTB=$("#createTimeSt_dtb").datetimebox({
@@ -78,24 +137,28 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var no=$("#toolbar #no_inp").val();
-			var pdName=$("#toolbar #pdName_inp").val();
-			var deptName=$("#toolbar #deptName_inp").val();
-			var createTimeStart=createTimeStDTB.datetimebox("getValue");
-			var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
-			var startTimeStart=startTimeStDTB.datetimebox("getValue");
-			var startTimeEnd=startTimeEtDTB.datetimebox("getValue");
-			tab1.datagrid("load",{no:no,pdName:pdName,deptName:deptName,createTimeStart:createTimeStart,
-				createTimeEnd:createTimeEnd,startTimeStart:startTimeStart,startTimeEnd:startTimeEnd});
+			loadTab1Data();
 		}
 	});
+}
+
+function loadTab1Data(){
+	var no=$("#toolbar #no_inp").val();
+	var pdName=$("#toolbar #pdName_inp").val();
+	var deptName=$("#toolbar #deptName_inp").val();
+	var createTimeStart=createTimeStDTB.datetimebox("getValue");
+	var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
+	var startTimeStart=startTimeStDTB.datetimebox("getValue");
+	var startTimeEnd=startTimeEtDTB.datetimebox("getValue");
+	tab1.datagrid("load",{no:no,pdName:pdName,deptId:deptId,deptName:deptName,createTimeStart:createTimeStart,
+		createTimeEnd:createTimeEnd,startTimeStart:startTimeStart,startTimeEnd:startTimeEnd});
 }
 
 function initAddLB(){
 	$("#add_but").linkbutton({
 		iconCls:"icon-add",
 		onClick:function(){
-			location.href=deviceMgmtPath+"account/new";
+			location.href=deviceMgmtPath+"account/new?nav="+nav;
 		}
 	});
 }
@@ -124,8 +187,8 @@ function initTab1(){
 			{field:"createTime",title:"创建时间",width:200},
 			{field:"startTime",title:"启用时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
-            	var str="<a href=\"edit?id="+value+"\">编辑</a>&nbsp;&nbsp;"
-            		+"<a href=\"detail?id="+value+"\">详情</a>";
+            	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
+            		+"<a href=\"detail?id="+value+"&nav="+nav+"\">详情</a>";
             	return str;
             }}
 	    ]],
@@ -178,12 +241,18 @@ function deleteByIds() {
 
 function setFitWidthInParent(o){
 	var width=$(o).css("width");
-	return width.substring(0,width.length-2)-250;
+	return width.substring(0,width.length-2)-550;
 }
 </script>
 </head>
 <body>
 <%@include file="../../inc/side.jsp"%>
+<div class="tree_div" id="tree_div">
+	<div class="title_div" id="title_div">部门列表</div>
+	<div id="tree">
+	</div>
+	<div class="space_div"></div>
+</div>
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
 		<div class="row_div">

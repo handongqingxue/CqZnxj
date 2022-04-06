@@ -8,9 +8,9 @@ public interface PatrolDeviceService {
 
 	int add(PatrolDevice pd);
 
-	int queryForInt(String name, String deptName);
+	int queryForInt(String name, Integer deptId, String deptName);
 
-	List<PatrolDevice> queryList(String name, String deptName, int page, int rows, String sort, String order);
+	List<PatrolDevice> queryList(String name, Integer deptId, String deptName, int page, int rows, String sort, String order);
 
 	int deleteByIds(String ids);
 

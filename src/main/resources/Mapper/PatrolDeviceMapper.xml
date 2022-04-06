@@ -50,7 +50,10 @@
 		select count(*) from dept d,patrol_device pd where d.deptId=pd.deptId
 		<if test="name!=''&amp;name!=null">
 			and pd.name like CONCAT('%',#{name},'%')
-		</if> 
+		</if>
+		<if test="deptId!=''&amp;deptId!=null">
+			and d.deptId=#{deptId}
+		</if>
 		<if test="deptName!=''&amp;deptName!=null">
 			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if> 
@@ -59,7 +62,10 @@
 		select pd.id,pd.name,d.deptName,pd.makeDate from dept d,patrol_device pd where d.deptId=pd.deptId
 		<if test="name!=''&amp;name!=null">
 			and pd.name like CONCAT('%',#{name},'%')
-		</if> 
+		</if>
+		<if test="deptId!=''&amp;deptId!=null">
+			and d.deptId=#{deptId}
+		</if>
 		<if test="deptName!=''&amp;deptName!=null">
 			and d.deptName like CONCAT('%',#{deptName},'%')
 		</if> 
