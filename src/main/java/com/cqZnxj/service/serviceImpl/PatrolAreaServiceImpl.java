@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,15 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	public int add(PatrolArea pa) {
 		// TODO Auto-generated method stub
 		return patrolAreaDao.add(pa);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=patrolAreaDao.deleteByIds(idList);
+		return count;
 	}
 
 	@Override
@@ -64,6 +74,22 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	@Override
 	public PatrolArea selectById(String id) {
 		// TODO Auto-generated method stub
-		return patrolAreaDao.selectById(id);
+		PatrolArea pa = patrolAreaDao.selectById(id);
+		List<PatrolDeviceAccount> pdaList = patrolDeviceAccountDao.queryCBBList(pa.getDeptId().toString(),null);
+		String pdaIds = pa.getPdaIds();
+		String[] pdaIdArr = pdaIds.split(",");
+		String pdaNos = "";
+		for (String pdaIdStr : pdaIdArr) {
+			int pdaId = Integer.valueOf(pdaIdStr);
+			for (int j = 0; j < pdaList.size(); j++) {
+				PatrolDeviceAccount pda = pdaList.get(j);
+				if(pdaId==pda.getId()) {
+					pdaNos+=","+pda.getNo();
+					break;
+				}
+			}
+		}
+		pa.setPdaNos(pdaNos.substring(1));
+		return pa;
 	}
 }

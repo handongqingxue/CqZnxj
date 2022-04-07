@@ -8,6 +8,8 @@ public interface PatrolAreaService {
 
 	int add(PatrolArea pa);
 
+	int deleteByIds(String ids);
+
 	int edit(PatrolArea pa);
 
 	int queryForInt(String name, Integer deptId, String deptName,String createTimeStart,String createTimeEnd);

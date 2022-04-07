@@ -206,7 +206,7 @@ function deleteByIds(ids){
 			}
 			ids=ids.substring(1);
 			
-			$.post(patrolMgmtPath + "deleteParam",
+			$.post(patrolMgmtPath + "deleteArea",
 				{ids:ids},
 				function(result){
 					if(result.status==1){

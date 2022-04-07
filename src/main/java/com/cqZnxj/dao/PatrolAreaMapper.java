@@ -10,6 +10,8 @@ public interface PatrolAreaMapper {
 
 	int add(PatrolArea pa);
 
+	int deleteByIds(List<String> idList);
+
 	int edit(PatrolArea pa);
 
 	int queryForInt(@Param("name") String name, @Param("deptId") Integer deptId, @Param("deptName") String deptName,@Param("createTimeStart") String createTimeStart,@Param("createTimeEnd") String createTimeEnd);

@@ -31,6 +31,12 @@
 			</if>
 		</trim>
 	</insert>
+	<delete id="deleteByIds">
+		delete from patrol_area where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in (" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.PatrolArea">
 		update patrol_area set 
 		<trim suffixOverrides=",">

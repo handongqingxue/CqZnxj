@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cqZnxj.entity.*;
 import com.cqZnxj.service.*;
+import com.cqZnxj.util.JsonUtil;
+import com.cqZnxj.util.PlanResult;
 
 /**
  * 巡检管理类
@@ -48,6 +50,16 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/area/list";
 	}
 	
+	@RequestMapping(value="/area/detail")
+	public String goAreaDetail(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolArea pa=patrolAreaService.selectById(id);
+		request.setAttribute("pa", pa);
+		
+		return MODULE_NAME+"/area/detail";
+	}
+	
 	@RequestMapping(value="/newArea")
 	@ResponseBody
 	public Map<String, Object> newArea(PatrolArea pa) {
@@ -64,6 +76,26 @@ public class PatrolMgmtController {
 			jsonMap.put("info", "创建巡检区域失败！");
 		}
 		return jsonMap;
+	}
+
+	@RequestMapping(value="/deleteArea",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteParam(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patrolAreaService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除巡检区域失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除巡检区域成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
 	}
 	
 	@RequestMapping(value="/editArea")
