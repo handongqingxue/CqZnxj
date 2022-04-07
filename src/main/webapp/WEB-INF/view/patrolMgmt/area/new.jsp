@@ -19,7 +19,7 @@
 	margin-left: 20px;
 	font-size: 18px;
 }
-.no_inp{
+.name_inp{
 	width: 150px;
 	height:30px;
 }
@@ -28,6 +28,7 @@
 var path='<%=basePath %>';
 var mainPath=path+'main/';
 var deviceMgmtPath=path+'deviceMgmt/';
+var patrolMgmtPath=path+'patrolMgmt/';
 var dialogTop=30;
 var dialogLeft=20;
 var ndNum=0;
@@ -51,9 +52,9 @@ function initDialogPosition(){
 function initNewDialog(){
 	dialogTop+=20;
 	$("#new_div").dialog({
-		title:"设备台账信息",
+		title:"巡检区域信息",
 		width:setFitWidthInParent("body","new_div"),
-		height:200,
+		height:210,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -92,6 +93,7 @@ function initNewDialog(){
 
 	initDeptCBB();
 	initPDCBB();
+	initPDACBB();
 }
 
 function initDeptCBB(){
@@ -121,7 +123,10 @@ function initPDCBB(){
 	pdCBB=$("#new_div #pd_cbb").combobox({
 		valueField:"value",
 		textField:"text",
-		data:data
+		data:data,
+		onSelect:function(){
+			loadPDACBBData();
+		}
 	});
 }
 
@@ -141,24 +146,58 @@ function loadPDCBBData(){
 	,"json");
 }
 
+function initPDACBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择设备编号"});
+	pdaCBB=$("#new_div #pda_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data,
+		multiple:true
+	});
+}
+
+function loadPDACBBData(){
+	var pdId=pdCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择设备编号"});
+	$.post(deviceMgmtPath+"queryAccountCBBList",
+		{pdId:pdId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].id,"text":rows[i].no});
+			}
+			pdaCBB.combobox("loadData",data);
+		}
+	,"json");
+}
+
 function checkNew(){
 	if(checkDeptId()){
 		if(checkPDName()){
-			if(checkNo()){
-				newAccount();
+			if(checkPDAName()){
+				if(checkName()){
+					newArea();
+				}
 			}
 		}
 	}
 }
 
-function newAccount(){
-	var pdId=pdCBB.combobox("getValue");
-	$("#new_div #pdId").val(pdId);
+function newArea(){
+	var deptId=deptCBB.combobox("getValue");
+	$("#new_div #deptId").val(deptId);
+	var pdaIdsArr=pdaCBB.combobox("getValues");
+	var pdaIds=pdaIdsArr.sort().toString();
+	if(pdaIds.substring(0,1)==",")
+		pdaIds=pdaIds.substring(1);
+	$("#new_div #pdaIds").val(pdaIds);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
 		type:"post",
-		url:deviceMgmtPath+"newAccount",
+		url:patrolMgmtPath+"newArea",
 		dataType: "json",
 		data:formData,
 		cache: false,
@@ -174,46 +213,6 @@ function newAccount(){
 			}
 		}
 	});
-}
-
-function focusNo(){
-	var no = $("#no").val();
-	if(no=="设备编号不能为空"||no=="设备编号已存在"){
-		$("#no").val("");
-		$("#no").css("color", "#555555");
-	}
-}
-
-//验证设备编号
-function checkNo(){
-	var flag=false;
-	var no = $("#no").val();
-	if(no==null||no==""||no=="设备编号不能为空"){
-		$("#no").css("color","#E15748");
-    	$("#no").val("设备编号不能为空");
-    	flag=false;
-	}
-	else if(no=="设备编号已存在"){
-		$("#no").css("color","#E15748");
-    	$("#no").val("设备编号已存在");
-    	flag=false;
-	}
-	else{
-		$.ajaxSetup({async:false});
-		$.post(deviceMgmtPath+"checkNoIfExist",
-			{no:no},
-			function(data){
-				if(data.status==1)
-			    	flag=true;
-				else{
-					$("#no").css("color","#E15748");
-			    	$("#no").val(data.msg);
-			    	flag=false;
-				}
-			}
-		,"json");
-	}
-	return flag;
 }
 
 //验证部门
@@ -238,6 +237,37 @@ function checkPDName(){
 		return true;
 }
 
+//验证设备编号
+function checkPDAName(){
+	var pdaName=pdaCBB.combobox("getValues");
+	if(pdaName==null||pdaName==""){
+	  	alert("请选择设备编号");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+function focusName(){
+	var name = $("#name").val();
+	if(name=="区域名称不能为空"){
+		$("#name").val("");
+		$("#name").css("color", "#555555");
+	}
+}
+
+//验证区域名称
+function checkName(){
+	var name = $("#name").val();
+	if(name==null||name==""||name=="区域名称不能为空"){
+		$("#name").css("color","#E15748");
+    	$("#name").val("区域名称不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
 function setFitWidthInParent(parent,self){
 	var space=0;
 	switch (self) {
@@ -248,6 +278,8 @@ function setFitWidthInParent(parent,self){
 		space=340;
 		break;
 	case "new_div_table":
+		space=372;
+		break;
 	case "panel_window":
 		space=355;
 		break;
@@ -260,7 +292,7 @@ function setFitWidthInParent(parent,self){
 <body>
 <%@include file="../../inc/side.jsp"%>
 <div class="center_con_div" id="center_con_div">
-	<div class="page_location_div">设备台账-添加</div>
+	<div class="page_location_div">巡检区域-添加</div>
 	
 	<div id="new_div">
 		<form id="form1" name="form1" method="post" action="" enctype="multipart/form-data">
@@ -271,6 +303,7 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				<input id="dept_cbb"/>
+				<input type="hidden" id="deptId" name="deptId"/>
 			</td>
 			<td class="td1" align="right">
 				设备名称
@@ -285,11 +318,14 @@ function setFitWidthInParent(parent,self){
 				设备编号
 			</td>
 			<td class="td2">
-				<input type="text" class="no_inp" id="no" name="no" placeholder="请输入设备编号" onfocus="focusNo()" onblur="checkNo()"/>
+				<input id="pda_cbb"/>
+				<input type="hidden" id="pdaIds" name="pdaIds"/>
 			</td>
 			<td class="td1" align="right">
+				区域名称
 			</td>
 			<td class="td2">
+				<input type="text" class="name_inp" id="name" name="name" placeholder="请输入区域名称" onfocus="focusName()" onblur="checkName()"/>
 			</td>
 		  </tr>
 		</table>

@@ -108,7 +108,7 @@ function resizeSideDiv(){
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡检路线</span>
 	</a>
-	<a class="nav_item nav_item_a" href="">
+	<a class="nav_item nav_item_a${param.nav eq 'xjqy'?' selected':'' }" href="<%=basePath%>patrolMgmt/area/list?nav=xjqy">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡检区域</span>
 	</a>

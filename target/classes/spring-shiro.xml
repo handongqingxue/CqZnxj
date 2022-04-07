@@ -25,6 +25,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/deviceMgmt/**=anon
+				/patrolMgmt/**=anon
 				/main/**=anon
 				/resource/**=anon
 				/**=authc

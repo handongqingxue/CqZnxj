@@ -10,7 +10,7 @@ public interface DeptMapper {
 
 	List<TreeNode> queryTreeList(@Param("parentId") int parentId);
 
-	int getCountByParentId(@Param("parentId") int id);
+	int getCountByParentId(@Param("parentId") int parentId);
 	
 	int queryForInt(@Param("deptName") String deptName);
 

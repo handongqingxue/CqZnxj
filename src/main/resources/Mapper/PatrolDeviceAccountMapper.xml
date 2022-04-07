@@ -112,6 +112,10 @@
 		select pda.*,pd.name pdName,d.deptId,d.deptName from patrol_device_account pda,patrol_device pd,dept d where pda.pdId=pd.id and pd.deptId=d.deptId and pda.id=#{id}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
-		select id,no from patrol_device_account where pdId=#{pdId} order by createTime
+		select id,no from patrol_device_account where 1=1
+		<if test="pdId!=''&amp;pdId!=null">
+			and pdId=#{pdId}
+		</if>
+		 order by createTime
 	</select>
 </mapper>
