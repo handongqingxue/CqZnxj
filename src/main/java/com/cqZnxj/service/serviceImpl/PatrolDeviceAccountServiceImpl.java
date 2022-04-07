@@ -70,8 +70,8 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	}
 
 	@Override
-	public List<PatrolDeviceAccount> queryCBBList(String pdId) {
+	public List<PatrolDeviceAccount> queryCBBList(String deptId,String pdId) {
 		// TODO Auto-generated method stub
-		return patrolDeviceAccountDao.queryCBBList(pdId);
+		return patrolDeviceAccountDao.queryCBBList(deptId,pdId);
 	}
 }

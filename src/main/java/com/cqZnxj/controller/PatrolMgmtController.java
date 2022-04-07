@@ -31,6 +31,16 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/area/new";
 	}
+	
+	@RequestMapping(value="/area/edit")
+	public String goAreaEdit(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolArea pa=patrolAreaService.selectById(id);
+		request.setAttribute("pa", pa);
+		
+		return MODULE_NAME+"/area/edit";
+	}
 
 	@RequestMapping(value="/area/list")
 	public String goAreaList(HttpServletRequest request) {
@@ -52,6 +62,24 @@ public class PatrolMgmtController {
 		else {
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "¥¥Ω®—≤ºÏ«¯”Ú ß∞‹£°");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/editArea")
+	@ResponseBody
+	public Map<String, Object> editArea(PatrolArea pa) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolAreaService.edit(pa);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "±‡º≠—≤ºÏ«¯”Ú≥…π¶£°");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "±‡º≠—≤ºÏ«¯”Ú ß∞‹£°");
 		}
 		return jsonMap;
 	}

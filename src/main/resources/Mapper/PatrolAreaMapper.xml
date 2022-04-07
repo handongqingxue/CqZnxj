@@ -31,6 +31,21 @@
 			</if>
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatrolArea">
+		update patrol_area set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="pdaIds!=null">
+				pdaIds=#{pdaIds},
+			</if>
+			<if test="deptId!=null">
+				deptId=#{deptId},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from dept d,patrol_area pa where d.deptId=pa.deptId
 		<if test="name!=''&amp;name!=null">
@@ -61,5 +76,8 @@
 			and pa.createTime between #{createTimeStart} and #{createTimeEnd}
 		</if>
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.PatrolArea">
+		select pa.*,d.deptName from patrol_area pa,dept d where pa.deptId=d.deptId and pa.id=#{id}
 	</select>
 </mapper>

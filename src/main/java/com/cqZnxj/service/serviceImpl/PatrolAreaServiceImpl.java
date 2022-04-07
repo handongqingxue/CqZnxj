@@ -18,6 +18,18 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
 
 	@Override
+	public int add(PatrolArea pa) {
+		// TODO Auto-generated method stub
+		return patrolAreaDao.add(pa);
+	}
+
+	@Override
+	public int edit(PatrolArea pa) {
+		// TODO Auto-generated method stub
+		return patrolAreaDao.edit(pa);
+	}
+
+	@Override
 	public int queryForInt(String name, Integer deptId, String deptName, String createTimeStart, String createTimeEnd) {
 		// TODO Auto-generated method stub
 		return patrolAreaDao.queryForInt(name, deptId, deptName, createTimeStart, createTimeEnd);
@@ -28,7 +40,7 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 			String order) {
 		// TODO Auto-generated method stub
 		List<PatrolArea> paList = patrolAreaDao.queryList(name, deptId, deptName, createTimeStart, createTimeEnd, (page-1)*rows, rows, sort, order);
-		List<PatrolDeviceAccount> pdaList = patrolDeviceAccountDao.queryCBBList(null);
+		List<PatrolDeviceAccount> pdaList = patrolDeviceAccountDao.queryCBBList(null,null);
 		for (int i = 0; i < paList.size(); i++) {
 			PatrolArea pa = paList.get(i);
 			String pdaIds = pa.getPdaIds();
@@ -50,8 +62,8 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	}
 
 	@Override
-	public int add(PatrolArea pa) {
+	public PatrolArea selectById(String id) {
 		// TODO Auto-generated method stub
-		return patrolAreaDao.add(pa);
+		return patrolAreaDao.selectById(id);
 	}
 }

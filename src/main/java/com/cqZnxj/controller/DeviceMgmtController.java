@@ -437,11 +437,11 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryAccountCBBList")
 	@ResponseBody
-	public Map<String, Object> queryAccountCBBList(String pdId) {
+	public Map<String, Object> queryAccountCBBList(String deptId,String pdId) {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryCBBList(pdId);
+		List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryCBBList(deptId,pdId);
 		
 		jsonMap.put("rows", pdaList);
 		
