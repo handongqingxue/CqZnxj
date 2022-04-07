@@ -41,7 +41,10 @@
 		</if>
 		<if test="deptName!=''&amp;deptName!=null">
 			and d.deptName like CONCAT('%',#{deptName},'%')
-		</if> 
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and pa.createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolArea">
 		select pa.*,d.deptName from dept d,patrol_area pa where d.deptId=pa.deptId
@@ -53,7 +56,10 @@
 		</if>
 		<if test="deptName!=''&amp;deptName!=null">
 			and d.deptName like CONCAT('%',#{deptName},'%')
-		</if> 
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and pa.createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
 		limit #{rowNum},#{rows}
 	</select>
 </mapper>

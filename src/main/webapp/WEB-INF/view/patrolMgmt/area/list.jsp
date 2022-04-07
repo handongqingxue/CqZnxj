@@ -132,12 +132,10 @@ function initSearchLB(){
 
 function loadTab1Data(){
 	var deptName=$("#toolbar #deptName_inp").val();
-	var pdName=$("#toolbar #name_inp").val();
-	var pdaNo=$("#toolbar #pdaNo_inp").val();
-	var name=$("#toolbar #name").val();
+	var name=$("#toolbar #name_inp").val();
 	var createTimeStart=createTimeStDTB.datetimebox("getValue");
 	var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
-	tab1.datagrid("load",{deptId:deptId,deptName:deptName,pdName:pdName,pdaNo:pdaNo,name:name,
+	tab1.datagrid("load",{deptId:deptId,deptName:deptName,name:name,
 		createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
 }
 
@@ -246,6 +244,10 @@ function setFitWidthInParent(o){
 			<input type="text" class="name_inp" id="name_inp" placeholder="请输入区域名称"/>
 			<span class="deptName_span">部门：</span>
 			<input type="text" class="deptName_inp" id="deptName_inp" placeholder="请输入部门名称"/>
+			<span class="createTime_span">创建时间：</span>
+			<input id="createTimeSt_dtb"/>
+			-
+			<input id="createTimeEt_dtb"/>
 			<a class="search_but" id="search_but">查询</a>
 			<a id="add_but">添加</a>
 			<a id="remove_but">删除</a>

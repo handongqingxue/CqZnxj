@@ -18,16 +18,16 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
 
 	@Override
-	public int queryForInt(String name, Integer deptId, String deptName) {
+	public int queryForInt(String name, Integer deptId, String deptName, String createTimeStart, String createTimeEnd) {
 		// TODO Auto-generated method stub
-		return patrolAreaDao.queryForInt(name, deptId, deptName);
+		return patrolAreaDao.queryForInt(name, deptId, deptName, createTimeStart, createTimeEnd);
 	}
 
 	@Override
-	public List<PatrolArea> queryList(String name, Integer deptId, String deptName, int page, int rows, String sort,
+	public List<PatrolArea> queryList(String name, Integer deptId, String deptName,String createTimeStart,String createTimeEnd, int page, int rows, String sort,
 			String order) {
 		// TODO Auto-generated method stub
-		List<PatrolArea> paList = patrolAreaDao.queryList(name, deptId, deptName, (page-1)*rows, rows, sort, order);
+		List<PatrolArea> paList = patrolAreaDao.queryList(name, deptId, deptName, createTimeStart, createTimeEnd, (page-1)*rows, rows, sort, order);
 		List<PatrolDeviceAccount> pdaList = patrolDeviceAccountDao.queryCBBList(null);
 		for (int i = 0; i < paList.size(); i++) {
 			PatrolArea pa = paList.get(i);
