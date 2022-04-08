@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 .tab1_div{
-	margin-top:30px;
+	margin-top:65px;
 	margin-left: 220px;
 }
 .tab1_div .toolbar{
@@ -99,8 +99,8 @@ function setFitWidthInParent(o){
 <%@include file="../../inc/side.jsp"%>
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
-		<span class="name_span">类名：</span>
-		<input type="text" class="name_inp" id="name" placeholder="请输入类名"/>
+		<span class="name_span">部门：</span>
+		<input type="text" class="name_inp" id="name" placeholder="请输入部门名称"/>
 		<a class="search_but" id="search_but">查询</a>
 	</div>
 	<table id="tab1">

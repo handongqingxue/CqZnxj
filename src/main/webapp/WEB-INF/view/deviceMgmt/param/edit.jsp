@@ -9,6 +9,7 @@
 <style type="text/css">
 .center_con_div{
 	height: 90vh;
+	margin-top: 46px;
 	margin-left:205px;
 	position: absolute;
 }

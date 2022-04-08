@@ -26,6 +26,8 @@ import com.cqZnxj.util.PlanResult;
 public class PatrolMgmtController {
 	@Autowired
 	private PatrolAreaService patrolAreaService;
+	@Autowired
+	private PatrolLineService patrolLineService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
 	@RequestMapping(value="/area/new")
@@ -58,6 +60,51 @@ public class PatrolMgmtController {
 		request.setAttribute("pa", pa);
 		
 		return MODULE_NAME+"/area/detail";
+	}
+
+	@RequestMapping(value="/line/list")
+	public String goLineList(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/line/list";
+	}
+	
+	@RequestMapping(value="/newLine")
+	@ResponseBody
+	public Map<String, Object> newLine(PatrolLine pl) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolLineService.add(pl);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建巡检路线成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建巡检路线失败！");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryLineList")
+	@ResponseBody
+	public Map<String, Object> queryLineList(String name,String createTimeStart,String createTimeEnd,
+			int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = patrolLineService.queryForInt(name,createTimeStart, createTimeEnd);
+			List<PatrolLine> plList=patrolLineService.queryList(name, createTimeStart, createTimeEnd, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", plList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
 	}
 	
 	@RequestMapping(value="/newArea")

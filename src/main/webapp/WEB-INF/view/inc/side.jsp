@@ -8,10 +8,12 @@
 <style type="text/css">
 body{
 	margin: 0;
+	padding-top: 1px;
 }
 .left_nav_div{
 	width:200px;
 	background-color: #060E2B;
+	position: fixed;
 }
 .left_nav_div .nav_item{
 	height:45px;
@@ -47,6 +49,7 @@ body{
 	margin-left: 200px;
 	background-color: #18459A;
 	border-bottom: #eee solid 1px;
+	position: fixed;
 }
 .top_div .nav_location_span{
 	color:#fff;
@@ -73,7 +76,6 @@ function resizeSideDiv(){
 	var leftNavWidth=leftNavDiv.css("width");
 	leftNavWidth=leftNavWidth.substring(0,leftNavWidth.length-2);
 	topDiv.css("width",windowWidth-leftNavWidth+"px");
-	topDiv.css("margin-top",-windowHeight+"px");
 }
 </script>
 <title>Insert title here</title>
@@ -104,7 +106,7 @@ function resizeSideDiv(){
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡检管理</span>
 	</div>
-	<a class="nav_item nav_item_a" href="">
+	<a class="nav_item nav_item_a" href="<%=basePath%>patrolMgmt/line/list?nav=xjlx">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡检路线</span>
 	</a>
