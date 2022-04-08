@@ -8,6 +8,10 @@ public interface PatrolLineService {
 
 	int add(PatrolLine pl);
 
+	int deleteByIds(String ids);
+
+	int edit(PatrolLine pl);
+
 	int queryForInt(String name, String createTimeStart, String createTimeEnd);
 
 	List<PatrolLine> queryList(String name, String createTimeStart, String createTimeEnd, int page, int rows,

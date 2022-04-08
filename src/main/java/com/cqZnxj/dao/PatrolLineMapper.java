@@ -10,6 +10,10 @@ public interface PatrolLineMapper {
 
 	int add(PatrolLine pl);
 
+	int deleteByIds(List<String> idList);
+
+	int edit(PatrolLine pl);
+
 	int queryForInt(@Param("name") String name, @Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd);
 
 	List<PatrolLine> queryList(@Param("name") String name, @Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd, 

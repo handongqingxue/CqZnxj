@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,21 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 	public int add(PatrolLine pl) {
 		// TODO Auto-generated method stub
 		return patrolLineDao.add(pl);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=patrolLineDao.deleteByIds(idList);
+		return count;
+	}
+
+	@Override
+	public int edit(PatrolLine pl) {
+		// TODO Auto-generated method stub
+		return patrolLineDao.edit(pl);
 	}
 
 	@Override

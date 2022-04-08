@@ -85,6 +85,44 @@ public class PatrolMgmtController {
 		}
 		return jsonMap;
 	}
+
+	@RequestMapping(value="/deleteLine",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteLine(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patrolLineService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除巡检路线失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除巡检路线成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+	
+	@RequestMapping(value="/editLine")
+	@ResponseBody
+	public Map<String, Object> editLine(PatrolLine pl) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolLineService.edit(pl);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "编辑巡检路线成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "编辑巡检路线失败！");
+		}
+		return jsonMap;
+	}
 	
 	@RequestMapping(value="/queryLineList")
 	@ResponseBody
@@ -127,7 +165,7 @@ public class PatrolMgmtController {
 
 	@RequestMapping(value="/deleteArea",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String deleteParam(String ids) {
+	public String deleteArea(String ids) {
 		//TODO 针对分类的动态进行实时调整更新
 		int count=patrolAreaService.deleteByIds(ids);
 		PlanResult plan=new PlanResult();

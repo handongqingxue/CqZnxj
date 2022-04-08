@@ -19,6 +19,21 @@
 				now()
 		</trim>
 	</insert>
+	<delete id="deleteByIds">
+		delete from patrol_line where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in(" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatrolLine">
+		update patrol_line set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_line where 1=1
 		<if test="name!=''&amp;name!=null">
@@ -29,7 +44,7 @@
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolLine">
-		select `name`,createTime from patrol_line where 1=1
+		select id,`name`,createTime from patrol_line where 1=1
 		<if test="name!=''&amp;name!=null">
 			and name like CONCAT('%',#{name},'%')
 		</if>
