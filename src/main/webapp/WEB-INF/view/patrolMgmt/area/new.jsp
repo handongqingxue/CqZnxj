@@ -100,6 +100,7 @@ function initDeptCBB(){
 	var data=[];
 	data.push({"value":"","text":"请选择部门"});
 	$.post(mainPath+"queryDeptCBBList",
+		{parentId:0},
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){

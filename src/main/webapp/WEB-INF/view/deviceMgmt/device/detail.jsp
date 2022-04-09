@@ -49,7 +49,7 @@ function initDetailDialog(){
 	$("#detail_div").dialog({
 		title:"设备信息",
 		width:setFitWidthInParent("body","detail_div"),
-		height:160,
+		height:210,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -133,10 +133,22 @@ function setFitWidthInParent(parent,self){
 				<c:if test="${requestScope.pd.level eq 3 }">三级</c:if>
 			</td>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				${requestScope.pd.deptName }
+				${requestScope.pd.firstDeptName }
+			</td>
+		  </tr>
+		  <tr>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				${requestScope.pd.secondDeptName }
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

@@ -54,7 +54,7 @@ function initEditDialog(){
 	$("#edit_div").dialog({
 		title:"设备台账信息",
 		width:setFitWidthInParent("body","edit_div"),
-		height:285,
+		height:335,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -72,8 +72,9 @@ function initEditDialog(){
 	$("#edit_div table .td1").css("width","15%");
 	$("#edit_div table .td2").css("width","30%");
 	$("#edit_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#edit_div table tr").eq(0).css("height","45px");
-	$("#edit_div table tr").eq(1).css("height","130px");
+	$("#edit_div table tr").each(function(i){
+		$("#edit_div table tr").eq(i).css("height",(i==2?130:45)+"px");
+	});
 
 	$(".panel.window").eq(edNum).css("margin-top","20px");
 	$(".panel.window .panel-title").eq(edNum).css("color","#000");
@@ -92,33 +93,70 @@ function initEditDialog(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 
-	initDeptCBB();
+	initFirstDeptCBB();
+	initSecondDeptCBB();
 	initPDCBB();
 	setTimeout(function(){
 		loadPDCBBData();
 	},"1000");
 }
 
-function initDeptCBB(){
+function initFirstDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择部门"});
+	data.push({"value":"","text":"请选择一级部门"});
 	$.post(mainPath+"queryDeptCBBList",
+		{parentId:0},
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){
-				data.push({"value":rows[i].id,"text":rows[i].name});
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			deptCBB=$("#edit_div #dept_cbb").combobox({
+			firstDeptCBB=$("#edit_div #firstDept_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onLoadSuccess:function(){
-					$(this).combobox("setValue",'${requestScope.pda.deptId }');
+					$(this).combobox("setValue",'${requestScope.pda.firstDeptId }');
+					setTimeout(function(){
+						loadSecondDeptCBBData();
+					},"1000");
 				},
 				onSelect:function(){
-					loadPDCBBData();
+					loadSecondDeptCBBData();
 				}
 			});
+		}
+	,"json");
+}
+
+function initSecondDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	secondDeptCBB=$("#edit_div #secondDept_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data,
+		onLoadSuccess:function(){
+			$(this).combobox("setValue",'${requestScope.pda.secondDeptId }');
+		},
+		onSelect:function(){
+			loadPDCBBData();
+		}
+	});
+}
+
+function loadSecondDeptCBBData(){
+	var parentId=firstDeptCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:parentId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			secondDeptCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -137,7 +175,7 @@ function initPDCBB(){
 }
 
 function loadPDCBBData(){
-	var deptId=deptCBB.combobox("getValue");
+	var deptId=secondDeptCBB.combobox("getValue");
 	var data=[];
 	data.push({"value":"","text":"请选择设备名称"});
 	$.post(deviceMgmtPath+"queryDeviceCBBList",
@@ -237,11 +275,19 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				<input id="dept_cbb"/>
+				<input id="firstDept_cbb"/>
 			</td>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				<input id="secondDept_cbb"/>
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				设备名称
 			</td>
@@ -249,19 +295,23 @@ function setFitWidthInParent(parent,self){
 				<input id="pd_cbb"/>
 				<input type="hidden" id="pdId" name="pdId" value="${requestScope.pda.pdId }"/>
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				设备编号
 			</td>
 			<td class="td2">
 				 ${requestScope.pda.no }
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				二维码
 			</td>
 			<td class="td2">
 				 <img class="qrcodeUrl_img" alt="" src="${requestScope.pda.qrcodeUrl }">
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

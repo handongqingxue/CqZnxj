@@ -33,6 +33,30 @@ public class PatrolDevice {
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
+	public Integer getSecondDeptId() {
+		return secondDeptId;
+	}
+	public void setSecondDeptId(Integer secondDeptId) {
+		this.secondDeptId = secondDeptId;
+	}
+	public String getSecondDeptName() {
+		return secondDeptName;
+	}
+	public void setSecondDeptName(String secondDeptName) {
+		this.secondDeptName = secondDeptName;
+	}
+	public Integer getFirstDeptId() {
+		return firstDeptId;
+	}
+	public void setFirstDeptId(Integer firstDeptId) {
+		this.firstDeptId = firstDeptId;
+	}
+	public String getFirstDeptName() {
+		return firstDeptName;
+	}
+	public void setFirstDeptName(String firstDeptName) {
+		this.firstDeptName = firstDeptName;
+	}
 	public String getMakeDate() {
 		return makeDate;
 	}
@@ -49,6 +73,10 @@ public class PatrolDevice {
 	private String deptName;
 	private String specs;
 	private Integer deptId;
+	private Integer secondDeptId;
+	private String secondDeptName;
+	private Integer firstDeptId;
+	private String firstDeptName;
 	private String makeDate;
 	private Integer level;
 }

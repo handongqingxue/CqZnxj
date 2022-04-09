@@ -53,7 +53,7 @@ function initDetailDialog(){
 	$("#detail_div").dialog({
 		title:"设备台账信息",
 		width:setFitWidthInParent("body","detail_div"),
-		height:245,
+		height:295,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -66,8 +66,9 @@ function initDetailDialog(){
 	$("#detail_div table .td1").css("width","15%");
 	$("#detail_div table .td2").css("width","30%");
 	$("#detail_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#detail_div table tr").eq(0).css("height","45px");
-	$("#detail_div table tr").eq(1).css("height","130px");
+	$("#detail_div table tr").each(function(i){
+		$("#detail_div table tr").eq(i).css("height",(i==2?130:45)+"px");
+	});
 
 	$(".panel.window").eq(ddNum).css("margin-top","20px");
 	$(".panel.window .panel-title").eq(ddNum).css("color","#000");
@@ -116,30 +117,42 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				${requestScope.pda.deptName }
+				${requestScope.pda.firstDeptName }
 			</td>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				${requestScope.pda.secondDeptName }
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				设备名称
 			</td>
 			<td class="td2">
 				${requestScope.pda.pdName }
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				设备编号
 			</td>
 			<td class="td2">
 				 ${requestScope.pda.no }
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				二维码
 			</td>
 			<td class="td2">
 				 <img class="qrcodeUrl_img" alt="" src="${requestScope.pda.qrcodeUrl }">
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

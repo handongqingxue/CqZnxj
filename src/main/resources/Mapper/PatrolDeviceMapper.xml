@@ -72,7 +72,7 @@
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDevice">
-		select pd.*,d.deptName from patrol_device pd,dept d where pd.deptId=d.deptId and pd.id=#{id}
+		select pd.*,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from patrol_device pd,dept sd,dept fd where pd.deptId=sd.deptId and sd.parentId=fd.deptId and pd.id=#{id}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDevice">
 		select id,name from patrol_device where deptId=#{deptId} order by makeDate

@@ -14,5 +14,5 @@ public interface DeptService {
 
 	Dept selectByDeptId(String deptId);
 
-	List<Dept> queryCBBList(int parentId);
+	List<Dept> queryCBBList(Integer parentId);
 }

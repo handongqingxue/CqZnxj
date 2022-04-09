@@ -40,7 +40,7 @@ public class MainController {
 	
 	@RequestMapping(value="/queryDeptCBBList")
 	@ResponseBody
-	public Map<String, Object> queryDeptCBBList(int parentId) {
+	public Map<String, Object> queryDeptCBBList(Integer parentId) {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		

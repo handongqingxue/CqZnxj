@@ -109,7 +109,7 @@
 		select count(*) from patrol_device_account where no=#{no}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
-		select pda.*,pd.name pdName,d.deptId,d.deptName from patrol_device_account pda,patrol_device pd,dept d where pda.pdId=pd.id and pd.deptId=d.deptId and pda.id=#{id}
+		select pda.*,pd.name pdName,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from patrol_device_account pda,patrol_device pd,dept sd,dept fd where pda.pdId=pd.id and pd.deptId=sd.deptId and sd.parentId=fd.deptId and pda.id=#{id}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
 		select pda.id,pda.no from patrol_device_account pda,patrol_device pd where pda.pdId=pd.id

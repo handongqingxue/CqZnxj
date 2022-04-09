@@ -54,7 +54,7 @@ function initNewDialog(){
 	$("#new_div").dialog({
 		title:"设备信息",
 		width:setFitWidthInParent("body","new_div"),
-		height:200,
+		height:250,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -92,7 +92,8 @@ function initNewDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	initLevelCBB();
-	initDeptCBB();
+	initFirstDeptCBB();
+	initSecondDeptCBB();
 }
 
 function initLevelCBB(){
@@ -108,20 +109,50 @@ function initLevelCBB(){
 	});
 }
 
-function initDeptCBB(){
+function initFirstDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择部门"});
+	data.push({"value":"","text":"请选择一级部门"});
 	$.post(mainPath+"queryDeptCBBList",
+		{parentId:0},
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			deptCBB=$("#new_div #dept_cbb").combobox({
+			firstDeptCBB=$("#new_div #firstDept_cbb").combobox({
 				valueField:"value",
 				textField:"text",
-				data:data
+				data:data,
+				onSelect:function(){
+					loadSecondDeptCBBData();
+				}
 			});
+		}
+	,"json");
+}
+
+function initSecondDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	secondDeptCBB=$("#new_div #secondDept_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data
+	});
+}
+
+function loadSecondDeptCBBData(){
+	var deptId=firstDeptCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:deptId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			secondDeptCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -130,8 +161,10 @@ function checkNew(){
 	if(checkName()){
 		if(checkSpecs()){
 			if(checkLevelId()){
-				if(checkDeptId()){
-					newDevice();
+				if(checkFirstDeptId()){
+					if(checkSecondDeptId()){
+						newDevice();
+					}
 				}
 			}
 		}
@@ -141,7 +174,7 @@ function checkNew(){
 function newDevice(){
 	var level=levelCBB.combobox("getValue");
 	$("#new_div #level").val(level);
-	var deptId=deptCBB.combobox("getValue");
+	var deptId=secondDeptCBB.combobox("getValue");
 	$("#new_div #deptId").val(deptId);
 	
 	var formData = new FormData($("#form1")[0]);
@@ -216,11 +249,22 @@ function checkLevelId(){
 		return true;
 }
 
-//验证部门
-function checkDeptId(){
-	var deptId=deptCBB.combobox("getValue");
+//验证一级部门
+function checkFirstDeptId(){
+	var deptId=firstDeptCBB.combobox("getValue");
 	if(deptId==null||deptId==""){
-	  	alert("请选择部门");
+	  	alert("请选择一级部门");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证二级部门
+function checkSecondDeptId(){
+	var deptId=secondDeptCBB.combobox("getValue");
+	if(deptId==null||deptId==""){
+	  	alert("请选择二级部门");
 	  	return false;
 	}
 	else
@@ -277,11 +321,23 @@ function setFitWidthInParent(parent,self){
 				<input type="hidden" id="level" name="level"/>
 			</td>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				<input id="dept_cbb"/>
+				<input id="firstDept_cbb"/>
+			</td>
+		  </tr>
+		  <tr>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				<input id="secondDept_cbb"/>
 				<input type="hidden" id="deptId" name="deptId"/>
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

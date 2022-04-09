@@ -696,6 +696,22 @@ function initAddPlaasPaCBB(){
 	});
 }
 
+function loadAddPlaasPaCBBData(){
+	var deptId=apDdCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择区域"});
+	$.post(mainPath+"queryAreaCBBList",
+		{deptId:deptId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].id,"text":rows[i].name});
+			}
+			apPaCBB.combobox("loadData",data);
+		}
+	,"json");
+}
+
 function openAddPlaasDialog(flag){
 	if(flag){
 		$("#add_plaas_bg_div").css("display","block");

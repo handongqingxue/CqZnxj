@@ -18,6 +18,6 @@ public interface DeptMapper {
 
 	Dept selectByDeptId(@Param("deptId") String deptId);
 
-	List<Dept> queryCBBList(@Param("parentId") int parentId);
+	List<Dept> queryCBBList(@Param("parentId") Integer parentId);
 
 }

@@ -54,7 +54,7 @@ function initEditDialog(){
 	$("#edit_div").dialog({
 		title:"设备信息",
 		width:setFitWidthInParent("body","edit_div"),
-		height:200,
+		height:250,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -92,7 +92,11 @@ function initEditDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	initLevelCBB();
-	initDeptCBB();
+	initFirstDeptCBB();
+	initSecondDeptCBB();
+	setTimeout(function(){
+		secondDeptCBB.combobox("setValue",'${requestScope.pd.secondDeptId }');
+	},"1000");
 }
 
 function initLevelCBB(){
@@ -111,23 +115,53 @@ function initLevelCBB(){
 	});
 }
 
-function initDeptCBB(){
+function initFirstDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择部门"});
+	data.push({"value":"","text":"请选择一级部门"});
 	$.post(mainPath+"queryDeptCBBList",
+		{parentId:0},
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			deptCBB=$("#edit_div #dept_cbb").combobox({
+			firstDeptCBB=$("#edit_div #firstDept_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onLoadSuccess:function(){
-					$(this).combobox("setValue",'${requestScope.pd.deptId }');
+					$(this).combobox("setValue",'${requestScope.pd.firstDeptId }');
+					setTimeout(function(){
+						loadSecondDeptCBBData();
+					},"1000");
 				}
 			});
+		}
+	,"json");
+}
+
+function initSecondDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	secondDeptCBB=$("#edit_div #secondDept_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data
+	});
+}
+
+function loadSecondDeptCBBData(){
+	var parentId=firstDeptCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:parentId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			secondDeptCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -136,8 +170,10 @@ function checkEdit(){
 	if(checkName()){
 		if(checkSpecs()){
 			if(checkLevelId()){
-				if(checkDeptId()){
-					editDevice();
+				if(checkFirstDeptId()){
+					if(checkSecondDeptId()){
+						editDevice();
+					}
 				}
 			}
 		}
@@ -222,11 +258,22 @@ function checkLevelId(){
 		return true;
 }
 
-//验证部门
-function checkDeptId(){
-	var deptId=deptCBB.combobox("getValue");
+//验证一级部门
+function checkFirstDeptId(){
+	var deptId=firstDeptCBB.combobox("getValue");
 	if(deptId==null||deptId==""){
-	  	alert("请选择部门");
+	  	alert("请选择一级部门");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证二级部门
+function checkSecondDeptId(){
+	var deptId=secondDeptCBB.combobox("getValue");
+	if(deptId==null||deptId==""){
+	  	alert("请选择二级部门");
 	  	return false;
 	}
 	else
@@ -284,11 +331,23 @@ function setFitWidthInParent(parent,self){
 				<input type="hidden" id="level" name="level" value="${requestScope.pd.level }"/>
 			</td>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				<input id="dept_cbb"/>
+				<input id="firstDept_cbb"/>
+			</td>
+		  </tr>
+		  <tr>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				<input id="secondDept_cbb"/>
 				<input type="hidden" id="deptId" name="deptId" value="${requestScope.pd.deptId }"/>
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>
