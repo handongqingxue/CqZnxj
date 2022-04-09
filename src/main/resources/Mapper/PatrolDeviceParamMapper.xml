@@ -125,7 +125,7 @@
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolDeviceParam">
-		select pdp.*,pda.no pdaNo,pd.id pdId,pd.name pdName,d.deptId,d.deptName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,dept d where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.deptId=d.deptId and pda.id=#{id}
+		select pdp.*,pda.no pdaNo,pd.id pdId,pd.name pdName,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from patrol_device_param pdp,patrol_device_account pda,patrol_device pd,dept sd,dept fd where pdp.pdaId=pda.id and pda.pdId=pd.id and pd.deptId=sd.deptId and sd.parentId=fd.deptId and pda.id=#{id}
 	</select>
 	<select id="getCountByPdaIdList" resultType="java.lang.Integer">
 		select count(*) from patrol_device_param where 1=1

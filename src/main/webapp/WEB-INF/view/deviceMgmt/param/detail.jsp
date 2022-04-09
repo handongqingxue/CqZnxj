@@ -49,7 +49,7 @@ function initEditDialog(){
 	$("#edit_div").dialog({
 		title:"设备参数信息",
 		width:setFitWidthInParent("body","edit_div"),
-		height:260,
+		height:310,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -111,33 +111,39 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				${requestScope.pdp.deptName }
+				${requestScope.pdp.firstDeptName }
 			</td>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				${requestScope.pdp.secondDeptName }
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				设备名称
 			</td>
 			<td class="td2">
 				${requestScope.pdp.pdName }
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				设备编号
 			</td>
 			<td class="td2">
 				${requestScope.pdp.pdaNo }
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				参数名称
 			</td>
 			<td class="td2">
 				${requestScope.pdp.name }
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				参数类型
 			</td>
@@ -145,25 +151,31 @@ function setFitWidthInParent(parent,self){
 				<c:if test="${requestScope.pdp.type eq 1 }">数值</c:if>
 				<c:if test="${requestScope.pdp.type eq 2 }">观察</c:if>类
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				参数单位
 			</td>
 			<td class="td2">
 				${requestScope.pdp.unit }
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				报警上限
 			</td>
 			<td class="td2">
 				${requestScope.pdp.warnUp }
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				报警下限
 			</td>
 			<td class="td2">
 				${requestScope.pdp.warnDown }
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

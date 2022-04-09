@@ -54,7 +54,7 @@ function initEditDialog(){
 	$("#edit_div").dialog({
 		title:"设备参数信息",
 		width:setFitWidthInParent("body","edit_div"),
-		height:300,
+		height:350,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -91,40 +91,71 @@ function initEditDialog(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 
-	initDeptCBB();
+	initFirstDeptCBB();
+	initSecondDeptCBB();
 	initPDCBB();
 	setTimeout(function(){
+		loadSecondDeptCBB();
+		secondDeptCBB.combobox("setValue",'${requestScope.pdp.secondDeptId }');
 		loadPDCBBData();
 		pdCBB.combobox("setValue",'${requestScope.pdp.pdId }');
-		setTimeout(function(){
-			loadPDACBBData();
-			pdaCBB.combobox("setValue",'${requestScope.pdp.pdaId }');
-		},"1000");
+		loadPDACBBData();
+		pdaCBB.combobox("setValue",'${requestScope.pdp.pdaId }');
 	},"1000");
 	initPDACBB();
 	initTypeCBB();
 }
 
-function initDeptCBB(){
+function initFirstDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择部门"});
+	data.push({"value":"","text":"请选择一级部门"});
 	$.post(mainPath+"queryDeptCBBList",
+		{parentId:0},
 		function(result){
 			var rows=result.rows;
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			deptCBB=$("#edit_div #dept_cbb").combobox({
+			firstDeptCBB=$("#edit_div #firstDept_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onLoadSuccess:function(){
-					$(this).combobox("setValue",'${requestScope.pdp.deptId }');
+					$(this).combobox("setValue",'${requestScope.pdp.firstDeptId }');
 				},
 				onSelect:function(){
-					loadPDCBBData();
+					loadSecondDeptCBB();
 				}
 			});
+		}
+	,"json");
+}
+
+function initSecondDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	secondDeptCBB=$("#edit_div #secondDept_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data,
+		onSelect:function(){
+			loadPDCBBData();
+		}
+	});
+}
+
+function loadSecondDeptCBB(){
+	var parentId=firstDeptCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:parentId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			secondDeptCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -143,7 +174,7 @@ function initPDCBB(){
 }
 
 function loadPDCBBData(){
-	var deptId=deptCBB.combobox("getValue");
+	var deptId=secondDeptCBB.combobox("getValue");
 	var data=[];
 	data.push({"value":"","text":"请选择设备名称"});
 	$.post(deviceMgmtPath+"queryDeviceCBBList",
@@ -200,15 +231,17 @@ function initTypeCBB(){
 }
 
 function checkEdit(){
-	if(checkDeptId()){
-		if(checkPDName()){
-			if(checkPDAName()){
-				if(checkName()){
-					if(checkTypeName()){
-						if(checkUnit()){
-							if(checkWarnUp()){
-								if(checkWarnDown()){
-									editParam();
+	if(checkFirstDeptId()){
+		if(checkSecondDeptId()){
+			if(checkPDName()){
+				if(checkPDAName()){
+					if(checkName()){
+						if(checkTypeName()){
+							if(checkUnit()){
+								if(checkWarnUp()){
+									if(checkWarnDown()){
+										editParam();
+									}
 								}
 							}
 						}
@@ -246,11 +279,22 @@ function editParam(){
 	});
 }
 
-//验证部门
-function checkDeptId(){
-	var deptId=deptCBB.combobox("getValue");
+//验证一级部门
+function checkFirstDeptId(){
+	var deptId=firstDeptCBB.combobox("getValue");
 	if(deptId==null||deptId==""){
-	  	alert("请选择部门");
+	  	alert("请选择一级部门");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证二级部门
+function checkSecondDeptId(){
+	var deptId=secondDeptCBB.combobox("getValue");
+	if(deptId==null||deptId==""){
+	  	alert("请选择二级部门");
 	  	return false;
 	}
 	else
@@ -382,19 +426,25 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				<input id="dept_cbb"/>
+				<input id="firstDept_cbb"/>
 			</td>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				<input id="secondDept_cbb"/>
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				设备名称
 			</td>
 			<td class="td2">
 				<input id="pd_cbb"/>
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				设备编号
 			</td>
@@ -402,14 +452,14 @@ function setFitWidthInParent(parent,self){
 				<input id="pda_cbb"/>
 				<input type="hidden" id="pdaId" name="pdaId" value="${requestScope.pdp.pdaId }"/>
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				参数名称
 			</td>
 			<td class="td2">
 				<input type="text" class="name_inp" id="name" name="name" value="${requestScope.pdp.name }" placeholder="请输入参数名称" onfocus="focusName()" onblur="checkName()"/>
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				参数类型
 			</td>
@@ -417,25 +467,31 @@ function setFitWidthInParent(parent,self){
 				<input id="type_cbb"/>
 				<input type="hidden" id="type" name="type"/>
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				参数单位
 			</td>
 			<td class="td2">
 				<input type="text" class="unit_inp" id="unit" name="unit" value="${requestScope.pdp.unit }" placeholder="请输入参数单位" onfocus="focusUnit()" onblur="checkUnit()"/>
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				报警上限
 			</td>
 			<td class="td2">
 				<input type="number" class="warnUp_inp" id="warnUp" name="warnUp" value="${requestScope.pdp.warnUp }" placeholder="请输入报警上限"/>
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				报警下限
 			</td>
 			<td class="td2">
 				<input type="number" class="warnDown_inp" id="warnDown" name="warnDown" value="${requestScope.pdp.warnDown }" placeholder="请输入报警下限"/>
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>
