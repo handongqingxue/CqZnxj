@@ -106,7 +106,7 @@ function resizeSideDiv(){
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡检管理</span>
 	</div>
-	<a class="nav_item nav_item_a" href="<%=basePath%>patrolMgmt/line/list?nav=xjlx">
+	<a class="nav_item nav_item_a${param.nav eq 'xjlx'?' selected':'' }" href="<%=basePath%>patrolMgmt/line/list?nav=xjlx">
 		<img class="nav_img" src="<%=basePath%>resource/image/001.png">
 		<span class="text_span">巡检路线</span>
 	</a>
@@ -152,6 +152,12 @@ function resizeSideDiv(){
 	</c:if>
 	<c:if test="${param.nav eq 'sbcs' }">
 		设备管理>设备参数
+	</c:if>
+	<c:if test="${param.nav eq 'xjlx' }">
+		巡检管理>巡检路线
+	</c:if>
+	<c:if test="${param.nav eq 'xjqy' }">
+		巡检管理>巡检区域
 	</c:if>
 	</span>
 	<span class="client_id_span">admin</span>

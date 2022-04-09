@@ -19,4 +19,6 @@ public interface PatrolAreaService {
 
 	PatrolArea selectById(String id);
 
+	List<PatrolArea> queryCBBList(int deptId);
+
 }

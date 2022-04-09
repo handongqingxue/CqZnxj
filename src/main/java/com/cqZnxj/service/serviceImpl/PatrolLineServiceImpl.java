@@ -49,4 +49,10 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 		// TODO Auto-generated method stub
 		return patrolLineDao.queryList(name, createTimeStart, createTimeEnd, (page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public List<PatrolLine> queryCBBList() {
+		// TODO Auto-generated method stub
+		return patrolLineDao.queryCBBList();
+	}
 }

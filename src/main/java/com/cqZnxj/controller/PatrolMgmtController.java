@@ -28,6 +28,8 @@ public class PatrolMgmtController {
 	private PatrolAreaService patrolAreaService;
 	@Autowired
 	private PatrolLineService patrolLineService;
+	@Autowired
+	private PatLineAreaAccSetService patLineAreaAccSetService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
 	@RequestMapping(value="/area/new")
@@ -121,6 +123,27 @@ public class PatrolMgmtController {
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "±à¼­Ñ²¼ìÂ·ÏßÊ§°Ü£¡");
 		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryPatLineAreaAccSetList")
+	@ResponseBody
+	public Map<String, Object> queryPatLineAreaAccSetList(String plName,String paName,
+			int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = patLineAreaAccSetService.queryForInt(plName,paName);
+			List<PatLineAreaAccSet> plaasList=patLineAreaAccSetService.queryList(plName,paName, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", plaasList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return jsonMap;
 	}
 	
@@ -218,6 +241,32 @@ public class PatrolMgmtController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryLineCBBList")
+	@ResponseBody
+	public Map<String, Object> queryLineCBBList() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolLine> plList=patrolLineService.queryCBBList();
+		
+		jsonMap.put("rows", plList);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryAreaCBBList")
+	@ResponseBody
+	public Map<String, Object> queryAreaCBBList(int deptId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolArea> paList=patrolAreaService.queryCBBList(deptId);
+		
+		jsonMap.put("rows", paList);
 		
 		return jsonMap;
 	}

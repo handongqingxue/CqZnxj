@@ -27,6 +27,6 @@
 		select * from dept where deptId=#{deptId}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.Dept">
-		select deptId,deptName from dept order by createTime desc
+		select deptId,deptName from dept where parentId=#{parentId} order by createTime desc
 	</select>
 </mapper>

@@ -10,18 +10,18 @@
 	margin-left: 220px;
 	position: fixed;
 }
-.tab1_div .toolbar{
+.tab1_toolbar{
 	height:32px;
 }
-.tab1_div .toolbar .row_div{
+.tab1_toolbar .row_div{
 	height:32px;
 }
-.tab1_div .toolbar .row_div .name_span,
-.tab1_div .toolbar .row_div .createTime_span,
-.tab1_div .toolbar .row_div .search_but{
+.tab1_toolbar .row_div .name_span,
+.tab1_toolbar .row_div .createTime_span,
+.tab1_toolbar .row_div .tab1_search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .row_div .name_inp{
+.tab1_toolbar .row_div .name_inp{
 	width: 120px;
 	height: 25px;
 }
@@ -30,7 +30,7 @@ a {
   text-decoration: none;
 }
 
-.add_line_bg_div,.edit_line_bg_div,.detail_line_bg_div{
+.add_line_bg_div,.edit_line_bg_div,.detail_line_bg_div,.add_plaas_bg_div{
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0,0,0,.45);
@@ -52,27 +52,68 @@ a {
 	width: 150px;
 	height: 25px;
 }
+
+.tab2_div{
+	margin-top:500px;
+	margin-left: 220px;
+	position: fixed;
+}
+.tab2_toolbar{
+	height:32px;
+}
+.tab2_toolbar .row_div{
+	height:32px;
+}
+.tab2_toolbar .row_div .plName_span,
+.tab2_toolbar .row_div .paName_span,
+.tab2_toolbar .row_div .tab2_search_but{
+	margin-left: 13px;
+}
+.tab2_toolbar .row_div .plName_inp,
+.tab2_toolbar .row_div .paName_inp{
+	width: 120px;
+	height: 25px;
+}
+
+.add_plaas_div{
+	width: 500px;
+	height: 410px;
+	margin: 200px auto 0;
+	background-color: #fff;
+	border-radius:5px;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
 </style>
 <title>Insert title here</title>
 <%@include file="../../inc/js.jsp"%>
 <script type="text/javascript">
 var path='<%=basePath %>';
+var mainPath=path+'main/';
 var patrolMgmtPath=path+'patrolMgmt/';
 var dialogTop=10;
 var dialogLeft=20;
 var aldNum=0;
 var eldNum=1;
 var dldNum=2;
+var aplaasdNum=3;
 $(function(){
-	initCreateTimeStDTB();
-	initCreateTimeEtDTB();
-	initSearchLB();
-	initAddLB();
-	initRemoveLB();
+	initTab1CreateTimeStDTB();
+	initTab1CreateTimeEtDTB();
+	initTab1SearchLB();
+	initTab1AddLB();
+	initTab1RemoveLB();
 	initTab1();
 	initAddLineDialog();//0
 	initEditLineDialog();//1
 	initDetailLineDialog();//2
+
+	initTab2SearchLB();
+	initTab2AddLB();
+	initTab2RemoveLB();
+	initTab2();
+	initAddPlaasDialog();//3
 	
 	initDialogPosition();//将不同窗体移动到主要内容区域
 });
@@ -87,6 +128,9 @@ function initDialogPosition(){
 	var dldpw=$("body").find(".panel.window").eq(dldNum);
 	var dldws=$("body").find(".window-shadow").eq(dldNum);
 
+	var aplaasdpw=$("body").find(".panel.window").eq(aplaasdNum);
+	var aplaasdws=$("body").find(".window-shadow").eq(aplaasdNum);
+
 	var aldDiv=$("#add_line_div");
 	aldDiv.append(aldpw);
 	aldDiv.append(aldws);
@@ -98,34 +142,38 @@ function initDialogPosition(){
 	var dldDiv=$("#detail_line_div");
 	dldDiv.append(dldpw);
 	dldDiv.append(dldws);
+
+	var aplaasdDiv=$("#add_plaas_div");
+	aplaasdDiv.append(aplaasdpw);
+	aplaasdDiv.append(aplaasdws);
 }
 
-function initCreateTimeStDTB(){
-	createTimeStDTB=$("#createTimeSt_dtb").datetimebox({
+function initTab1CreateTimeStDTB(){
+	tab1CreateTimeStDTB=$("#tab1_createTimeSt_dtb").datetimebox({
         required:false
     });
 }
 
-function initCreateTimeEtDTB(){
-	createTimeEtDTB=$("#createTimeEt_dtb").datetimebox({
+function initTab1CreateTimeEtDTB(){
+	tab1CreateTimeEtDTB=$("#tab1_createTimeEt_dtb").datetimebox({
         required:false
     });
 }
 
-function initSearchLB(){
-	$("#search_but").linkbutton({
+function initTab1SearchLB(){
+	$("#tab1_search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var name=$("#toolbar #name").val();
-			var createTimeStart=createTimeStDTB.datetimebox("getValue");
-			var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
+			var name=$("#tab1_toolbar #name").val();
+			var createTimeStart=tab1CreateTimeStDTB.datetimebox("getValue");
+			var createTimeEnd=tab1CreateTimeEtDTB.datetimebox("getValue");
 			tab1.datagrid("load",{name:name,createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
 		}
 	});
 }
 
-function initAddLB(){
-	$("#add_but").linkbutton({
+function initTab1AddLB(){
+	$("#tab1_add_but").linkbutton({
 		iconCls:"icon-add",
 		onClick:function(){
 			openAddLineDialog(true);
@@ -133,11 +181,11 @@ function initAddLB(){
 	});
 }
 
-function initRemoveLB(){
-	removeLB=$("#remove_but").linkbutton({
+function initTab1RemoveLB(){
+	$("#tab1_remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			deleteByIds();
+			deleteLineByIds();
 		}
 	});
 }
@@ -146,7 +194,7 @@ function initTab1(){
 	tab1=$("#tab1").datagrid({
 		title:"路线查询",
 		url:patrolMgmtPath+"queryLineList",
-		toolbar:"#toolbar",
+		toolbar:"#tab1_toolbar",
 		width:setFitWidthInParent("body","tab1_div"),
 		pagination:true,
 		pageSize:10,
@@ -175,7 +223,7 @@ function initTab1(){
 	});
 }
 
-function deleteByIds(ids){
+function deleteLineByIds(ids){
 	var rows=tab1.datagrid("getSelections");
 	if (rows.length == 0) {
 		$.messager.alert("提示","请选择要删除的信息！","warning");
@@ -458,20 +506,222 @@ function editLine(){
 	,"json");
 }
 
+function initTab2SearchLB(){
+	$("#tab2_search_but").linkbutton({
+		iconCls:"icon-search",
+		onClick:function(){
+			var name=$("#tab2_toolbar #name").val();
+			tab2.datagrid("load",{name:name});
+		}
+	});
+}
+
+function initTab2AddLB(){
+	$("#tab2_add_but").linkbutton({
+		iconCls:"icon-add",
+		onClick:function(){
+			openAddPlaasDialog(true);
+		}
+	});
+}
+
+function initTab2RemoveLB(){
+	$("#tab2_remove_but").linkbutton({
+		iconCls:"icon-remove",
+		onClick:function(){
+			//deleteLineByIds();
+		}
+	});
+}
+
+function initTab2(){
+	tab2=$("#tab2").datagrid({
+		title:"路线、区域、设备台账查询",
+		url:patrolMgmtPath+"queryPatLineAreaAccSetList",
+		toolbar:"#tab2_toolbar",
+		width:setFitWidthInParent("body","tab1_div"),
+		pagination:true,
+		pageSize:10,
+		columns:[[
+			{field:"plName",title:"路线名称",width:150},
+			{field:"paName",title:"区域名称",width:150},
+			{field:"pdaNos",title:"设备台账",width:300},
+            {field:"id",title:"操作",width:110,formatter:function(value,row){
+       			var rowJson = JSON.stringify(row).replace(/"/g, '&quot;');
+            	var str="<a onclick=\"openEditLineDialog(true,"+rowJson+")\">编辑</a>&nbsp;&nbsp;"
+        		+"<a onclick=\"openDetailLineDialog(true,"+rowJson+")\">详情</a>";
+            	return str;
+            }}
+	    ]],
+        onLoadSuccess:function(data){
+			if(data.total==0){
+				$(this).datagrid("appendRow",{plName:"<div style=\"text-align:center;\">暂无信息<div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"plName",colspan:4});
+				data.total=0;
+			}
+			
+			$(".panel-header .panel-title").css("color","#000");
+			$(".panel-header .panel-title").css("font-size","15px");
+			$(".panel-header .panel-title").css("padding-left","10px");
+			$(".panel-header, .panel-body").css("border-color","#ddd");
+		}
+	});
+}
+
+function initAddPlaasDialog(){
+	$("#add_plaas_dialog_div").dialog({
+		title:"路线、区域、设备台账添加",
+		width:setFitWidthInParent("#add_plaas_div","add_plaas_dialog_div"),
+		height:350,
+		top:5,
+		left:dialogLeft,
+		buttons:[
+           {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
+        	   checkAddLine();
+           }},
+           {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
+        	   openAddPlaasDialog(false);
+           }}
+        ]
+	});
+
+	$("#add_plaas_dialog_div table").css("width",(setFitWidthInParent("#add_plaas_div","add_plaas_dialog_table"))+"px");
+	$("#add_plaas_dialog_div table").css("magin","-100px");
+	$("#add_plaas_dialog_div table td").css("padding-left","40px");
+	$("#add_plaas_dialog_div table td").css("padding-right","20px");
+	$("#add_plaas_dialog_div table td").css("font-size","15px");
+	$("#add_plaas_dialog_div table .td1").css("width","30%");
+	$("#add_plaas_dialog_div table .td2").css("width","60%");
+	$("#add_plaas_dialog_div table tr").css("height","45px");
+
+	$(".panel.window").eq(aplaasdNum).css("margin-top","20px");
+	$(".panel.window .panel-title").eq(aplaasdNum).css("color","#000");
+	$(".panel.window .panel-title").eq(aplaasdNum).css("font-size","15px");
+	$(".panel.window .panel-title").eq(aplaasdNum).css("padding-left","10px");
+	
+	$(".panel-header, .panel-body").css("border-color","#ddd");
+	
+	//以下的是表格下面的面板
+	$(".window-shadow").eq(aplaasdNum).css("margin-top","20px");
+	$(".window,.window .window-body").eq(aplaasdNum).css("border-color","#ddd");
+
+	$("#add_plaas_dialog_div #ok_but").css("left","30%");
+	$("#add_plaas_dialog_div #ok_but").css("position","absolute");
+
+	$("#add_plaas_dialog_div #cancel_but").css("left","50%");
+	$("#add_plaas_dialog_div #cancel_but").css("position","absolute");
+	
+	$(".dialog-button").css("background-color","#fff");
+	$(".dialog-button .l-btn-text").css("font-size","20px");
+	
+	initAddPlaasPlCBB();
+	initAddPlaasUpDeptCBB();
+	initAddPlaasDownDeptCBB();
+	initAddPlaasPaCBB();
+}
+
+function initAddPlaasPlCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择路线"});
+	$.post(patrolMgmtPath+"queryLineCBBList",
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].id,"text":rows[i].name});
+			}
+			apPlCBB=$("#add_plaas_div #pl_cbb").combobox({
+				valueField:"value",
+				textField:"text",
+				data:data
+			});
+		}
+	,"json");
+}
+
+function initAddPlaasUpDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择上级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:0},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			apUdCBB=$("#apud_cbb").combobox({
+				valueField:"value",
+				textField:"text",
+				data:data,
+				onSelect:function(){
+					loadAddPlaasDownDeptCBBData();
+				}
+			});
+		}
+	,"json");
+}
+
+function initAddPlaasDownDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择下级部门"});
+	apDdCBB=$("#apdd_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data
+	});
+}
+
+function loadAddPlaasDownDeptCBBData(){
+	var parentId=apUdCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择下级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:parentId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			apDdCBB.combobox("loadData",data);
+		}
+	,"json");
+}
+
+function initAddPlaasPaCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择区域"});
+	apPaCBB=$("#appa_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data
+	});
+}
+
+function openAddPlaasDialog(flag){
+	if(flag){
+		$("#add_plaas_bg_div").css("display","block");
+	}
+	else{
+		$("#add_plaas_bg_div").css("display","none");
+	}
+}
+
 function setFitWidthInParent(parent,self){
 	var space=0;
 	switch (self) {
 	case "tab1_div":
+	case "tab2_div":
 		space=250;
 		break;
 	case "add_line_dialog_div":
 	case "edit_line_dialog_div":
 	case "detail_line_dialog_div":
+	case "add_plaas_dialog_div":
 		space=50;
 		break;
 	case "add_line_dialog_table":
 	case "edit_line_dialog_table":
 	case "detail_line_dialog_table":
+	case "add_plaas_dialog_table":
 		space=68;
 		break;
 	}
@@ -483,17 +733,17 @@ function setFitWidthInParent(parent,self){
 <body>
 <%@include file="../../inc/side.jsp"%>
 <div class="tab1_div" id="tab1_div">
-	<div class="toolbar" id="toolbar">
+	<div class="tab1_toolbar" id="tab1_toolbar">
 		<div class="row_div">
 			<span class="name_span">名称：</span>
 			<input type="text" class="name_inp" id="name" placeholder="请输入路线名称"/>
 			<span class="createTime_span">创建时间：</span>
-			<input id="createTimeSt_dtb"/>
+			<input id="tab1_createTimeSt_dtb"/>
 			-
-			<input id="createTimeEt_dtb"/>
-			<a class="search_but" id="search_but">查询</a>
-			<a id="add_but">添加</a>
-			<a id="remove_but">删除</a>
+			<input id="tab1_createTimeEt_dtb"/>
+			<a class="tab1_search_but" id="tab1_search_but">查询</a>
+			<a id="tab1_add_but">添加</a>
+			<a id="tab1_remove_but">删除</a>
 		</div>
 	</div>
 	<table id="tab1">
@@ -546,6 +796,74 @@ function setFitWidthInParent(parent,self){
 				</td>
 				<td class="td2">
 					<span id="name_span"></span>
+				</td>
+			  </tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="tab2_div" id="tab2_div">
+	<div class="tab2_toolbar" id="tab2_toolbar">
+		<div class="row_div">
+			<span class="plName_span">路线名称：</span>
+			<input type="text" class="plName_inp" id="plName" placeholder="请输入路线名称"/>
+			<span class="paName_span">区域名称：</span>
+			<input type="text" class="paName_inp" id="paName" placeholder="请输入区域名称"/>
+			<a class="tab2_search_but" id="tab2_search_but">查询</a>
+			<a id="tab2_add_but">添加</a>
+			<a id="tab2_remove_but">删除</a>
+		</div>
+	</div>
+	<table id="tab2">
+	</table>
+</div>
+
+<div class="add_plaas_bg_div" id="add_plaas_bg_div">
+	<div class="add_plaas_div" id="add_plaas_div">
+		<div class="add_plaas_dialog_div" id="add_plaas_dialog_div">
+			<table>
+			  <tr>
+				<td class="td1" align="right">
+					路线
+				</td>
+				<td class="td2">
+					<input id="pl_cbb"/>
+					<input type="hidden" id="plId" name="plId"/>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					上级部门
+				</td>
+				<td class="td2">
+					<input id="apud_cbb"/>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					下级部门
+				</td>
+				<td class="td2">
+					<input id="apdd_cbb"/>
+					<input type="hidden" id="deptId" name="deptId"/>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					区域
+				</td>
+				<td class="td2">
+					<input id="appa_cbb"/>
+					<input type="hidden" id="paId" name="paId"/>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					设备台账
+				</td>
+				<td class="td2">
+					
 				</td>
 			  </tr>
 			</table>

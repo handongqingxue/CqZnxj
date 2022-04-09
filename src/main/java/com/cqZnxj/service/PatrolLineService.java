@@ -17,4 +17,6 @@ public interface PatrolLineService {
 	List<PatrolLine> queryList(String name, String createTimeStart, String createTimeEnd, int page, int rows,
 			String sort, String order);
 
+	List<PatrolLine> queryCBBList();
+
 }

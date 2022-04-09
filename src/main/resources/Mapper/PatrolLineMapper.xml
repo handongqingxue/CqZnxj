@@ -54,4 +54,7 @@
 		order by createTime desc
 		limit #{rowNum},#{rows}
 	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolLine">
+		select id,name from patrol_line order by createTime
+	</select>
 </mapper>

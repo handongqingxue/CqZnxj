@@ -86,4 +86,7 @@
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolArea">
 		select pa.*,d.deptName from patrol_area pa,dept d where pa.deptId=d.deptId and pa.id=#{id}
 	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolArea">
+		select id,name from patrol_area where deptId=#{deptId} order by createTime desc
+	</select>
 </mapper>

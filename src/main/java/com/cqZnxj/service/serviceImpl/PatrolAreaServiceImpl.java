@@ -92,4 +92,10 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 		pa.setPdaNos(pdaNos.substring(1));
 		return pa;
 	}
+
+	@Override
+	public List<PatrolArea> queryCBBList(int deptId) {
+		// TODO Auto-generated method stub
+		return patrolAreaDao.queryCBBList(deptId);
+	}
 }

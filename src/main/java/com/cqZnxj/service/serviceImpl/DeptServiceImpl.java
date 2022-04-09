@@ -45,9 +45,9 @@ public class DeptServiceImpl implements DeptService {
 		return deptDao.selectByDeptId(deptId);
 	}
 
-	public List<Dept> queryCBBList() {
+	public List<Dept> queryCBBList(int parentId) {
 		// TODO Auto-generated method stub
-		return deptDao.queryCBBList();
+		return deptDao.queryCBBList(parentId);
 	}
 
 }
