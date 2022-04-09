@@ -109,28 +109,30 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				${requestScope.pa.deptName }
+				${requestScope.pa.firstDeptName }
 			</td>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				${requestScope.pa.secondDeptName }
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				设备编号
 			</td>
 			<td class="td2">
 				${requestScope.pa.pdaNos }
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				区域名称
 			</td>
 			<td class="td2">
 				${requestScope.pa.name }
-			</td>
-			<td class="td1" align="right">
-			</td>
-			<td class="td2">
 			</td>
 		  </tr>
 		</table>

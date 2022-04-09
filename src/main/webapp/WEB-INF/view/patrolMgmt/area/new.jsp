@@ -92,13 +92,14 @@ function initNewDialog(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 
-	initDeptCBB();
+	initFirstDeptCBB();
+	initSecondDeptCBB();
 	initPDACBB();
 }
 
-function initDeptCBB(){
+function initFirstDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择部门"});
+	data.push({"value":"","text":"请选择一级部门"});
 	$.post(mainPath+"queryDeptCBBList",
 		{parentId:0},
 		function(result){
@@ -106,14 +107,43 @@ function initDeptCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			deptCBB=$("#new_div #dept_cbb").combobox({
+			firstDeptCBB=$("#new_div #firstDept_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onSelect:function(){
-					loadPDACBBData();
+					loadSecondDeptCBBData();
 				}
 			});
+		}
+	,"json");
+}
+
+function initSecondDeptCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	secondDeptCBB=$("#new_div #secondDept_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data,
+		onSelect:function(){
+			loadPDACBBData();
+		}
+	});
+}
+
+function loadSecondDeptCBBData(){
+	var parentId=firstDeptCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择二级部门"});
+	$.post(mainPath+"queryDeptCBBList",
+		{parentId:parentId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
+			}
+			secondDeptCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -130,7 +160,7 @@ function initPDACBB(){
 }
 
 function loadPDACBBData(){
-	var deptId=deptCBB.combobox("getValue");
+	var deptId=secondDeptCBB.combobox("getValue");
 	var data=[];
 	data.push({"value":"","text":"请选择设备编号"});
 	$.post(deviceMgmtPath+"queryAccountCBBList",
@@ -146,10 +176,12 @@ function loadPDACBBData(){
 }
 
 function checkNew(){
-	if(checkDeptId()){
-		if(checkPDAName()){
-			if(checkName()){
-				newArea();
+	if(checkFirstDeptId()){
+		if(checkSecondDeptId()){
+			if(checkPDAName()){
+				if(checkName()){
+					newArea();
+				}
 			}
 		}
 	}
@@ -185,11 +217,22 @@ function newArea(){
 	});
 }
 
-//验证部门
-function checkDeptId(){
-	var deptId=deptCBB.combobox("getValue");
+//验证一级部门
+function checkFirstDeptId(){
+	var deptId=firstDeptCBB.combobox("getValue");
 	if(deptId==null||deptId==""){
-	  	alert("请选择部门");
+	  	alert("请选择一级部门");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证二级部门
+function checkSecondDeptId(){
+	var deptId=secondDeptCBB.combobox("getValue");
+	if(deptId==null||deptId==""){
+	  	alert("请选择二级部门");
 	  	return false;
 	}
 	else
@@ -258,12 +301,20 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				部门
+				一级部门
 			</td>
 			<td class="td2">
-				<input id="dept_cbb"/>
+				<input id="firstDept_cbb"/>
+			</td>
+			<td class="td1" align="right">
+				二级部门
+			</td>
+			<td class="td2">
+				<input id="secondDept_cbb"/>
 				<input type="hidden" id="deptId" name="deptId"/>
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				设备编号
 			</td>
@@ -271,17 +322,11 @@ function setFitWidthInParent(parent,self){
 				<input id="pda_cbb"/>
 				<input type="hidden" id="pdaIds" name="pdaIds"/>
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				区域名称
 			</td>
 			<td class="td2">
 				<input type="text" class="name_inp" id="name" name="name" placeholder="请输入区域名称" onfocus="focusName()" onblur="checkName()"/>
-			</td>
-			<td class="td1" align="right">
-			</td>
-			<td class="td2">
 			</td>
 		  </tr>
 		</table>

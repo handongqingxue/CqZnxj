@@ -95,7 +95,7 @@ function initEditDialog(){
 	initSecondDeptCBB();
 	initPDCBB();
 	setTimeout(function(){
-		loadSecondDeptCBB();
+		loadSecondDeptCBBData();
 		secondDeptCBB.combobox("setValue",'${requestScope.pdp.secondDeptId }');
 		loadPDCBBData();
 		pdCBB.combobox("setValue",'${requestScope.pdp.pdId }');
@@ -124,7 +124,7 @@ function initFirstDeptCBB(){
 					$(this).combobox("setValue",'${requestScope.pdp.firstDeptId }');
 				},
 				onSelect:function(){
-					loadSecondDeptCBB();
+					loadSecondDeptCBBData();
 				}
 			});
 		}
@@ -144,7 +144,7 @@ function initSecondDeptCBB(){
 	});
 }
 
-function loadSecondDeptCBB(){
+function loadSecondDeptCBBData(){
 	var parentId=firstDeptCBB.combobox("getValue");
 	var data=[];
 	data.push({"value":"","text":"请选择二级部门"});

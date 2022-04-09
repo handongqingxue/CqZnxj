@@ -84,7 +84,7 @@
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolArea">
-		select pa.*,d.deptName from patrol_area pa,dept d where pa.deptId=d.deptId and pa.id=#{id}
+		select pa.*,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from patrol_area pa,dept sd,dept fd where pa.deptId=sd.deptId and sd.parentId=fd.deptId and pa.id=#{id}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolArea">
 		select id,name from patrol_area where deptId=#{deptId} order by createTime desc
