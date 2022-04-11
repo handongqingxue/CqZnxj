@@ -10,4 +10,6 @@ public interface PatLineAreaAccSetService {
 
 	List<PatLineAreaAccSet> queryList(String plName, String paName, int page, int rows, String sort, String order);
 
+	int add(PatLineAreaAccSet plaas);
+
 }

@@ -23,4 +23,6 @@ public interface PatrolAreaMapper {
 
 	List<PatrolArea> queryCBBList(@Param("deptId") int deptId);
 
+	String getPdaIdsById(@Param("id") String id);
+
 }

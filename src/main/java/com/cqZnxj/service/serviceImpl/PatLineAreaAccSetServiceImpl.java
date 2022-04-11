@@ -27,4 +27,10 @@ public class PatLineAreaAccSetServiceImpl implements PatLineAreaAccSetService {
 		// TODO Auto-generated method stub
 		return patLineAreaAccSetDao.queryList(plName, paName, (page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public int add(PatLineAreaAccSet plaas) {
+		// TODO Auto-generated method stub
+		return patLineAreaAccSetDao.add(plaas);
+	}
 }

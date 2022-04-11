@@ -91,6 +91,7 @@ a {
 <script type="text/javascript">
 var path='<%=basePath %>';
 var mainPath=path+'main/';
+var deviceMgmtPath=path+'deviceMgmt/';
 var patrolMgmtPath=path+'patrolMgmt/';
 var dialogTop=10;
 var dialogLeft=20;
@@ -465,6 +466,57 @@ function checkEditLineName(){
 		return true;
 }
 
+//验证所选路线
+function checkAddPlaasPl(){
+	var plId=apPlCBB.combobox("getValue");
+	if(plId==null||plId==""){
+	  	alert("请选择路线");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+function checkAddPlaasFd(){
+	var fdId=apFdCBB.combobox("getValue");
+	if(fdId==null||fdId==""){
+	  	alert("请选择一级部门");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+function checkAddPlaasSd(){
+	var sdId=apSdCBB.combobox("getValue");
+	if(sdId==null||sdId==""){
+	  	alert("请选择二级部门");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+function checkAddPlaasPa(){
+	var paId=apPaCBB.combobox("getValue");
+	if(paId==null||paId==""){
+	  	alert("请选择区域");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+function checkAddPlaasPda(){
+	var pdaIds=apPdaCBB.combobox("getValues");
+	if(pdaIds==null||pdaIds==""){
+	  	alert("请选择设备台账");
+	  	return false;
+	}
+	else
+		return true;
+}
+
 function checkAddLine(){
 	if(checkAddLineName()){
 		newLine();
@@ -474,6 +526,20 @@ function checkAddLine(){
 function checkEditLine(){
 	if(checkEditLineName()){
 		editLine();
+	}
+}
+
+function checkAddPatLineAreaAccSet(){
+	if(checkAddPlaasPl()){
+		if(checkAddPlaasFd()){
+			if(checkAddPlaasSd()){
+				if(checkAddPlaasPa()){
+					if(checkAddPlaasPda()){
+						newPatLineAreaAccSet();
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -501,6 +567,25 @@ function editLine(){
 				alert(data.info);
 				openEditLineDialog(false);
 				tab1.datagrid("load");
+			}
+		}
+	,"json");
+}
+
+function newPatLineAreaAccSet(){
+	var plId=apPlCBB.combobox("getValue");
+	var paId=apPaCBB.combobox("getValue");
+	var pdaIdsArr=apPdaCBB.combobox("getValues");
+	var pdaIds=pdaIdsArr.sort().toString();
+	if(pdaIds.substring(0,1)==",")
+		pdaIds=pdaIds.substring(1);
+	$.post(patrolMgmtPath+"newPatLineAreaAccSet",
+		{plId:plId,paId:paId,pdaIds:pdaIds},
+		function(data){
+			if(data.message=="ok"){
+				alert(data.info);
+				openAddPlaasDialog(false);
+				tab2.datagrid("load");
 			}
 		}
 	,"json");
@@ -577,7 +662,7 @@ function initAddPlaasDialog(){
 		left:dialogLeft,
 		buttons:[
            {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
-        	   checkAddLine();
+        	   checkAddPatLineAreaAccSet();
            }},
            {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
         	   openAddPlaasDialog(false);
@@ -615,9 +700,10 @@ function initAddPlaasDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	initAddPlaasPlCBB();
-	initAddPlaasUpDeptCBB();
-	initAddPlaasDownDeptCBB();
+	initAddPlaasFirstDeptCBB();
+	initAddPlaasSecondDeptCBB();
 	initAddPlaasPaCBB();
+	initAddPlaasPdaCBB();
 }
 
 function initAddPlaasPlCBB(){
@@ -638,9 +724,9 @@ function initAddPlaasPlCBB(){
 	,"json");
 }
 
-function initAddPlaasUpDeptCBB(){
+function initAddPlaasFirstDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择上级部门"});
+	data.push({"value":"","text":"请选择一级部门"});
 	$.post(mainPath+"queryDeptCBBList",
 		{parentId:0},
 		function(result){
@@ -648,32 +734,35 @@ function initAddPlaasUpDeptCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			apUdCBB=$("#apud_cbb").combobox({
+			apFdCBB=$("#apfd_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
 				onSelect:function(){
-					loadAddPlaasDownDeptCBBData();
+					loadAddPlaasSecondDeptCBBData();
 				}
 			});
 		}
 	,"json");
 }
 
-function initAddPlaasDownDeptCBB(){
+function initAddPlaasSecondDeptCBB(){
 	var data=[];
-	data.push({"value":"","text":"请选择下级部门"});
-	apDdCBB=$("#apdd_cbb").combobox({
+	data.push({"value":"","text":"请选择二级部门"});
+	apSdCBB=$("#apsd_cbb").combobox({
 		valueField:"value",
 		textField:"text",
-		data:data
+		data:data,
+		onSelect:function(){
+			loadAddPlaasPaCBBData();
+		}
 	});
 }
 
-function loadAddPlaasDownDeptCBBData(){
-	var parentId=apUdCBB.combobox("getValue");
+function loadAddPlaasSecondDeptCBBData(){
+	var parentId=apFdCBB.combobox("getValue");
 	var data=[];
-	data.push({"value":"","text":"请选择下级部门"});
+	data.push({"value":"","text":"请选择二级部门"});
 	$.post(mainPath+"queryDeptCBBList",
 		{parentId:parentId},
 		function(result){
@@ -681,7 +770,7 @@ function loadAddPlaasDownDeptCBBData(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].deptId,"text":rows[i].deptName});
 			}
-			apDdCBB.combobox("loadData",data);
+			apSdCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -692,15 +781,18 @@ function initAddPlaasPaCBB(){
 	apPaCBB=$("#appa_cbb").combobox({
 		valueField:"value",
 		textField:"text",
-		data:data
+		data:data,
+		onSelect:function(){
+			loadAddPlaasPdaCBBData();
+		}
 	});
 }
 
 function loadAddPlaasPaCBBData(){
-	var deptId=apDdCBB.combobox("getValue");
+	var deptId=apSdCBB.combobox("getValue");
 	var data=[];
 	data.push({"value":"","text":"请选择区域"});
-	$.post(mainPath+"queryAreaCBBList",
+	$.post(patrolMgmtPath+"queryAreaCBBList",
 		{deptId:deptId},
 		function(result){
 			var rows=result.rows;
@@ -708,6 +800,34 @@ function loadAddPlaasPaCBBData(){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
 			apPaCBB.combobox("loadData",data);
+		}
+	,"json");
+}
+
+function initAddPlaasPdaCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择设备台账"});
+	apPdaCBB=$("#appda_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data,
+		multiple:true
+	});
+}
+
+function loadAddPlaasPdaCBBData(){
+	var deptId=apSdCBB.combobox("getValue");
+	var paId=apPaCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择设备台账"});
+	$.post(deviceMgmtPath+"queryAreaAccCBBList",
+		{deptId:deptId,paId:paId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].id,"text":rows[i].no});
+			}
+			apPdaCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -850,18 +970,18 @@ function setFitWidthInParent(parent,self){
 			  </tr>
 			  <tr>
 				<td class="td1" align="right">
-					上级部门
+					一级部门
 				</td>
 				<td class="td2">
-					<input id="apud_cbb"/>
+					<input id="apfd_cbb"/>
 				</td>
 			  </tr>
 			  <tr>
 				<td class="td1" align="right">
-					下级部门
+					二级部门
 				</td>
 				<td class="td2">
-					<input id="apdd_cbb"/>
+					<input id="apsd_cbb"/>
 					<input type="hidden" id="deptId" name="deptId"/>
 				</td>
 			  </tr>
@@ -879,7 +999,8 @@ function setFitWidthInParent(parent,self){
 					设备台账
 				</td>
 				<td class="td2">
-					
+					<input id="appda_cbb"/>
+					<input type="hidden" id="pdaId" name="pdaId"/>
 				</td>
 			  </tr>
 			</table>

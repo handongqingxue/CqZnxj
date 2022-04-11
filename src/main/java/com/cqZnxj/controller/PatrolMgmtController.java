@@ -126,6 +126,24 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/newPatLineAreaAccSet")
+	@ResponseBody
+	public Map<String, Object> newPatLineAreaAccSet(PatLineAreaAccSet plaas) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patLineAreaAccSetService.add(plaas);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建巡检路线、区域、设备台账关系成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建巡检路线、区域、设备台账关系失败！");
+		}
+		return jsonMap;
+	}
+	
 	@RequestMapping(value="/queryPatLineAreaAccSetList")
 	@ResponseBody
 	public Map<String, Object> queryPatLineAreaAccSetList(String plName,String paName,

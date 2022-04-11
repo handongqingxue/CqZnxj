@@ -12,4 +12,6 @@ public interface PatLineAreaAccSetMapper {
 
 	List<PatLineAreaAccSet> queryList(@Param("plName") String plName, @Param("paName") String paName, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
+	int add(PatLineAreaAccSet plaas);
+
 }

@@ -17,6 +17,8 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
 	@Autowired
 	private PatrolDeviceParamMapper patrolDeviceParamDao;
+	@Autowired
+	private PatrolAreaMapper patrolAreaDao;
 
 	public int queryForInt(String no, String pdName, Integer deptId, String deptName, String createTimeStart,
 			String createTimeEnd, String startTimeStart, String startTimeEnd) {
@@ -73,5 +75,14 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	public List<PatrolDeviceAccount> queryCBBList(String deptId,String pdId) {
 		// TODO Auto-generated method stub
 		return patrolDeviceAccountDao.queryCBBList(deptId,pdId);
+	}
+
+	@Override
+	public List<PatrolDeviceAccount> queryAreaAccCBBList(String deptId, String paId) {
+		// TODO Auto-generated method stub
+		String pdaIds=patrolAreaDao.getPdaIdsById(paId);
+		String[] pdaIdArr = pdaIds.split(",");
+		List<String> pdaIdList = Arrays.asList(pdaIdArr);
+		return patrolDeviceAccountDao.queryCBBListByIdList(pdaIdList);
 	}
 }

@@ -29,4 +29,6 @@ public interface PatrolDeviceAccountMapper {
 
 	List<PatrolDeviceAccount> queryCBBList(@Param("deptId") String deptId,@Param("pdId") String pdId);
 
+	List<PatrolDeviceAccount> queryCBBListByIdList(@Param("pdaIdList") List<String> pdaIdList);
+
 }

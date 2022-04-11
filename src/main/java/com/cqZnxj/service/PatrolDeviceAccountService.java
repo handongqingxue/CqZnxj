@@ -25,4 +25,6 @@ public interface PatrolDeviceAccountService {
 
 	List<PatrolDeviceAccount> queryCBBList(String deptId,String pdId);
 
+	List<PatrolDeviceAccount> queryAreaAccCBBList(String deptId, String paId);
+
 }

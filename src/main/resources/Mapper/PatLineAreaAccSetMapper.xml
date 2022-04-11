@@ -3,6 +3,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqZnxj.dao.PatLineAreaAccSetMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.PatLineAreaAccSet">
+		insert into pat_line_area_acc_set
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="plId!=null">
+				plId,
+			</if>
+			<if test="paId!=null">
+				paId,
+			</if>
+			<if test="pdaIds!=null">
+				pdaIds,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="plId!=null">
+				#{plId},
+			</if>
+			<if test="paId!=null">
+				#{paId},
+			</if>
+			<if test="pdaIds!=null">
+				#{pdaIds},
+			</if>
+		</trim>
+	</insert>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from pat_line_area_acc_set plaas,patrol_line pl,patrol_area pa where plaas.plId=pl.id and plaas.paId=pa.id
 		<if test="plName!=''&amp;plName!=null">

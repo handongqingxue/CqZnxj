@@ -447,4 +447,17 @@ public class DeviceMgmtController {
 		
 		return jsonMap;
 	}
+	
+	@RequestMapping(value="/queryAreaAccCBBList")
+	@ResponseBody
+	public Map<String, Object> queryAreaAccCBBList(String deptId,String paId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryAreaAccCBBList(deptId,paId);
+		
+		jsonMap.put("rows", pdaList);
+		
+		return jsonMap;
+	}
 }

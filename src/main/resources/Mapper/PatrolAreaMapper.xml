@@ -89,4 +89,7 @@
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolArea">
 		select id,name from patrol_area where deptId=#{deptId} order by createTime desc
 	</select>
+	<select id="getPdaIdsById" resultType="java.lang.String">
+		select pdaIds from patrol_area where id=#{id}
+	</select>
 </mapper>
