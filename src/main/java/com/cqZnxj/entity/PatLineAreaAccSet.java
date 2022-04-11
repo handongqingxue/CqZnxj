@@ -45,10 +45,38 @@ public class PatLineAreaAccSet {
 	public void setPdaNos(String pdaNos) {
 		this.pdaNos = pdaNos;
 	}
+	public Integer getFirstDeptId() {
+		return firstDeptId;
+	}
+	public void setFirstDeptId(Integer firstDeptId) {
+		this.firstDeptId = firstDeptId;
+	}
+	public String getFirstDeptName() {
+		return firstDeptName;
+	}
+	public void setFirstDeptName(String firstDeptName) {
+		this.firstDeptName = firstDeptName;
+	}
+	public Integer getSecondDeptId() {
+		return secondDeptId;
+	}
+	public void setSecondDeptId(Integer secondDeptId) {
+		this.secondDeptId = secondDeptId;
+	}
+	public String getSecondDeptName() {
+		return secondDeptName;
+	}
+	public void setSecondDeptName(String secondDeptName) {
+		this.secondDeptName = secondDeptName;
+	}
 	private Integer plId;
 	private String plName;
 	private Integer paId;
 	private String paName;
 	private String pdaIds;
 	private String pdaNos;
+	private Integer firstDeptId;
+	private String firstDeptName;
+	private Integer secondDeptId;
+	private String secondDeptName;
 }

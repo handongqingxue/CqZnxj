@@ -14,4 +14,6 @@ public interface PatLineAreaAccSetMapper {
 
 	int add(PatLineAreaAccSet plaas);
 
+	int edit(PatLineAreaAccSet plaas);
+
 }

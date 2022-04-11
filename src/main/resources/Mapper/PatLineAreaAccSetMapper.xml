@@ -29,8 +29,24 @@
 			</if>
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatLineAreaAccSet">
+		update pat_line_area_acc_set set 
+		<trim suffixOverrides=",">
+			<if test="plId!=null">
+				plId=#{plId},
+			</if>
+			<if test="paId!=null">
+				paId=#{paId},
+			</if>
+			<if test="pdaIds!=null">
+				pdaIds=#{pdaIds},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from pat_line_area_acc_set plaas,patrol_line pl,patrol_area pa where plaas.plId=pl.id and plaas.paId=pa.id
+		select count(*) from pat_line_area_acc_set plaas,patrol_line pl,patrol_area pa,dept sd,dept fd
+		 where plaas.plId=pl.id and plaas.paId=pa.id and pa.deptId=sd.deptId and sd.parentId=fd.deptId
 		<if test="plName!=''&amp;plName!=null">
 			and pl.name like CONCAT('%',#{plName},'%')
 		</if>
@@ -39,7 +55,8 @@
 		</if> 
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatLineAreaAccSet">
-		select plaas.*,pl.name plName,pa.name paName from pat_line_area_acc_set plaas,patrol_line pl,patrol_area pa where plaas.plId=pl.id and plaas.paId=pa.id
+		select plaas.*,pl.name plName,pa.name paName,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from pat_line_area_acc_set plaas,patrol_line pl,patrol_area pa,dept sd,dept fd
+		 where plaas.plId=pl.id and plaas.paId=pa.id and pa.deptId=sd.deptId and sd.parentId=fd.deptId
 		<if test="plName!=''&amp;plName!=null">
 			and pl.name like CONCAT('%',#{plName},'%')
 		</if>

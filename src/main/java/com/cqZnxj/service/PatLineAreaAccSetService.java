@@ -12,4 +12,6 @@ public interface PatLineAreaAccSetService {
 
 	int add(PatLineAreaAccSet plaas);
 
+	int edit(PatLineAreaAccSet plaas);
+
 }
