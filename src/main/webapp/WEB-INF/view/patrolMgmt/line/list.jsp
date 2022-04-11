@@ -31,7 +31,7 @@ a {
 }
 
 .add_line_bg_div,.edit_line_bg_div,.detail_line_bg_div,
-.add_plaas_bg_div,.edit_plaas_bg_div{
+.add_plaas_bg_div,.edit_plaas_bg_div,.detail_plaas_bg_div{
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0,0,0,.45);
@@ -76,7 +76,7 @@ a {
 	height: 25px;
 }
 
-.add_plaas_div,.edit_plaas_div{
+.add_plaas_div,.edit_plaas_div,.detail_plaas_div{
 	width: 500px;
 	height: 410px;
 	margin: 200px auto 0;
@@ -101,6 +101,7 @@ var eldNum=1;
 var dldNum=2;
 var aplaasdNum=3;
 var eplaasdNum=4;
+var dplaasdNum=5;
 $(function(){
 	initTab1CreateTimeStDTB();
 	initTab1CreateTimeEtDTB();
@@ -118,6 +119,7 @@ $(function(){
 	initTab2();
 	initAddPlaasDialog();//3
 	initEditPlaasDialog();//4
+	initDetailPlaasDialog();//5
 	
 	initDialogPosition();//将不同窗体移动到主要内容区域
 });
@@ -138,6 +140,9 @@ function initDialogPosition(){
 	var eplaasdpw=$("body").find(".panel.window").eq(eplaasdNum);
 	var eplaasdws=$("body").find(".window-shadow").eq(eplaasdNum);
 
+	var dplaasdpw=$("body").find(".panel.window").eq(dplaasdNum);
+	var dplaasdws=$("body").find(".window-shadow").eq(dplaasdNum);
+
 	var aldDiv=$("#add_line_div");
 	aldDiv.append(aldpw);
 	aldDiv.append(aldws);
@@ -157,6 +162,10 @@ function initDialogPosition(){
 	var eplaasdDiv=$("#edit_plaas_div");
 	eplaasdDiv.append(eplaasdpw);
 	eplaasdDiv.append(eplaasdws);
+
+	var dplaasdDiv=$("#detail_plaas_div");
+	dplaasdDiv.append(dplaasdpw);
+	dplaasdDiv.append(dplaasdws);
 }
 
 function initTab1CreateTimeStDTB(){
@@ -230,6 +239,13 @@ function initTab1(){
 			$(".panel-header .panel-title").css("font-size","15px");
 			$(".panel-header .panel-title").css("padding-left","10px");
 			$(".panel-header, .panel-body").css("border-color","#ddd");
+			
+			var tab1Div=$("#tab1_div");
+			var tab1MarginTop=tab1Div.css("margin-top");
+			tab1MarginTop=parseInt(tab1MarginTop.substring(0,tab1MarginTop.length-2));
+			
+			var tab2Div=$("#tab2_div");
+			tab2Div.css("margin-top",data.total*32+tab1MarginTop+170+"px");
 		}
 	});
 }
@@ -255,6 +271,38 @@ function deleteLineByIds(ids){
 					if(result.status==1){
 						alert(result.msg);
 						tab1.datagrid("load");
+					}
+					else{
+						alert(result.msg);
+					}
+				}
+			,"json");
+			
+		}
+	});
+}
+
+function deletePatLineAreaAccSetByIds(ids){
+	var rows=tab2.datagrid("getSelections");
+	if (rows.length == 0) {
+		$.messager.alert("提示","请选择要删除的信息！","warning");
+		return false;
+	}
+	
+	$.messager.confirm("提示","确定要删除吗？",function(r){
+		if(r){
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += "," + rows[i].id;
+			}
+			ids=ids.substring(1);
+			
+			$.post(patrolMgmtPath + "deletePatLineAreaAccSet",
+				{ids:ids},
+				function(result){
+					if(result.status==1){
+						alert(result.msg);
+						tab2.datagrid("load");
 					}
 					else{
 						alert(result.msg);
@@ -688,8 +736,9 @@ function initTab2SearchLB(){
 	$("#tab2_search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var name=$("#tab2_toolbar #name").val();
-			tab2.datagrid("load",{name:name});
+			var plName=$("#tab2_toolbar #plName").val();
+			var paName=$("#tab2_toolbar #paName").val();
+			tab2.datagrid("load",{plName:plName,paName:paName});
 		}
 	});
 }
@@ -707,7 +756,7 @@ function initTab2RemoveLB(){
 	$("#tab2_remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			//deleteLineByIds();
+			deletePatLineAreaAccSetByIds();
 		}
 	});
 }
@@ -727,7 +776,7 @@ function initTab2(){
             {field:"id",title:"操作",width:110,formatter:function(value,row){
        			var rowJson = JSON.stringify(row).replace(/"/g, '&quot;');
             	var str="<a onclick=\"openEditPlaasDialog(true,"+rowJson+")\">编辑</a>&nbsp;&nbsp;"
-        		+"<a onclick=\"openDetailLineDialog(true,"+rowJson+")\">详情</a>";
+        		+"<a onclick=\"openDetailPlaasDialog(true,"+rowJson+")\">详情</a>";
             	return str;
             }}
 	    ]],
@@ -850,6 +899,47 @@ function initEditPlaasDialog(){
 	initEditPlaasSecondDeptCBB();
 	initEditPlaasPaCBB();
 	initEditPlaasPdaCBB();
+}
+
+function initDetailPlaasDialog(){
+	$("#detail_plaas_dialog_div").dialog({
+		title:"路线、区域、设备台账详情",
+		width:setFitWidthInParent("#detail_plaas_div","detail_plaas_dialog_div"),
+		height:350,
+		top:5,
+		left:dialogLeft,
+		buttons:[
+           {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
+        	   openDetailPlaasDialog(false);
+           }}
+        ]
+	});
+
+	$("#detail_plaas_dialog_div table").css("width",(setFitWidthInParent("#detail_line_div","detail_plaas_dialog_table"))+"px");
+	$("#detail_plaas_dialog_div table").css("magin","-100px");
+	$("#detail_plaas_dialog_div table td").css("padding-left","40px");
+	$("#detail_plaas_dialog_div table td").css("padding-right","20px");
+	$("#detail_plaas_dialog_div table td").css("font-size","15px");
+	$("#detail_plaas_dialog_div table .td1").css("width","30%");
+	$("#detail_plaas_dialog_div table .td2").css("width","60%");
+	$("#detail_plaas_dialog_div table tr").css("height","45px");
+
+	$(".panel.window").eq(dplaasdNum).css("margin-top","20px");
+	$(".panel.window .panel-title").eq(dplaasdNum).css("color","#000");
+	$(".panel.window .panel-title").eq(dplaasdNum).css("font-size","15px");
+	$(".panel.window .panel-title").eq(dplaasdNum).css("padding-left","10px");
+	
+	$(".panel-header, .panel-body").css("border-color","#ddd");
+	
+	//以下的是表格下面的面板
+	$(".window-shadow").eq(dplaasdNum).css("margin-top","20px");
+	$(".window,.window .window-body").eq(dplaasdNum).css("border-color","#ddd");
+
+	$("#detail_plaas_dialog_div #ok_but").css("left","40%");
+	$("#detail_plaas_dialog_div #ok_but").css("position","absolute");
+	
+	$(".dialog-button").css("background-color","#fff");
+	$(".dialog-button .l-btn-text").css("font-size","20px");
 }
 
 function initAddPlaasPlCBB(){
@@ -1141,6 +1231,28 @@ function openEditPlaasDialog(flag,row){
 	}
 }
 
+function openDetailPlaasDialog(flag,row){
+	if(flag){
+		$("#detail_plaas_bg_div").css("display","block");
+		$("#detail_plaas_div #id").val(row.id);
+		$("#detail_plaas_div #plName_span").text(row.plName);
+		$("#detail_plaas_div #fdn_span").text(row.firstDeptName);
+		$("#detail_plaas_div #sdn_span").text(row.secondDeptName);
+		$("#detail_plaas_div #paName_span").text(row.paName);
+		$("#detail_plaas_div #pdaNos_span").text(row.pdaNos);
+		
+	}
+	else{
+		$("#detail_plaas_bg_div").css("display","none");
+		$("#detail_plaas_div #id").val("");
+		$("#detail_plaas_div #plName_span").text("");
+		$("#detail_plaas_div #fdn_span").text("");
+		$("#detail_plaas_div #sdn_span").text("");
+		$("#detail_plaas_div #paName_span").text("");
+		$("#detail_plaas_div #pdaNos_span").text("");
+	}
+}
+
 function setFitWidthInParent(parent,self){
 	var space=0;
 	switch (self) {
@@ -1153,6 +1265,7 @@ function setFitWidthInParent(parent,self){
 	case "detail_line_dialog_div":
 	case "add_plaas_dialog_div":
 	case "edit_plaas_dialog_div":
+	case "detail_plaas_dialog_div":
 		space=50;
 		break;
 	case "add_line_dialog_table":
@@ -1160,6 +1273,7 @@ function setFitWidthInParent(parent,self){
 	case "detail_line_dialog_table":
 	case "add_plaas_dialog_table":
 	case "edit_plaas_dialog_table":
+	case "detail_plaas_dialog_table":
 		space=68;
 		break;
 	}
@@ -1357,6 +1471,56 @@ function setFitWidthInParent(parent,self){
 				<td class="td2">
 					<input id="eppda_cbb"/>
 					<input type="hidden" id="pdaId" name="pdaId"/>
+				</td>
+			  </tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="detail_plaas_bg_div" id="detail_plaas_bg_div">
+	<div class="detail_plaas_div" id="detail_plaas_div">
+		<div class="detail_plaas_dialog_div" id="detail_plaas_dialog_div">
+			<input type="hidden" id="id" name="id"/>
+			<table>
+			  <tr>
+				<td class="td1" align="right">
+					路线
+				</td>
+				<td class="td2">
+					<span id="plName_span"></span>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					一级部门
+				</td>
+				<td class="td2">
+					<span id="fdn_span"></span>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					二级部门
+				</td>
+				<td class="td2">
+					<span id="sdn_span"></span>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					区域
+				</td>
+				<td class="td2">
+					<span id="paName_span"></span>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="td1" align="right">
+					设备台账
+				</td>
+				<td class="td2">
+					<span id="pdaNos_span"></span>
 				</td>
 			  </tr>
 			</table>

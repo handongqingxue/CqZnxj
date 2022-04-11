@@ -14,6 +14,8 @@ public interface PatLineAreaAccSetMapper {
 
 	int add(PatLineAreaAccSet plaas);
 
+	int deleteByIds(List<String> idList);
+
 	int edit(PatLineAreaAccSet plaas);
 
 }

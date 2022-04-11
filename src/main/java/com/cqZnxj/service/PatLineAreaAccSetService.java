@@ -12,6 +12,8 @@ public interface PatLineAreaAccSetService {
 
 	int add(PatLineAreaAccSet plaas);
 
+	int deleteByIds(String ids);
+
 	int edit(PatLineAreaAccSet plaas);
 
 }

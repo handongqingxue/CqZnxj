@@ -143,6 +143,26 @@ public class PatrolMgmtController {
 		}
 		return jsonMap;
 	}
+
+	@RequestMapping(value="/deletePatLineAreaAccSet",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deletePatLineAreaAccSet(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=patLineAreaAccSetService.deleteByIds(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除巡检路线、区域、设备台账关系失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除巡检路线、区域、设备台账关系成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
 	
 	@RequestMapping(value="/editPatLineAreaAccSet")
 	@ResponseBody

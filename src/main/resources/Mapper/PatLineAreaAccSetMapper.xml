@@ -29,6 +29,12 @@
 			</if>
 		</trim>
 	</insert>
+	<delete id="deleteByIds">
+		delete from pat_line_area_acc_set where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in(" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.PatLineAreaAccSet">
 		update pat_line_area_acc_set set 
 		<trim suffixOverrides=",">
