@@ -30,9 +30,12 @@ a {
 <%@include file="../../inc/js.jsp"%>
 <script type="text/javascript">
 var path='<%=basePath %>';
-var deviceMgmtPath=path+'deviceMgmt/';
+var patrolMgmtPath=path+'patrolMgmt/';
+var nav='${param.nav}';
 $(function(){
 	initSearchLB();
+	initAddLB();
+	initRemoveLB();
 	initTab1();
 });
 
@@ -46,26 +49,50 @@ function initSearchLB(){
 	});
 }
 
+function initAddLB(){
+	$("#add_but").linkbutton({
+		iconCls:"icon-add",
+		onClick:function(){
+			location.href=patrolMgmtPath+"team/new?nav="+nav;
+		}
+	});
+}
+
+function initRemoveLB(){
+	removeLB=$("#remove_but").linkbutton({
+		iconCls:"icon-remove",
+		onClick:function(){
+			deleteByIds();
+		}
+	});
+}
+
 function initTab1(){
 	tab1=$("#tab1").datagrid({
-		title:"部门查询",
-		url:deviceMgmtPath+"queryDeptList",
+		title:"巡检班组查询",
+		url:patrolMgmtPath+"queryTeamList",
 		toolbar:"#toolbar",
 		width:setFitWidthInParent("body"),
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"deptName",title:"名称",width:150},
-			{field:"createTime",title:"创建时间",width:180},
-            {field:"deptId",title:"操作",width:110,formatter:function(value,row){
-            	var str="<a href=\"detail?deptId="+value+"\">详情</a>";
+			{field:"name",title:"名称",width:150},
+			{field:"startTime",title:"巡检开始时间",width:180},
+			{field:"endTime",title:"巡检结束时间",width:180},
+			{field:"leader",title:"负责人",width:150},
+			{field:"workDay",title:"上班日",width:200},
+			{field:"staffNames",title:"班组人员",width:200},
+			{field:"updateTime",title:"修改时间",width:180},
+			{field:"updateStaffId",title:"修改人",width:150},
+            {field:"id",title:"操作",width:110,formatter:function(value,row){
+            	var str="<a href=\"detail?id="+value+"\">详情</a>";
             	return str;
             }}
 	    ]],
         onLoadSuccess:function(data){
 			if(data.total==0){
-				$(this).datagrid("appendRow",{deptName:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"deptName",colspan:3});
+				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:9});
 				data.total=0;
 			}
 			
@@ -75,18 +102,6 @@ function initTab1(){
 			$(".panel-header, .panel-body").css("border-color","#ddd");
 		}
 	});
-}
-
-//验证部门id是否存在于集合里
-function checkDeptIdInList(deptId,deptList){
-	var flag=false;
-	for (var i = 0; i < deptList.length; i++){
-		if(deptId==deptList[i].id){
-			flag=true;
-			break;
-		}
-	}
-	return flag;
 }
 
 function setFitWidthInParent(o){
@@ -99,9 +114,11 @@ function setFitWidthInParent(o){
 <%@include file="../../inc/side.jsp"%>
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
-		<span class="name_span">部门：</span>
-		<input type="text" class="name_inp" id="name" placeholder="请输入部门名称"/>
+		<span class="name_span">班组名称：</span>
+		<input type="text" class="name_inp" id="name" placeholder="请输入班组名称"/>
 		<a class="search_but" id="search_but">查询</a>
+		<a id="add_but">添加</a>
+		<a id="remove_but">删除</a>
 	</div>
 	<table id="tab1">
 	</table>

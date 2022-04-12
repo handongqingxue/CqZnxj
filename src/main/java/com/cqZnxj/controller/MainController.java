@@ -18,6 +18,8 @@ public class MainController {
 
 	@Autowired
 	private DeptService deptService;
+	@Autowired
+	private StaffService staffService;
 	
 	/**
 	 * Ìø×ªµ½µÇÂ¼Ò³
@@ -47,6 +49,19 @@ public class MainController {
 		List<Dept> deptList=deptService.queryCBBList(parentId);
 		
 		jsonMap.put("rows", deptList);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryStaffCBBList")
+	@ResponseBody
+	public Map<String, Object> queryStaffCBBList(String deptId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<Staff> staffList=staffService.queryCBBList(deptId);
+		
+		jsonMap.put("rows", staffList);
 		
 		return jsonMap;
 	}
