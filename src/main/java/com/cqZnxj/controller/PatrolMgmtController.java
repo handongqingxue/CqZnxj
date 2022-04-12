@@ -77,6 +77,16 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/team/new";
 	}
+	
+	@RequestMapping(value="/team/edit")
+	public String goTeamEdit(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolTeam pt=patrolTeamService.selectById(id);
+		request.setAttribute("pt", pt);
+		
+		return MODULE_NAME+"/team/edit";
+	}
 
 	@RequestMapping(value="/team/list")
 	public String goTeamList(HttpServletRequest request) {
@@ -329,6 +339,24 @@ public class PatrolMgmtController {
 		else {
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "´´½¨Ñ²¼ì°à×éÊ§°Ü£¡");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/editTeam")
+	@ResponseBody
+	public Map<String, Object> editTeam(PatrolTeam pt) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolTeamService.edit(pt);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "±à¼­Ñ²¼ì°à×é³É¹¦£¡");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "±à¼­Ñ²¼ì°à×éÊ§°Ü£¡");
 		}
 		return jsonMap;
 	}

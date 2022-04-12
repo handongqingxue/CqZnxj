@@ -21,6 +21,9 @@
 			<if test="workDay!=null">
 				workDay,
 			</if>
+			<if test="deptId!=null">
+				deptId,
+			</if>
 			<if test="staffIds!=null">
 				staffIds,
 			</if>
@@ -43,12 +46,46 @@
 			<if test="workDay!=null">
 				#{workDay},
 			</if>
+			<if test="deptId!=null">
+				#{deptId},
+			</if>
 			<if test="staffIds!=null">
 				#{staffIds},
 			</if>
 				now(),
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatrolTeam">
+		update patrol_team set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="startTime!=null">
+				startTime=#{startTime},
+			</if>
+			<if test="endTime!=null">
+				endTime=#{endTime},
+			</if>
+			<if test="leader!=null">
+				leader=#{leader},
+			</if>
+			<if test="workDay!=null">
+				workDay=#{workDay},
+			</if>
+			<if test="deptId!=null">
+				deptId=#{deptId},
+			</if>
+			<if test="staffIds!=null">
+				staffIds=#{staffIds},
+			</if>
+				updateTime=now(),
+			<if test="updateStaffId!=null">
+				updateStaffId=#{updateStaffId},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_team where 1=1
 		<if test="name!=''&amp;name!=null">
@@ -61,5 +98,8 @@
 			and name like CONCAT('%',#{name},'%')
 		</if>
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.PatrolTeam">
+		select pt.*,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from patrol_team pt,dept sd,dept fd where pt.deptId=sd.deptId and sd.parentId=fd.deptId and pt.id=#{id}
 	</select>
 </mapper>

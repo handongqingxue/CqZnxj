@@ -24,6 +24,12 @@ public class PatrolTeamServiceImpl implements PatrolTeamService {
 	}
 
 	@Override
+	public int edit(PatrolTeam pt) {
+		// TODO Auto-generated method stub
+		return patrolTeamDao.edit(pt);
+	}
+
+	@Override
 	public int queryForInt(String name) {
 		// TODO Auto-generated method stub
 		return patrolTeamDao.queryForInt(name);
@@ -52,5 +58,11 @@ public class PatrolTeamServiceImpl implements PatrolTeamService {
 			pt.setStaffNames(staffNames.substring(1));
 		}
 		return ptList;
+	}
+
+	@Override
+	public PatrolTeam selectById(String id) {
+		// TODO Auto-generated method stub
+		return patrolTeamDao.selectById(id);
 	}
 }

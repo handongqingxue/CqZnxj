@@ -77,7 +77,6 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"name",title:"名称",width:150},
-			{field:"createTime",title:"创建时间",width:180},
 			{field:"startTime",title:"巡检开始时间",width:120},
 			{field:"endTime",title:"巡检结束时间",width:120},
 			{field:"leader",title:"负责人",width:150},
@@ -92,10 +91,12 @@ function initTab1(){
 				return str;
 			}},
 			{field:"staffNames",title:"班组人员",width:200},
+			{field:"createTime",title:"创建时间",width:180},
 			{field:"updateTime",title:"修改时间",width:180},
 			{field:"updateStaffId",title:"修改人",width:150},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
-            	var str="<a href=\"detail?id="+value+"\">详情</a>";
+            	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
+        			+"<a href=\"detail?id="+value+"&nav="+nav+"\">详情</a>";
             	return str;
             }}
 	    ]],

@@ -10,8 +10,12 @@ public interface PatrolTeamMapper {
 
 	int add(PatrolTeam pt);
 
+	int edit(PatrolTeam pt);
+
 	int queryForInt(@Param("name") String name);
 
 	List<PatrolTeam> queryList(@Param("name") String name, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
+
+	PatrolTeam selectById(String id);
 
 }
