@@ -45,6 +45,18 @@ public class PatrolTeam {
 	public void setStaffIds(String staffIds) {
 		this.staffIds = staffIds;
 	}
+	public String getStaffNames() {
+		return staffNames;
+	}
+	public void setStaffNames(String staffNames) {
+		this.staffNames = staffNames;
+	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
 	public String getUpdateTime() {
 		return updateTime;
 	}
@@ -63,6 +75,8 @@ public class PatrolTeam {
 	private String leader;
 	private String workDay;
 	private String staffIds;
+	private String staffNames;
+	private String createTime;
 	private String updateTime;
 	private Integer updateStaffId;
 }

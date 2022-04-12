@@ -6,6 +6,8 @@ import com.cqZnxj.entity.*;
 
 public interface PatrolTeamService {
 
+	int add(PatrolTeam pt);
+
 	int queryForInt(String name);
 
 	List<PatrolTeam> queryList(String name, int page, int rows, String sort, String order);

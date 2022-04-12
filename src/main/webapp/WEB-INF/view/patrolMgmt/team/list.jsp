@@ -77,10 +77,20 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"name",title:"名称",width:150},
-			{field:"startTime",title:"巡检开始时间",width:180},
-			{field:"endTime",title:"巡检结束时间",width:180},
+			{field:"createTime",title:"创建时间",width:180},
+			{field:"startTime",title:"巡检开始时间",width:120},
+			{field:"endTime",title:"巡检结束时间",width:120},
 			{field:"leader",title:"负责人",width:150},
-			{field:"workDay",title:"上班日",width:200},
+			{field:"workDay",title:"上班日",width:350,formatter:function(value,row){
+				var str=value.replaceAll("1","星期一")
+							 .replaceAll("2","星期二")
+							 .replaceAll("3","星期三")
+							 .replaceAll("4","星期四")
+							 .replaceAll("5","星期五")
+							 .replaceAll("6","星期六")
+							 .replaceAll("7","星期日");
+				return str;
+			}},
 			{field:"staffNames",title:"班组人员",width:200},
 			{field:"updateTime",title:"修改时间",width:180},
 			{field:"updateStaffId",title:"修改人",width:150},
@@ -92,7 +102,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:9});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:10});
 				data.total=0;
 			}
 			

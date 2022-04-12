@@ -273,30 +273,53 @@ function loadStaffIdsCBBData(){
 }
 
 function checkNew(){
-	if(checkFirstDeptId()){
-		if(checkSecondDeptId()){
-			if(checkPDAName()){
-				if(checkName()){
-					newArea();
+	if(checkName()){
+		if(checkLeader()){
+			if(checkStartTime()){
+				if(checkEndTime()){
+					if(checkWorkDay()){
+						if(checkFirstDeptId()){
+							if(checkSecondDeptId()){
+								if(checkStaffIds()){
+									newTeam();
+								}
+							}
+						}
+					}
 				}
 			}
 		}
 	}
 }
 
-function newArea(){
-	var deptId=deptCBB.combobox("getValue");
+function newTeam(){
+	var sth=sthCBB.combobox("getValue");
+	var stm=stmCBB.combobox("getValue");
+	var sts=stsCBB.combobox("getValue");
+	$("#new_div #startTime").val(sth+":"+stm+":"+sts);
+	
+	var eth=ethCBB.combobox("getValue");
+	var etm=etmCBB.combobox("getValue");
+	var ets=etsCBB.combobox("getValue");
+	$("#new_div #endTime").val(eth+":"+etm+":"+ets);
+
+	var workDayArr=wdCBB.combobox("getValues");
+	var workDay=workDayArr.sort().toString();
+	if(workDay.substring(0,1)==",")
+		workDay=workDay.substring(1);
+	$("#new_div #workDay").val(workDay);
+	var deptId=secondDeptCBB.combobox("getValue");
 	$("#new_div #deptId").val(deptId);
-	var pdaIdsArr=pdaCBB.combobox("getValues");
-	var pdaIds=pdaIdsArr.sort().toString();
-	if(pdaIds.substring(0,1)==",")
-		pdaIds=pdaIds.substring(1);
-	$("#new_div #pdaIds").val(pdaIds);
+	var staffIdsArr=staffIdsCBB.combobox("getValues");
+	var staffIds=staffIdsArr.sort().toString();
+	if(staffIds.substring(0,1)==",")
+		staffIds=staffIds.substring(1);
+	$("#new_div #staffIds").val(staffIds);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
 		type:"post",
-		url:patrolMgmtPath+"newArea",
+		url:patrolMgmtPath+"newTeam",
 		dataType: "json",
 		data:formData,
 		cache: false,
@@ -312,6 +335,81 @@ function newArea(){
 			}
 		}
 	});
+}
+
+function focusName(){
+	var name = $("#name").val();
+	if(name=="班组名称不能为空"){
+		$("#name").val("");
+		$("#name").css("color", "#555555");
+	}
+}
+
+//验证班组名称
+function checkName(){
+	var name = $("#name").val();
+	if(name==null||name==""||name=="班组名称不能为空"){
+		$("#name").css("color","#E15748");
+    	$("#name").val("班组名称不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusLeader(){
+	var leader = $("#leader").val();
+	if(leader=="负责人不能为空"){
+		$("#leader").val("");
+		$("#leader").css("color", "#555555");
+	}
+}
+
+//验证负责人
+function checkLeader(){
+	var leader = $("#leader").val();
+	if(leader==null||leader==""||leader=="负责人不能为空"){
+		$("#leader").css("color","#E15748");
+    	$("#leader").val("负责人不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function checkStartTime(){
+	var sth=sthCBB.combobox("getValue");
+	var stm=stmCBB.combobox("getValue");
+	var sts=stsCBB.combobox("getValue");
+	if(sth==null||sth==""||stm==null||stm==""||sts==null||sts==""){
+		alert("请选择巡检开始时间");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function checkEndTime(){
+	var eth=ethCBB.combobox("getValue");
+	var etm=etmCBB.combobox("getValue");
+	var ets=etsCBB.combobox("getValue");
+	if(eth==null||eth==""||etm==null||etm==""||ets==null||ets==""){
+		alert("请选择巡检结束时间");
+    	return false;
+	}
+	else
+		return true;
+}
+
+//验证上班日
+function checkWorkDay(){
+	var workDay=wdCBB.combobox("getValues");
+	if(workDay==null||workDay==""){
+	  	alert("请选择上班日");
+	  	return false;
+	}
+	else
+		return true;
 }
 
 //验证一级部门
@@ -336,32 +434,12 @@ function checkSecondDeptId(){
 		return true;
 }
 
-//验证设备编号
-function checkPDAName(){
-	var pdaName=pdaCBB.combobox("getValues");
-	if(pdaName==null||pdaName==""){
-	  	alert("请选择设备编号");
+//验证班组人员
+function checkStaffIds(){
+	var staffIds=staffIdsCBB.combobox("getValues");
+	if(staffIds==null||staffIds==""){
+	  	alert("请选择班组人员");
 	  	return false;
-	}
-	else
-		return true;
-}
-
-function focusName(){
-	var name = $("#name").val();
-	if(name=="区域名称不能为空"){
-		$("#name").val("");
-		$("#name").css("color", "#555555");
-	}
-}
-
-//验证区域名称
-function checkName(){
-	var name = $("#name").val();
-	if(name==null||name==""||name=="区域名称不能为空"){
-		$("#name").css("color","#E15748");
-    	$("#name").val("区域名称不能为空");
-    	return false;
 	}
 	else
 		return true;
@@ -420,6 +498,7 @@ function setFitWidthInParent(parent,self){
 				<input type="text" id="stm_cbb"/>
 				:
 				<input type="text" id="sts_cbb"/>
+				<input type="hidden" id="startTime" name="startTime"/>
 			</td>
 			<td class="td1" align="right">
 				巡检结束时间
@@ -430,6 +509,7 @@ function setFitWidthInParent(parent,self){
 				<input type="text" id="etm_cbb"/>
 				:
 				<input type="text" id="ets_cbb"/>
+				<input type="hidden" id="endTime" name="endTime"/>
 			</td>
 		  </tr>
 		  <tr>
@@ -438,6 +518,7 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				<input type="text" id="workDay_cbb"/>
+				<input type="hidden" id="workDay" name="workDay"/>
 			</td>
 			<td class="td1" align="right">
 				一级部门
@@ -459,7 +540,7 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				<input type="text" id="staffIds_cbb"/>
-				<input type="hidden" id="pdaIds" name="pdaIds"/>
+				<input type="hidden" id="staffIds" name="staffIds"/>
 			</td>
 		  </tr>
 		</table>

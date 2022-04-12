@@ -315,6 +315,24 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/newTeam")
+	@ResponseBody
+	public Map<String, Object> newTeam(PatrolTeam pt) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolTeamService.add(pt);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建巡检班组成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建巡检班组失败！");
+		}
+		return jsonMap;
+	}
+	
 	@RequestMapping(value="/queryTeamList")
 	@ResponseBody
 	public Map<String, Object> queryTeamList(String name,int page,int rows,String sort,String order) {

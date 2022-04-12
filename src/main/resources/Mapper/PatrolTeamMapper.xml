@@ -3,6 +3,52 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqZnxj.dao.PatrolTeamMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.PatrolTeam">
+		insert into patrol_team
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name!=null">
+				name,
+			</if>
+			<if test="startTime!=null">
+				startTime,
+			</if>
+			<if test="endTime!=null">
+				endTime,
+			</if>
+			<if test="leader!=null">
+				leader,
+			</if>
+			<if test="workDay!=null">
+				workDay,
+			</if>
+			<if test="staffIds!=null">
+				staffIds,
+			</if>
+				createTime,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name!=null">
+				#{name},
+			</if>
+			<if test="startTime!=null">
+				#{startTime},
+			</if>
+			<if test="endTime!=null">
+				#{endTime},
+			</if>
+			<if test="leader!=null">
+				#{leader},
+			</if>
+			<if test="workDay!=null">
+				#{workDay},
+			</if>
+			<if test="staffIds!=null">
+				#{staffIds},
+			</if>
+				now(),
+		</trim>
+	</insert>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_team where 1=1
 		<if test="name!=''&amp;name!=null">
@@ -10,7 +56,7 @@
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolTeam">
-		select id,name,startTime,endTime,leader,workDay,staffIds,updateTime,updateStaffId from patrol_team where 1=1
+		select id,name,startTime,endTime,leader,workDay,staffIds,createTime,updateTime,updateStaffId from patrol_team where 1=1
 		<if test="name!=''&amp;name!=null">
 			and name like CONCAT('%',#{name},'%')
 		</if>
