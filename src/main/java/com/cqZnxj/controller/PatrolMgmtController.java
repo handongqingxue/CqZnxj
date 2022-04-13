@@ -32,6 +32,8 @@ public class PatrolMgmtController {
 	private PatLineAreaAccSetService patLineAreaAccSetService;
 	@Autowired
 	private PatrolTeamService patrolTeamService;
+	@Autowired
+	private PatrolPlanService patrolPlanService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
 	@RequestMapping(value="/area/new")
@@ -70,6 +72,12 @@ public class PatrolMgmtController {
 	public String goLineList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/line/list";
+	}
+
+	@RequestMapping(value="/plan/list")
+	public String goPlanList(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/plan/list";
 	}
 	
 	@RequestMapping(value="/team/new")
@@ -327,6 +335,26 @@ public class PatrolMgmtController {
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", paList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryPlanList")
+	@ResponseBody
+	public Map<String, Object> queryPlanList(String name,Integer state,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = patrolPlanService.queryForInt(name,state);
+			List<PatrolPlan> ppList=patrolPlanService.queryList(name, state, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", ppList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

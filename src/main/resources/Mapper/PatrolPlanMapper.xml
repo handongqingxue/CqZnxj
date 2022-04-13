@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqZnxj.dao.PatrolPlanMapper">
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from patrol_plan where 1=1
+		<if test="name!=''&amp;name!=null">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="state!=''&amp;state!=null">
+			and state=#{state}
+		</if>
+	</select>
+	<select id="queryList" resultType="com.cqZnxj.entity.PatrolLine">
+		select id,`name`,type from patrol_plan where 1=1
+		<if test="name!=''&amp;name!=null">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="state!=''&amp;state!=null">
+			and state=#{state}
+		</if>
+		order by createTime desc
+		limit #{rowNum},#{rows}
+	</select>
+</mapper>
