@@ -27,11 +27,23 @@ public class PatrolPlan {
 	public void setPtIds(String ptIds) {
 		this.ptIds = ptIds;
 	}
+	public String getPtNames() {
+		return ptNames;
+	}
+	public void setPtNames(String ptNames) {
+		this.ptNames = ptNames;
+	}
 	public String getPlIds() {
 		return plIds;
 	}
 	public void setPlIds(String plIds) {
 		this.plIds = plIds;
+	}
+	public String getPlNames() {
+		return plNames;
+	}
+	public void setPlNames(String plNames) {
+		this.plNames = plNames;
 	}
 	public Integer getFrequency() {
 		return frequency;
@@ -72,7 +84,9 @@ public class PatrolPlan {
 	private String name;//计划名称
 	private Integer type;//计划类型 1.日常 2.临时
 	private String ptIds;//巡更班组id
+	private String ptNames;//巡更班组名
 	private String plIds;//巡检路线id
+	private String plNames;//巡检路线名
 	private Integer frequency;//巡更频次
 	private String createTime;//创建时间
 	private String startDate;//开始日期

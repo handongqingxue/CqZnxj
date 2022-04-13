@@ -91,4 +91,10 @@ public class PatrolTeamServiceImpl implements PatrolTeamService {
 		pt.setStaffNames(staffNames.substring(1));
 		return pt;
 	}
+
+	@Override
+	public List<PatrolTeam> queryCBBList() {
+		// TODO Auto-generated method stub
+		return patrolTeamDao.queryCBBList();
+	}
 }

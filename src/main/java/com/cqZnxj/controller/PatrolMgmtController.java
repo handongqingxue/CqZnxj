@@ -73,6 +73,12 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/line/list";
 	}
+	
+	@RequestMapping(value="/plan/new")
+	public String goPlanNew(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/plan/new";
+	}
 
 	@RequestMapping(value="/plan/list")
 	public String goPlanList(HttpServletRequest request) {
@@ -343,6 +349,24 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/newPlan")
+	@ResponseBody
+	public Map<String, Object> newPlan(PatrolPlan pp) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolPlanService.add(pp);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建巡检计划成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建巡检计划失败！");
+		}
+		return jsonMap;
+	}
+	
 	@RequestMapping(value="/queryPlanList")
 	@ResponseBody
 	public Map<String, Object> queryPlanList(String name,Integer state,int page,int rows,String sort,String order) {
@@ -461,6 +485,19 @@ public class PatrolMgmtController {
 		List<PatrolArea> paList=patrolAreaService.queryCBBList(deptId);
 		
 		jsonMap.put("rows", paList);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryTeamCBBList")
+	@ResponseBody
+	public Map<String, Object> queryTeamCBBList() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolTeam> ptList=patrolTeamService.queryCBBList();
+		
+		jsonMap.put("rows", ptList);
 		
 		return jsonMap;
 	}

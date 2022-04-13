@@ -18,4 +18,6 @@ public interface PatrolTeamService {
 
 	int deleteByIds(String ids);
 
+	List<PatrolTeam> queryCBBList();
+
 }

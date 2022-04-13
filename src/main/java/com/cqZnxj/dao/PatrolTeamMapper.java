@@ -20,4 +20,6 @@ public interface PatrolTeamMapper {
 
 	PatrolTeam selectById(String id);
 
+	List<PatrolTeam> queryCBBList();
+
 }

@@ -108,4 +108,7 @@
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolTeam">
 		select pt.*,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from patrol_team pt,dept sd,dept fd where pt.deptId=sd.deptId and sd.parentId=fd.deptId and pt.id=#{id}
 	</select>
+	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolTeam">
+		select id,name from patrol_team where 1=1 order by createTime
+	</select>
 </mapper>

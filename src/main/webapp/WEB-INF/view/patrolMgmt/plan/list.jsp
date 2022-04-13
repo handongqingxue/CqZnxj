@@ -94,7 +94,24 @@ function initTab1(){
 			{field:"createTime",title:"创建时间",width:180},
 			{field:"startDate",title:"开始日期",width:120},
 			{field:"endDate",title:"结束日期",width:120},
-			{field:"state",title:"状态",width:150},
+			{field:"state",title:"状态",width:150,formatter:function(value,row){
+				var str;
+				switch (value) {
+				case 1:
+					str="未开始";
+					break;
+				case 2:
+					str="进行中";
+					break;
+				case 3:
+					str="已结束";
+					break;
+				case 4:
+					str="暂停中";
+					break;
+				}
+            	return str;
+			}},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
         			+"<a href=\"detail?id="+value+"&nav="+nav+"\">详情</a>";

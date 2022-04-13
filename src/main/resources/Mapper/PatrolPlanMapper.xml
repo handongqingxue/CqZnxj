@@ -3,6 +3,66 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqZnxj.dao.PatrolPlanMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.PatrolPlan">
+		insert into patrol_plan
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name!=null">
+				name,
+			</if>
+			<if test="type!=null">
+				type,
+			</if>
+			<if test="ptIds!=null">
+				ptIds,
+			</if>
+			<if test="plIds!=null">
+				plIds,
+			</if>
+			<if test="frequency!=null">
+				frequency,
+			</if>
+				createTime,
+			<if test="startDate!=null">
+				startDate,
+			</if>
+			<if test="endDate!=null">
+				endDate,
+			</if>
+			<if test="leastPopulation!=null">
+				leastPopulation,
+			</if>
+				state,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name!=null">
+				#{name},
+			</if>
+			<if test="type!=null">
+				#{type},
+			</if>
+			<if test="ptIds!=null">
+				#{ptIds},
+			</if>
+			<if test="plIds!=null">
+				#{plIds},
+			</if>
+			<if test="frequency!=null">
+				#{frequency},
+			</if>
+				now(),
+			<if test="startDate!=null">
+				#{startDate},
+			</if>
+			<if test="endDate!=null">
+				#{endDate},
+			</if>
+			<if test="leastPopulation!=null">
+				#{leastPopulation},
+			</if>
+				1,
+		</trim>
+	</insert>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_plan where 1=1
 		<if test="name!=''&amp;name!=null">
@@ -12,8 +72,8 @@
 			and state=#{state}
 		</if>
 	</select>
-	<select id="queryList" resultType="com.cqZnxj.entity.PatrolLine">
-		select id,`name`,type from patrol_plan where 1=1
+	<select id="queryList" resultType="com.cqZnxj.entity.PatrolPlan">
+		select id,`name`,type,ptIds,plIds,createTime,startDate,endDate,state from patrol_plan where 1=1
 		<if test="name!=''&amp;name!=null">
 			and name like CONCAT('%',#{name},'%')
 		</if>
