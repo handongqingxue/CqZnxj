@@ -55,6 +55,12 @@
 				now(),
 		</trim>
 	</insert>
+	<delete id="deleteByIds">
+		delete from patrol_team where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in(" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.PatrolTeam">
 		update patrol_team set 
 		<trim suffixOverrides=",">

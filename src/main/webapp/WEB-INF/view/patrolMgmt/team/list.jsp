@@ -115,6 +115,38 @@ function initTab1(){
 	});
 }
 
+function deleteByIds(ids){
+	var rows=tab1.datagrid("getSelections");
+	if (rows.length == 0) {
+		$.messager.alert("提示","请选择要删除的信息！","warning");
+		return false;
+	}
+	
+	$.messager.confirm("提示","确定要删除吗？",function(r){
+		if(r){
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += "," + rows[i].id;
+			}
+			ids=ids.substring(1);
+			
+			$.post(patrolMgmtPath + "deleteTeam",
+				{ids:ids},
+				function(result){
+					if(result.status==1){
+						alert(result.msg);
+						tab1.datagrid("load");
+					}
+					else{
+						alert(result.msg);
+					}
+				}
+			,"json");
+			
+		}
+	});
+}
+
 function setFitWidthInParent(o){
 	var width=$(o).css("width");
 	return width.substring(0,width.length-2)-250;

@@ -10,6 +10,8 @@ public interface PatrolTeamMapper {
 
 	int add(PatrolTeam pt);
 
+	int deleteByIds(List<String> idList);
+
 	int edit(PatrolTeam pt);
 
 	int queryForInt(@Param("name") String name);

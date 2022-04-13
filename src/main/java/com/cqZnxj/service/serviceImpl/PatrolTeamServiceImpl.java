@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,15 @@ public class PatrolTeamServiceImpl implements PatrolTeamService {
 	public int add(PatrolTeam pt) {
 		// TODO Auto-generated method stub
 		return patrolTeamDao.add(pt);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=patrolTeamDao.deleteByIds(idList);
+		return count;
 	}
 
 	@Override
@@ -63,6 +73,22 @@ public class PatrolTeamServiceImpl implements PatrolTeamService {
 	@Override
 	public PatrolTeam selectById(String id) {
 		// TODO Auto-generated method stub
-		return patrolTeamDao.selectById(id);
+		PatrolTeam pt = patrolTeamDao.selectById(id);
+		List<Staff> staffList = staffDao.queryCBBList(pt.getDeptId().toString());
+		String staffIds = pt.getStaffIds();
+		String[] staffIdArr = staffIds.split(",");
+		String staffNames = "";
+		for (String staffIdStr : staffIdArr) {
+			int staffId = Integer.valueOf(staffIdStr);
+			for (int j = 0; j < staffList.size(); j++) {
+				Staff staff = staffList.get(j);
+				if(staffId==staff.getId()) {
+					staffNames+=","+staff.getName();
+					break;
+				}
+			}
+		}
+		pt.setStaffNames(staffNames.substring(1));
+		return pt;
 	}
 }

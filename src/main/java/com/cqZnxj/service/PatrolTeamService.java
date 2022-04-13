@@ -16,4 +16,6 @@ public interface PatrolTeamService {
 
 	PatrolTeam selectById(String id);
 
+	int deleteByIds(String ids);
+
 }
