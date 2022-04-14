@@ -63,6 +63,36 @@
 				1,
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.PatrolPlan">
+		update patrol_plan set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<if test="ptIds!=null">
+				ptIds=#{ptIds},
+			</if>
+			<if test="plIds!=null">
+				plIds=#{plIds},
+			</if>
+			<if test="frequency!=null">
+				frequency=#{frequency},
+			</if>
+			<if test="startDate!=null">
+				startDate=#{startDate},
+			</if>
+			<if test="endDate!=null">
+				endDate=#{endDate},
+			</if>
+			<if test="leastPopulation!=null">
+				leastPopulation=#{leastPopulation},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from patrol_plan where 1=1
 		<if test="name!=''&amp;name!=null">
@@ -82,5 +112,8 @@
 		</if>
 		order by createTime desc
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.PatrolPlan">
+		select pp.* from patrol_plan pp where pp.id=#{id}
 	</select>
 </mapper>

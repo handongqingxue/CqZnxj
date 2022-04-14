@@ -26,6 +26,12 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 	}
 
 	@Override
+	public int edit(PatrolPlan pp) {
+		// TODO Auto-generated method stub
+		return patrolPlanDao.edit(pp);
+	}
+
+	@Override
 	public int queryForInt(String name,Integer state) {
 		// TODO Auto-generated method stub
 		return patrolPlanDao.queryForInt(name,state);
@@ -70,5 +76,11 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 			pp.setPlNames(plNames.substring(1));
 		}
 		return ppList;
+	}
+
+	@Override
+	public PatrolPlan selectById(String id) {
+		// TODO Auto-generated method stub
+		return patrolPlanDao.selectById(id);
 	}
 }

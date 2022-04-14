@@ -79,11 +79,31 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/plan/new";
 	}
+	
+	@RequestMapping(value="/plan/edit")
+	public String goPlanEdit(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolPlan pp=patrolPlanService.selectById(id);
+		request.setAttribute("pp", pp);
+		
+		return MODULE_NAME+"/plan/edit";
+	}
 
 	@RequestMapping(value="/plan/list")
 	public String goPlanList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/plan/list";
+	}
+	
+	@RequestMapping(value="/plan/detail")
+	public String goPlanDetail(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		PatrolPlan pp=patrolPlanService.selectById(id);
+		request.setAttribute("pp", pp);
+		
+		return MODULE_NAME+"/plan/detail";
 	}
 	
 	@RequestMapping(value="/team/new")
@@ -363,6 +383,24 @@ public class PatrolMgmtController {
 		else {
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "创建巡检计划失败！");
+		}
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/editPlan")
+	@ResponseBody
+	public Map<String, Object> editPlan(PatrolPlan pp) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=patrolPlanService.edit(pp);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "编辑巡检计划成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "编辑巡检计划失败！");
 		}
 		return jsonMap;
 	}
