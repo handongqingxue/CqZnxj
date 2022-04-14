@@ -8,6 +8,8 @@ public interface PatrolPlanService {
 
 	int add(PatrolPlan pp);
 
+	int deleteByIds(String ids);
+
 	int edit(PatrolPlan pp);
 
 	int queryForInt(String name,Integer state);

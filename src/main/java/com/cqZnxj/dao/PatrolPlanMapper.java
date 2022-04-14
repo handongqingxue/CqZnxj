@@ -10,6 +10,8 @@ public interface PatrolPlanMapper {
 
 	int add(PatrolPlan pp);
 
+	int deleteByIdList(List<String> idList);
+
 	int edit(PatrolPlan pp);
 
 	int queryForInt(@Param("name") String name, @Param("state") Integer state);

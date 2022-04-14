@@ -148,7 +148,7 @@ function deleteByIds(ids){
 			}
 			ids=ids.substring(1);
 			
-			$.post(patrolMgmtPath + "deleteTeam",
+			$.post(patrolMgmtPath + "deletePlan",
 				{ids:ids},
 				function(result){
 					if(result.status==1){

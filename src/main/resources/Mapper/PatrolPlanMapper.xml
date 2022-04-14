@@ -63,6 +63,12 @@
 				1,
 		</trim>
 	</insert>
+	<delete id="deleteByIdList">
+		delete from patrol_plan where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in(" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.PatrolPlan">
 		update patrol_plan set 
 		<trim suffixOverrides=",">
