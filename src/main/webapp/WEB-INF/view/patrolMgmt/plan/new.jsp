@@ -24,10 +24,6 @@
 	width: 150px;
 	height:30px;
 }
-.frequency_inp,.leastPopulation_inp{
-	width: 100px;
-	height:30px;
-}
 </style>
 <script type="text/javascript">
 var path='<%=basePath %>';
@@ -59,7 +55,7 @@ function initNewDialog(){
 	$("#new_div").dialog({
 		title:"巡检计划信息",
 		width:setFitWidthInParent("body","new_div"),
-		height:300,
+		height:250,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -172,11 +168,7 @@ function checkNew(){
 				if(checkPlIds()){
 					if(checkStartDate()){
 						if(checkEndDate()){
-							if(checkFrequency()){
-								if(checkLeastPopulation()){
-									newPlan();
-								}
-							}
+							newPlan();
 						}
 					}
 				}
@@ -292,28 +284,6 @@ function checkEndDate(){
 		return true;
 }
 
-//验证巡更频次
-function checkFrequency(){
-	var frequency = $("#frequency").val();
-	if(frequency==null||frequency==""){
-	  	alert("请选择巡更频次");
-	  	return false;
-	}
-	else
-		return true;
-}
-
-//验证最少巡更人数
-function checkLeastPopulation(){
-	var leastPopulation = $("#leastPopulation").val();
-	if(leastPopulation==null||leastPopulation==""){
-	  	alert("请选择最少巡更人数");
-	  	return false;
-	}
-	else
-		return true;
-}
-
 function setFitWidthInParent(parent,self){
 	var space=0;
 	switch (self) {
@@ -388,22 +358,6 @@ function setFitWidthInParent(parent,self){
 			<td class="td2">
 				<input id="ed_db"/>
 				<input type="hidden" id="endDate" name="endDate"/>
-			</td>
-		  </tr>
-		  <tr>
-			<td class="td1" align="right">
-				巡更频次
-			</td>
-			<td class="td2">
-				间隔
-				<input type="number" class="frequency_inp" id="frequency" name="frequency" placeholder="请输入整数"/>
-				分钟
-			</td>
-			<td class="td1" align="right">
-				最少巡更人数
-			</td>
-			<td class="td2">
-				<input type="number" class="leastPopulation_inp" id="leastPopulation" name="leastPopulation" placeholder="请输入整数"/>
 			</td>
 		  </tr>
 		</table>

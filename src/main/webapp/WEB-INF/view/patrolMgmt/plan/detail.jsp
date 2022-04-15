@@ -51,7 +51,7 @@ function initDetailDialog(){
 	$("#detail_div").dialog({
 		title:"巡检计划信息",
 		width:setFitWidthInParent("body","detail_div"),
-		height:260,
+		height:210,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -155,20 +155,6 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				${requestScope.pp.endDate }
-			</td>
-		  </tr>
-		  <tr>
-			<td class="td1" align="right">
-				巡更频次
-			</td>
-			<td class="td2">
-				间隔${requestScope.pp.frequency }分钟
-			</td>
-			<td class="td1" align="right">
-				最少巡更人数
-			</td>
-			<td class="td2">
-				${requestScope.pp.leastPopulation }
 			</td>
 		  </tr>
 		</table>

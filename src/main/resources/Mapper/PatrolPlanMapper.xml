@@ -18,18 +18,12 @@
 			<if test="plIds!=null">
 				plIds,
 			</if>
-			<if test="frequency!=null">
-				frequency,
-			</if>
 				createTime,
 			<if test="startDate!=null">
 				startDate,
 			</if>
 			<if test="endDate!=null">
 				endDate,
-			</if>
-			<if test="leastPopulation!=null">
-				leastPopulation,
 			</if>
 				state,
 		</trim>
@@ -47,18 +41,12 @@
 			<if test="plIds!=null">
 				#{plIds},
 			</if>
-			<if test="frequency!=null">
-				#{frequency},
-			</if>
 				now(),
 			<if test="startDate!=null">
 				#{startDate},
 			</if>
 			<if test="endDate!=null">
 				#{endDate},
-			</if>
-			<if test="leastPopulation!=null">
-				#{leastPopulation},
 			</if>
 				1,
 		</trim>

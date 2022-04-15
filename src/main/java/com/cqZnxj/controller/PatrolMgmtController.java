@@ -375,14 +375,21 @@ public class PatrolMgmtController {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		int count=patrolPlanService.add(pp);
-		if(count>0) {
-			jsonMap.put("message", "ok");
-			jsonMap.put("info", "创建巡检计划成功！");
-		}
-		else {
+		try {
+			int count=patrolPlanService.add(pp);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "创建巡检计划成功！");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "创建巡检计划失败！");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			jsonMap.put("message", "no");
 			jsonMap.put("info", "创建巡检计划失败！");
+			e.printStackTrace();
 		}
 		return jsonMap;
 	}

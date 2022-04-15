@@ -159,6 +159,9 @@ function resizeSideDiv(){
 	<c:if test="${param.nav eq 'xjqy' }">
 		巡检管理>巡检区域
 	</c:if>
+	<c:if test="${param.nav eq 'xjjh' }">
+		巡检管理>巡检计划
+	</c:if>
 	<c:if test="${param.nav eq 'xjbz' }">
 		巡检管理>巡检班组
 	</c:if>

@@ -45,12 +45,6 @@ public class PatrolPlan {
 	public void setPlNames(String plNames) {
 		this.plNames = plNames;
 	}
-	public Integer getFrequency() {
-		return frequency;
-	}
-	public void setFrequency(Integer frequency) {
-		this.frequency = frequency;
-	}
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -69,12 +63,6 @@ public class PatrolPlan {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Integer getLeastPopulation() {
-		return leastPopulation;
-	}
-	public void setLeastPopulation(Integer leastPopulation) {
-		this.leastPopulation = leastPopulation;
-	}
 	public Integer getState() {
 		return state;
 	}
@@ -87,10 +75,8 @@ public class PatrolPlan {
 	private String ptNames;//巡更班组名
 	private String plIds;//巡检路线id
 	private String plNames;//巡检路线名
-	private Integer frequency;//巡更频次
 	private String createTime;//创建时间
 	private String startDate;//开始日期
 	private String endDate;//结束日期
-	private Integer leastPopulation;//最少巡更人数
 	private Integer state;//状态 1.未开始 2.进行中 3.已结束 4.暂停中
 }
