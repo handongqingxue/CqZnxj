@@ -12,8 +12,11 @@
 			<if test="type!=null">
 				type,
 			</if>
-			<if test="ptIds!=null">
-				ptIds,
+			<if test="ptId!=null">
+				ptId,
+			</if>
+			<if test="psIds!=null">
+				psIds,
 			</if>
 			<if test="plIds!=null">
 				plIds,
@@ -35,8 +38,11 @@
 			<if test="type!=null">
 				#{type},
 			</if>
-			<if test="ptIds!=null">
-				#{ptIds},
+			<if test="ptId!=null">
+				#{ptId},
+			</if>
+			<if test="psIds!=null">
+				#{psIds},
 			</if>
 			<if test="plIds!=null">
 				#{plIds},
@@ -66,14 +72,14 @@
 			<if test="type!=null">
 				type=#{type},
 			</if>
-			<if test="ptIds!=null">
-				ptIds=#{ptIds},
+			<if test="ptId!=null">
+				ptId=#{ptId},
+			</if>
+			<if test="psIds!=null">
+				psIds=#{psIds},
 			</if>
 			<if test="plIds!=null">
 				plIds=#{plIds},
-			</if>
-			<if test="frequency!=null">
-				frequency=#{frequency},
 			</if>
 			<if test="startDate!=null">
 				startDate=#{startDate},
@@ -81,33 +87,30 @@
 			<if test="endDate!=null">
 				endDate=#{endDate},
 			</if>
-			<if test="leastPopulation!=null">
-				leastPopulation=#{leastPopulation},
-			</if>
 		</trim>
 		where id=#{id}
 	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from patrol_plan where 1=1
+		select count(*) from patrol_plan pp,patrol_team pt where pp.ptId=pt.id
 		<if test="name!=''&amp;name!=null">
-			and name like CONCAT('%',#{name},'%')
+			and pp.name like CONCAT('%',#{name},'%')
 		</if>
 		<if test="state!=''&amp;state!=null">
-			and state=#{state}
+			and pp.state=#{state}
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolPlan">
-		select id,`name`,type,ptIds,plIds,createTime,startDate,endDate,state from patrol_plan where 1=1
+		select pp.*,pt.name ptName from patrol_plan pp,patrol_team pt where pp.ptId=pt.id
 		<if test="name!=''&amp;name!=null">
-			and name like CONCAT('%',#{name},'%')
+			and pp.name like CONCAT('%',#{name},'%')
 		</if>
 		<if test="state!=''&amp;state!=null">
-			and state=#{state}
+			and pp.state=#{state}
 		</if>
-		order by createTime desc
+		order by pp.createTime desc
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolPlan">
-		select pp.* from patrol_plan pp where pp.id=#{id}
+		select pp.*,pt.name ptName from patrol_plan pp,patrol_team pt where pp.ptId=pt.id and pp.id=#{id}
 	</select>
 </mapper>

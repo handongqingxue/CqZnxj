@@ -51,7 +51,7 @@ function initDetailDialog(){
 	$("#detail_div").dialog({
 		title:"巡检计划信息",
 		width:setFitWidthInParent("body","detail_div"),
-		height:210,
+		height:260,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -134,27 +134,39 @@ function setFitWidthInParent(parent,self){
 				巡检班组
 			</td>
 			<td class="td2">
-				${requestScope.pp.ptNames }
+				${requestScope.pp.ptName }
 			</td>
+			<td class="td1" align="right">
+				巡检人员
+			</td>
+			<td class="td2">
+				${requestScope.pp.psNames }
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				巡检路线
 			</td>
 			<td class="td2">
 				${requestScope.pp.plNames }
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				开始日期
 			</td>
 			<td class="td2">
 				${requestScope.pp.startDate }
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				结束日期
 			</td>
 			<td class="td2">
 				${requestScope.pp.endDate }
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

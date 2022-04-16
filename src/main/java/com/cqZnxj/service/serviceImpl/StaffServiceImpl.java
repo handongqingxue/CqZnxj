@@ -20,4 +20,10 @@ public class StaffServiceImpl implements StaffService {
 		// TODO Auto-generated method stub
 		return staffDao.queryCBBList(deptId);
 	}
+
+	@Override
+	public List<Staff> queryCBBListByPtId(Integer ptId) {
+		// TODO Auto-generated method stub
+		return staffDao.queryCBBListByPtId(ptId);
+	}
 }

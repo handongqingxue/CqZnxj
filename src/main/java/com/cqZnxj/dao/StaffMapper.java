@@ -10,4 +10,6 @@ public interface StaffMapper {
 
 	List<Staff> queryCBBList(@Param("deptId") String deptId);
 
+	List<Staff> queryCBBListByPtId(@Param("ptId") Integer ptId);
+
 }

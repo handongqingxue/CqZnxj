@@ -21,17 +21,29 @@ public class PatrolPlan {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	public String getPtIds() {
-		return ptIds;
+	public Integer getPtId() {
+		return ptId;
 	}
-	public void setPtIds(String ptIds) {
-		this.ptIds = ptIds;
+	public void setPtId(Integer ptId) {
+		this.ptId = ptId;
 	}
-	public String getPtNames() {
-		return ptNames;
+	public String getPtName() {
+		return ptName;
 	}
-	public void setPtNames(String ptNames) {
-		this.ptNames = ptNames;
+	public void setPtName(String ptName) {
+		this.ptName = ptName;
+	}
+	public String getPsIds() {
+		return psIds;
+	}
+	public void setPsIds(String psIds) {
+		this.psIds = psIds;
+	}
+	public String getPsNames() {
+		return psNames;
+	}
+	public void setPsNames(String psNames) {
+		this.psNames = psNames;
 	}
 	public String getPlIds() {
 		return plIds;
@@ -71,8 +83,10 @@ public class PatrolPlan {
 	}
 	private String name;//计划名称
 	private Integer type;//计划类型 1.日常 2.临时
-	private String ptIds;//巡更班组id
-	private String ptNames;//巡更班组名
+	private Integer ptId;//巡更班组id
+	private String ptName;//巡更班组名
+	private String psIds;//巡更班组人员id
+	private String psNames;//巡更班组人员名
 	private String plIds;//巡检路线id
 	private String plNames;//巡检路线名
 	private String createTime;//创建时间

@@ -19,6 +19,8 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 	private PatrolTeamMapper patrolTeamDao;
 	@Autowired
 	private PatrolLineMapper patrolLineDao;
+	@Autowired
+	private StaffMapper staffDao;
 
 	@Override
 	public int add(PatrolPlan pp) {
@@ -50,25 +52,25 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 	public List<PatrolPlan> queryList(String name, Integer state, int page, int rows, String sort, String order) {
 		// TODO Auto-generated method stub
 		List<PatrolPlan> ppList = patrolPlanDao.queryList(name, state, (page-1)*rows, rows, sort, order);
-		List<PatrolTeam> ptList = patrolTeamDao.queryCBBList();
+		List<Staff> psList = staffDao.queryCBBList(null);
 		List<PatrolLine> plList = patrolLineDao.queryCBBList();
 		for (int i = 0; i < ppList.size(); i++) {
 			PatrolPlan pp = ppList.get(i);
-			String ptIds = pp.getPtIds();
-			String[] ptIdArr = ptIds.split(",");
-			String ptNames = "";
-			for (String ptIdStr : ptIdArr) {
-				int ptId = Integer.valueOf(ptIdStr);
-				for (int j = 0; j < ptList.size(); j++) {
-					PatrolTeam pt = ptList.get(j);
-					if(ptId==pt.getId()) {
-						ptNames+=","+pt.getName();
+			String psIds = pp.getPsIds();
+			String[] psIdArr = psIds.split(",");
+			String psNames = "";
+			for (String psIdStr : psIdArr) {
+				int psId = Integer.valueOf(psIdStr);
+				for (int j = 0; j < psList.size(); j++) {
+					Staff ps = psList.get(j);
+					if(psId==ps.getId()) {
+						psNames+=","+ps.getName();
 						break;
 					}
 				}
 			}
-			pp.setPtNames(ptNames.substring(1));
-
+			pp.setPsNames(psNames.substring(1));
+			
 			String plIds = pp.getPlIds();
 			String[] plIdArr = plIds.split(",");
 			String plNames = "";
@@ -91,22 +93,23 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 	public PatrolPlan selectById(String id) {
 		// TODO Auto-generated method stub
 		PatrolPlan pp = patrolPlanDao.selectById(id);
-		List<PatrolTeam> ptList = patrolTeamDao.queryCBBList();
+		List<Staff> psList = staffDao.queryCBBList(null);
 		List<PatrolLine> plList = patrolLineDao.queryCBBList();
-		String ptIds = pp.getPtIds();
-		String[] ptIdArr = ptIds.split(",");
-		String ptNames = "";
-		for (String ptIdStr : ptIdArr) {
-			int ptId = Integer.valueOf(ptIdStr);
-			for (int j = 0; j < ptList.size(); j++) {
-				PatrolTeam pt = ptList.get(j);
-				if(ptId==pt.getId()) {
-					ptNames+=","+pt.getName();
+		
+		String psIds = pp.getPsIds();
+		String[] psIdArr = psIds.split(",");
+		String psNames = "";
+		for (String psIdStr : psIdArr) {
+			int psId = Integer.valueOf(psIdStr);
+			for (int j = 0; j < psList.size(); j++) {
+				Staff ps = psList.get(j);
+				if(psId==ps.getId()) {
+					psNames+=","+ps.getName();
 					break;
 				}
 			}
 		}
-		pp.setPtNames(ptNames.substring(1));
+		pp.setPsNames(psNames.substring(1));
 		
 		String plIds = pp.getPlIds();
 		String[] plIdArr = plIds.split(",");

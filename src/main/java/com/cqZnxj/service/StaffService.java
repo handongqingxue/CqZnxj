@@ -8,4 +8,6 @@ public interface StaffService {
 
 	List<Staff> queryCBBList(String deptId);
 
+	List<Staff> queryCBBListByPtId(Integer ptId);
+
 }

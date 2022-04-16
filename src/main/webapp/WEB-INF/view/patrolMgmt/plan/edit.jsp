@@ -55,7 +55,7 @@ function initEditDialog(){
 	$("#edit_div").dialog({
 		title:"巡检计划信息",
 		width:setFitWidthInParent("body","edit_div"),
-		height:250,
+		height:300,
 		top:dialogTop,
 		left:dialogLeft,
 		buttons:[
@@ -93,10 +93,14 @@ function initEditDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 
 	initTypeCBB();
-	initPtsCBB();
+	initPtCBB();
+	initPssCBB();
 	initPlsCBB();
 	initStartDateDB();
 	initEndDateDB();
+	setTimeout(function(){
+		loadPssCBBData();
+	},1000);
 }
 
 function initTypeCBB(){
@@ -114,7 +118,7 @@ function initTypeCBB(){
 	});
 }
 
-function initPtsCBB(){
+function initPtCBB(){
 	var data=[];
 	data.push({"value":"","text":"请选择巡检班组"});
 	$.post(patrolMgmtPath+"queryTeamCBBList",
@@ -123,16 +127,44 @@ function initPtsCBB(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
-			ptsCBB=$("#edit_div #pts_cbb").combobox({
+			ptCBB=$("#edit_div #pt_cbb").combobox({
 				valueField:"value",
 				textField:"text",
 				data:data,
-				multiple:true,
 				onLoadSuccess:function(){
-					var ptIdArr='${requestScope.pp.ptIds }'.split(",");
-					$(this).combobox("setValues",ptIdArr);
+					$(this).combobox("setValue",'${requestScope.pp.ptId }');
 				}
 			});
+		}
+	,"json");
+}
+
+function initPssCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择巡检人员"});
+	pssCBB=$("#edit_div #pss_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data,
+		multiple:true,
+		onLoadSuccess:function(){
+			$(this).combobox("setValues",'${requestScope.pp.psIds }'.split(","));
+		}
+	});
+}
+
+function loadPssCBBData(){
+	var ptId=ptCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择巡检人员"});
+	$.post(patrolMgmtPath+"queryTeamStaffCBBList",
+		{ptId:ptId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].id,"text":rows[i].name});
+			}
+			pssCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -177,11 +209,13 @@ function initEndDateDB(){
 function checkEdit(){
 	if(checkName()){
 		if(checkType()){
-			if(checkPtIds()){
-				if(checkPlIds()){
-					if(checkStartDate()){
-						if(checkEndDate()){
-							editPlan();
+			if(checkPtId()){
+				if(checkPsIds()){
+					if(checkPlIds()){
+						if(checkStartDate()){
+							if(checkEndDate()){
+								editPlan();
+							}
 						}
 					}
 				}
@@ -194,9 +228,17 @@ function editPlan(){
 	var name = $("#name").val();
 	var type=typeCBB.combobox("getValue");
 	$("#edit_div #type").val(type);
-	var ptIds=ptsCBB.combobox("getValues");
-	$("#edit_div #ptIds").val(ptIds);
-	var plIds=plsCBB.combobox("getValues");
+	var ptId=ptCBB.combobox("getValue");
+	$("#edit_div #ptId").val(ptId);
+	var psIdsArr=pssCBB.combobox("getValues");
+	var psIds=psIdsArr.sort().toString();
+	if(psIds.substring(0,1)==",")
+		psIds=psIds.substring(1);
+	$("#edit_div #psIds").val(psIds);
+	var plIdsArr=plsCBB.combobox("getValues");
+	var plIds=plIdsArr.sort().toString();
+	if(plIds.substring(0,1)==",")
+		plIds=plIds.substring(1);
 	$("#edit_div #plIds").val(plIds);
 	var startDate=sdDB.datebox("getValue");
 	$("#edit_div #startDate").val(startDate);
@@ -256,10 +298,21 @@ function checkType(){
 }
 
 //验证巡检班组
-function checkPtIds(){
-	var ptIds=ptsCBB.combobox("getValues");
-	if(ptIds==null||ptIds==""){
+function checkPtId(){
+	var ptId=ptCBB.combobox("getValues");
+	if(ptId==null||ptId==""){
 	  	alert("请选择巡检班组");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证巡检人员
+function checkPsIds(){
+	var pssId=pssCBB.combobox("getValue");
+	if(pssId==null||pssId==""){
+	  	alert("请选择巡检人员");
 	  	return false;
 	}
 	else
@@ -347,9 +400,18 @@ function setFitWidthInParent(parent,self){
 				巡检班组
 			</td>
 			<td class="td2">
-				<input id="pts_cbb"/>
-				<input type="hidden" id="ptIds" name="ptIds" value="${requestScope.pp.ptIds }"/>
+				<input id="pt_cbb"/>
+				<input type="hidden" id="ptId" name="ptId" value="${requestScope.pp.ptId }"/>
 			</td>
+			<td class="td1" align="right">
+				巡检人员
+			</td>
+			<td class="td2">
+				<input id="pss_cbb"/>
+				<input type="hidden" id="psIds" name="psIds" value="${requestScope.pp.psIds }"/>
+			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				巡检路线
 			</td>
@@ -357,8 +419,6 @@ function setFitWidthInParent(parent,self){
 				<input id="pls_cbb"/>
 				<input type="hidden" id="plIds" name="plIds" value="${requestScope.pp.plIds }"/>
 			</td>
-		  </tr>
-		  <tr>
 			<td class="td1" align="right">
 				开始日期
 			</td>
@@ -366,12 +426,18 @@ function setFitWidthInParent(parent,self){
 				<input id="sd_db"/>
 				<input type="hidden" id="startDate" name="startDate" value="${requestScope.pp.startDate }"/>
 			</td>
+		  </tr>
+		  <tr>
 			<td class="td1" align="right">
 				结束日期
 			</td>
 			<td class="td2">
 				<input id="ed_db"/>
 				<input type="hidden" id="endDate" name="endDate" value="${requestScope.pp.endDate }"/>
+			</td>
+			<td class="td1" align="right">
+			</td>
+			<td class="td2">
 			</td>
 		  </tr>
 		</table>

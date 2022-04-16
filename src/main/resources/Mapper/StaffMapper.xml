@@ -9,4 +9,7 @@
 			and deptId=#{deptId}
 		</if>
 	</select>
+	<select id="queryCBBListByPtId" resultType="com.cqZnxj.entity.Staff">
+		select id,name from staff where id in(select staffIds from patrol_team where id=#{ptId})
+	</select>
 </mapper>

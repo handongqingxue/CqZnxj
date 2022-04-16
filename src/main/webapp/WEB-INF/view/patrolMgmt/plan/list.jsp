@@ -89,7 +89,8 @@ function initTab1(){
 				}
 				return str;
 			}},
-			{field:"ptNames",title:"班组",width:200},
+			{field:"ptName",title:"班组",width:200},
+			{field:"psNames",title:"人员",width:200},
 			{field:"plNames",title:"路线",width:200},
 			{field:"createTime",title:"创建时间",width:180},
 			{field:"startDate",title:"开始日期",width:120},
@@ -121,7 +122,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:9});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:10});
 				data.total=0;
 			}
 			

@@ -34,6 +34,8 @@ public class PatrolMgmtController {
 	private PatrolTeamService patrolTeamService;
 	@Autowired
 	private PatrolPlanService patrolPlanService;
+	@Autowired
+	private StaffService staffService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
 	@RequestMapping(value="/area/new")
@@ -563,6 +565,19 @@ public class PatrolMgmtController {
 		List<PatrolTeam> ptList=patrolTeamService.queryCBBList();
 		
 		jsonMap.put("rows", ptList);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryTeamStaffCBBList")
+	@ResponseBody
+	public Map<String, Object> queryTeamStaffCBBList(Integer ptId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<Staff> ptsList=staffService.queryCBBListByPtId(ptId);
+		
+		jsonMap.put("rows", ptsList);
 		
 		return jsonMap;
 	}
