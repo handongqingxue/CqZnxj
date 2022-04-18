@@ -19,4 +19,8 @@ public interface PatrolDeviceParamService {
 
 	int deleteByIds(String ids);
 
+	List<PatrolDeviceParam> selectPhListByPdaId(Integer pdaId);
+
+	PatrolDeviceParam selectPhInfoById(Integer id);
+
 }

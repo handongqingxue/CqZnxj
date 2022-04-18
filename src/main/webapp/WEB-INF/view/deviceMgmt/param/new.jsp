@@ -350,6 +350,9 @@ function focusUnit(){
 
 //验证参数单位
 function checkUnit(){
+	var type=typeCBB.combobox("getValue");
+	if(type==2)
+		return true;
 	var unit = $("#unit").val();
 	if(unit==null||unit==""||unit=="参数单位不能为空"){
 		$("#unit").css("color","#E15748");
@@ -362,6 +365,9 @@ function checkUnit(){
 
 //验证报警上限
 function checkWarnUp(){
+	var type=typeCBB.combobox("getValue");
+	if(type==2)
+		return true;
 	var warnUp = $("#warnUp").val();
 	if(warnUp==null||warnUp==""){
 	  	alert("请选择报警上限");
@@ -373,6 +379,9 @@ function checkWarnUp(){
 
 //验证报警下限
 function checkWarnDown(){
+	var type=typeCBB.combobox("getValue");
+	if(type==2)
+		return true;
 	var warnDown = $("#warnDown").val();
 	if(warnDown==null||warnDown==""){
 	  	alert("请选择报警下限");

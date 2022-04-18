@@ -55,4 +55,16 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 		count=patrolDeviceParamDao.deleteByIds(idList);
 		return count;
 	}
+
+	@Override
+	public List<PatrolDeviceParam> selectPhListByPdaId(Integer pdaId) {
+		// TODO Auto-generated method stub
+		return patrolDeviceParamDao.selectPhListByPdaId(pdaId);
+	}
+
+	@Override
+	public PatrolDeviceParam selectPhInfoById(Integer id) {
+		// TODO Auto-generated method stub
+		return patrolDeviceParamDao.selectPhInfoById(id);
+	}
 }

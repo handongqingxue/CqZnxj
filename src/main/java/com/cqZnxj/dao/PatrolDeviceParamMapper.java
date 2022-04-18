@@ -25,4 +25,8 @@ public interface PatrolDeviceParamMapper {
 
 	int deleteByPdaIdList(@Param("pdaIdList") List<String> pdaIdList);
 
+	List<PatrolDeviceParam> selectPhListByPdaId(@Param("pdaId") Integer pdaId);
+
+	PatrolDeviceParam selectPhInfoById(@Param("id") Integer id);
+
 }

@@ -105,6 +105,30 @@ public class PatrolDeviceParam {
 	public void setPdaNo(String pdaNo) {
 		this.pdaNo = pdaNo;
 	}
+	public Integer getPaId() {
+		return paId;
+	}
+	public void setPaId(Integer paId) {
+		this.paId = paId;
+	}
+	public String getPaName() {
+		return paName;
+	}
+	public void setPaName(String paName) {
+		this.paName = paName;
+	}
+	public Integer getPlId() {
+		return plId;
+	}
+	public void setPlId(Integer plId) {
+		this.plId = plId;
+	}
+	public String getPlName() {
+		return plName;
+	}
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
 	private String name;
 	private Integer type;
 	private Float warnDown;
@@ -121,4 +145,8 @@ public class PatrolDeviceParam {
 	private String pdName;
 	private Integer pdaId;
 	private String pdaNo;
+	private Integer paId;
+	private String paName;
+	private Integer plId;
+	private String plName;
 }

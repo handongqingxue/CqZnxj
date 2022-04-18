@@ -18,6 +18,8 @@ public class PhoneController {
 
 	@Autowired
 	private PatrolDeviceAccountService patrolDeviceAccountService;
+	@Autowired
+	private PatrolDeviceParamService patrolDeviceParamService;
 
 	@RequestMapping(value="/getPDAQrcodeInfo")
 	@ResponseBody
@@ -26,8 +28,23 @@ public class PhoneController {
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		PatrolDeviceAccount pda=patrolDeviceAccountService.getQrcodeInfoByNo(pdaNo);
+		List<PatrolDeviceParam> pdpList=patrolDeviceParamService.selectPhListByPdaId(pda.getId());
 		
 		jsonMap.put("pda", pda);
+		jsonMap.put("pdpList", pdpList);
+		
+		return jsonMap;
+	}
+
+	@RequestMapping(value="/getPDPInfo")
+	@ResponseBody
+	public Map<String, Object> getPDPInfo(Integer id) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		PatrolDeviceParam pdp=patrolDeviceParamService.selectPhInfoById(id);
+		
+		jsonMap.put("pdp", pdp);
 		
 		return jsonMap;
 	}

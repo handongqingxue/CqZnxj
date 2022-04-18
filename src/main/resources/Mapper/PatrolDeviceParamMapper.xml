@@ -139,4 +139,12 @@
 		#{pdaId}
 		</foreach>
 	</delete>
+	<select id="selectPhListByPdaId" resultType="com.cqZnxj.entity.PatrolDeviceParam">
+		select * from patrol_device_param where pdaId=#{pdaId}
+	</select>
+	<select id="selectPhInfoById" resultType="com.cqZnxj.entity.PatrolDeviceParam">
+		select pdp.*,pd.name pdName,pa.id paId,pa.name paName,pl.name plName from
+		 patrol_device_param pdp,patrol_device_account pda,patrol_device pd,pat_line_area_acc_set plaas,patrol_area pa,patrol_line pl
+		  where pdp.pdaId=pda.id and pda.pdId=pd.id and plaas.pdaIds in(pda.id) and plaas.paId=pa.id and plaas.plId=pl.id and pdp.id=#{id}
+	</select>
 </mapper>
