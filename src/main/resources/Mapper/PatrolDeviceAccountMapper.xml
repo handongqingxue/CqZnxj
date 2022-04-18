@@ -127,4 +127,7 @@
 		#{pdaId}
 		</foreach>
 	</select>
+	<select id="getQrcodeInfoByNo" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
+		select pda.id,pda.no,pa.name paName,pl.name plName from patrol_device_account pda,pat_line_area_acc_set plaas,patrol_area pa,patrol_line pl where plaas.pdaIds in(pda.id) and plaas.paId=pa.id and plaas.plId=pl.id and pda.no=#{no}
+	</select>
 </mapper>

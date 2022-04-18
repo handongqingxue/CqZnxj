@@ -85,4 +85,10 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 		List<String> pdaIdList = Arrays.asList(pdaIdArr);
 		return patrolDeviceAccountDao.queryCBBListByIdList(pdaIdList);
 	}
+
+	@Override
+	public PatrolDeviceAccount getQrcodeInfoByNo(String no) {
+		// TODO Auto-generated method stub
+		return patrolDeviceAccountDao.getQrcodeInfoByNo(no);
+	}
 }

@@ -27,4 +27,6 @@ public interface PatrolDeviceAccountService {
 
 	List<PatrolDeviceAccount> queryAreaAccCBBList(String deptId, String paId);
 
+	PatrolDeviceAccount getQrcodeInfoByNo(String no);
+
 }

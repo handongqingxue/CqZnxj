@@ -31,4 +31,6 @@ public interface PatrolDeviceAccountMapper {
 
 	List<PatrolDeviceAccount> queryCBBListByIdList(@Param("pdaIdList") List<String> pdaIdList);
 
+	PatrolDeviceAccount getQrcodeInfoByNo(@Param("no") String no);
+
 }

@@ -27,6 +27,7 @@
 				/deviceMgmt/**=anon
 				/patrolMgmt/**=anon
 				/main/**=anon
+				/phone/**=anon
 				/resource/**=anon
 				/**=authc
 			</value>

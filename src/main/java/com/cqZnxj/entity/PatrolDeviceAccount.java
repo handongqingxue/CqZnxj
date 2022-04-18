@@ -27,6 +27,18 @@ public class PatrolDeviceAccount {
 	public void setPdName(String pdName) {
 		this.pdName = pdName;
 	}
+	public String getPaName() {
+		return paName;
+	}
+	public void setPaName(String paName) {
+		this.paName = paName;
+	}
+	public String getPlName() {
+		return plName;
+	}
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
 	public Integer getDeptId() {
 		return deptId;
 	}
@@ -90,6 +102,8 @@ public class PatrolDeviceAccount {
 	private String no;
 	private Integer pdId;
 	private String pdName;
+	private String paName;
+	private String plName;
 	private Integer deptId;
 	private String deptName;
 	private Integer secondDeptId;
