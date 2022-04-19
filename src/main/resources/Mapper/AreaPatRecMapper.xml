@@ -2,18 +2,24 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cqZnxj.dao.LinePatRecMapper">
-	<insert id="add" parameterType="com.cqZnxj.entity.LinePatRec">
-		insert into line_pat_rec
+<mapper namespace="com.cqZnxj.dao.AreaPatRecMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.AreaPatRec">
+		insert into area_pat_rec
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-				patAreaCount,
-				finishAreaCount,
+				patAccCount,
+				finishAccCount,
 				createTime,
 			<if test="plId!=null">
 				plId,
 			</if>
+			<if test="paId!=null">
+				paId,
+			</if>
 			<if test="ptId!=null">
 				ptId,
+			</if>
+			<if test="lprId!=null">
+				lprId,
 			</if>
 		</trim>
 		values
@@ -24,15 +30,18 @@
 			<if test="plId!=null">
 				#{plId},
 			</if>
+			<if test="paId!=null">
+				#{paId},
+			</if>
 			<if test="ptId!=null">
 				#{ptId},
+			</if>
+			<if test="lprId!=null">
+				#{lprId},
 			</if>
 		</trim>
 	</insert>
 	<select id="getCount" resultType="java.lang.Integer">
-		select count(*) from line_pat_rec where plId=#{plId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
-	</select>
-	<select id="getIdByPlIdPtId" resultType="java.lang.Integer">
-		select id from line_pat_rec where plId=#{plId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+		select count(*) from area_pat_rec where paId=#{paId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
 </mapper>

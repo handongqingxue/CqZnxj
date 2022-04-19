@@ -10,4 +10,6 @@ public interface LinePatRecMapper {
 
 	int getCount(@Param("plId") Integer plId, @Param("ptId") Integer ptId);
 
+	int getIdByPlIdPtId(@Param("plId") Integer plId, @Param("ptId") Integer ptId);
+
 }

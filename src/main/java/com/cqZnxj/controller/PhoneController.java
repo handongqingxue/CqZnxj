@@ -24,6 +24,8 @@ public class PhoneController {
 	private DevParPatRecService devParPatRecService;
 	@Autowired
 	private LinePatRecService linePatRecService;
+	@Autowired
+	private AreaPatRecService areaPatRecService;
 
 	@RequestMapping(value="/getPDAQrcodeInfo")
 	@ResponseBody
@@ -63,7 +65,9 @@ public class PhoneController {
 		
 		int count;
 		boolean bool;
-		bool=linePatRecService.checkIfExist(dppr.getPlId(),dppr.getPtId());
+		Integer plId = dppr.getPlId();
+		Integer ptId = dppr.getPtId();
+		bool=linePatRecService.checkIfExist(plId,ptId);
 		if(!bool) {
 			LinePatRec lpr=new LinePatRec();
 			lpr.setPlId(dppr.getPlId());
@@ -71,7 +75,20 @@ public class PhoneController {
 			linePatRecService.add(lpr);
 		}
 		
-		bool=devParPatRecService.checkIfExist(dppr.getPdpId(),dppr.getPtId());
+		Integer paId = dppr.getPaId();
+		bool=areaPatRecService.checkIfExist(paId,ptId);
+		if(!bool) {
+			int lprId = linePatRecService.getIdByPlIdPtId(plId,ptId);
+			
+			AreaPatRec apr=new AreaPatRec();
+			apr.setPlId(dppr.getPlId());
+			apr.setPaId(dppr.getPaId());
+			apr.setPtId(dppr.getPtId());
+			apr.setLprId(lprId);
+			count=areaPatRecService.add(apr);
+		}
+		
+		bool=devParPatRecService.checkIfExist(dppr.getPdpId(),ptId);
 		if(bool)
 			count=devParPatRecService.editByPdpIdPtId(dppr);
 		else

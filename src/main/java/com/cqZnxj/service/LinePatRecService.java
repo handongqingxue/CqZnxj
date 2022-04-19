@@ -8,4 +8,6 @@ public interface LinePatRecService {
 
 	boolean checkIfExist(Integer plId, Integer ptId);
 
+	int getIdByPlIdPtId(Integer plId, Integer ptId);
+
 }
