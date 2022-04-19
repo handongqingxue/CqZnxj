@@ -14,19 +14,26 @@ public class DevParPatRecServiceImpl implements DevParPatRecService {
 	private DevParPatRecMapper devParPatRecDao;
 
 	@Override
-	public int save(DevParPatRec dppr) {
+	public int add(DevParPatRec dppr) {
 		// TODO Auto-generated method stub
-		int count;
-		if(devParPatRecDao.getCount(dppr.getPdpId(),dppr.getPtId())==0)
-			count=devParPatRecDao.add(dppr);
-		else
-			count=devParPatRecDao.editByPdpIdPtId(dppr);
-		return count;
+		return devParPatRecDao.add(dppr);
+	}
+
+	@Override
+	public int editByPdpIdPtId(DevParPatRec dppr) {
+		// TODO Auto-generated method stub
+		return devParPatRecDao.editByPdpIdPtId(dppr);
 	}
 
 	@Override
 	public DevParPatRec selectByPdpIdPtId(Integer pdpId, Integer ptId) {
 		// TODO Auto-generated method stub
 		return devParPatRecDao.selectByPdpIdPtId(pdpId,ptId);
+	}
+
+	@Override
+	public boolean checkIfExist(Integer pdpId, Integer ptId) {
+		// TODO Auto-generated method stub
+		return devParPatRecDao.getCount(pdpId,ptId)==0?false:true;
 	}
 }

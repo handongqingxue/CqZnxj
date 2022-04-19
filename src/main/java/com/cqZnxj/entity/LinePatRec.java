@@ -9,12 +9,6 @@ public class LinePatRec {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPlId() {
-		return plId;
-	}
-	public void setPlId(Integer plId) {
-		this.plId = plId;
-	}
 	public Integer getPatAreaCount() {
 		return patAreaCount;
 	}
@@ -33,15 +27,21 @@ public class LinePatRec {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+	public Integer getPlId() {
+		return plId;
+	}
+	public void setPlId(Integer plId) {
+		this.plId = plId;
+	}
 	public Integer getPtId() {
 		return ptId;
 	}
 	public void setPtId(Integer ptId) {
 		this.ptId = ptId;
 	}
-	private Integer plId;
 	private Integer patAreaCount;
 	private Integer finishAreaCount;
 	private String createTime;
+	private Integer plId;
 	private Integer ptId;
 }

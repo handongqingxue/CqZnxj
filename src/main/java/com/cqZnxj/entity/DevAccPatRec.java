@@ -9,18 +9,6 @@ public class DevAccPatRec {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPdaId() {
-		return pdaId;
-	}
-	public void setPdaId(Integer pdaId) {
-		this.pdaId = pdaId;
-	}
-	public Integer getAprId() {
-		return aprId;
-	}
-	public void setAprId(Integer aprId) {
-		this.aprId = aprId;
-	}
 	public Integer getPatParCount() {
 		return patParCount;
 	}
@@ -45,6 +33,18 @@ public class DevAccPatRec {
 	public void setPlId(Integer plId) {
 		this.plId = plId;
 	}
+	public Integer getPaId() {
+		return paId;
+	}
+	public void setPaId(Integer paId) {
+		this.paId = paId;
+	}
+	public Integer getPdaId() {
+		return pdaId;
+	}
+	public void setPdaId(Integer pdaId) {
+		this.pdaId = pdaId;
+	}
 	public Integer getPtId() {
 		return ptId;
 	}
@@ -57,12 +57,19 @@ public class DevAccPatRec {
 	public void setPsId(Integer psId) {
 		this.psId = psId;
 	}
-	private Integer pdaId;
-	private Integer aprId;
+	public Integer getAprId() {
+		return aprId;
+	}
+	public void setAprId(Integer aprId) {
+		this.aprId = aprId;
+	}
 	private Integer patParCount;
 	private Integer finishParCount;
 	private String createTime;
 	private Integer plId;
+	private Integer paId;
+	private Integer pdaId;
 	private Integer ptId;
 	private Integer psId;
+	private Integer aprId;
 }

@@ -22,6 +22,8 @@ public class PhoneController {
 	private PatrolDeviceParamService patrolDeviceParamService;
 	@Autowired
 	private DevParPatRecService devParPatRecService;
+	@Autowired
+	private LinePatRecService linePatRecService;
 
 	@RequestMapping(value="/getPDAQrcodeInfo")
 	@ResponseBody
@@ -59,8 +61,22 @@ public class PhoneController {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		//select date_format(now(),'%Y-%m-%d')
-		int count=devParPatRecService.save(dppr);
+		int count;
+		boolean bool;
+		bool=linePatRecService.checkIfExist(dppr.getPlId(),dppr.getPtId());
+		if(!bool) {
+			LinePatRec lpr=new LinePatRec();
+			lpr.setPlId(dppr.getPlId());
+			lpr.setPtId(dppr.getPtId());
+			linePatRecService.add(lpr);
+		}
+		
+		bool=devParPatRecService.checkIfExist(dppr.getPdpId(),dppr.getPtId());
+		if(bool)
+			count=devParPatRecService.editByPdpIdPtId(dppr);
+		else
+			count=devParPatRecService.add(dppr);
+			
 		if(count>0) {
 			jsonMap.put("message", "ok");
 			jsonMap.put("info", "保存设备参数巡检记录成功！");

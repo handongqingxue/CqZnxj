@@ -9,12 +9,6 @@ public class AreaPatRec {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPaId() {
-		return paId;
-	}
-	public void setPaId(Integer paId) {
-		this.paId = paId;
-	}
 	public Integer getPatAccCount() {
 		return patAccCount;
 	}
@@ -39,16 +33,29 @@ public class AreaPatRec {
 	public void setPlId(Integer plId) {
 		this.plId = plId;
 	}
+	public Integer getPaId() {
+		return paId;
+	}
+	public void setPaId(Integer paId) {
+		this.paId = paId;
+	}
 	public Integer getPtId() {
 		return ptId;
 	}
 	public void setPtId(Integer ptId) {
 		this.ptId = ptId;
 	}
-	private Integer paId;
+	public Integer getLprId() {
+		return lprId;
+	}
+	public void setLprId(Integer lprId) {
+		this.lprId = lprId;
+	}
 	private Integer patAccCount;
 	private Integer finishAccCount;
 	private String createTime;
 	private Integer plId;
+	private Integer paId;
 	private Integer ptId;
+	private Integer lprId;
 }
