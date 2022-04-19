@@ -10,4 +10,6 @@ public interface AreaPatRecMapper {
 
 	int getCount(@Param("paId") Integer paId, @Param("ptId") Integer ptId);
 
+	int getIdByPaIdPtId(@Param("paId") Integer paId, @Param("ptId") Integer ptId);
+
 }

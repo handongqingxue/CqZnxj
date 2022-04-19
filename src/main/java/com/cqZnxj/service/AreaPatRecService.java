@@ -8,4 +8,6 @@ public interface AreaPatRecService {
 
 	boolean checkIfExist(Integer paId, Integer ptId);
 
+	int getIdByPaIdPtId(Integer paId, Integer ptId);
+
 }

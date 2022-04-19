@@ -26,6 +26,8 @@ public class PhoneController {
 	private LinePatRecService linePatRecService;
 	@Autowired
 	private AreaPatRecService areaPatRecService;
+	@Autowired
+	private DevAccPatRecService devAccPatRecService;
 
 	@RequestMapping(value="/getPDAQrcodeInfo")
 	@ResponseBody
@@ -50,6 +52,8 @@ public class PhoneController {
 		
 		PatrolDeviceParam pdp=patrolDeviceParamService.selectPhInfoById(id);
 		DevParPatRec dppr=devParPatRecService.selectByPdpIdPtId(pdp.getId(),ptId);
+		if(dppr==null)
+			dppr=new DevParPatRec();
 		
 		jsonMap.put("pdp", pdp);
 		jsonMap.put("dppr", dppr);
@@ -87,12 +91,31 @@ public class PhoneController {
 			apr.setLprId(lprId);
 			count=areaPatRecService.add(apr);
 		}
+
+		Integer pdaId = dppr.getPdaId();
+		bool=devAccPatRecService.checkIfExist(pdaId,ptId);
+		if(!bool) {
+			int aprId = areaPatRecService.getIdByPaIdPtId(paId,ptId);
+			
+			DevAccPatRec dapr=new DevAccPatRec();
+			dapr.setPlId(dppr.getPlId());
+			dapr.setPaId(dppr.getPaId());
+			dapr.setPdaId(dppr.getPdaId());
+			dapr.setPtId(dppr.getPtId());
+			dapr.setPsId(dppr.getPsId());
+			dapr.setAprId(aprId);
+			count=devAccPatRecService.add(dapr);
+		}
 		
 		bool=devParPatRecService.checkIfExist(dppr.getPdpId(),ptId);
 		if(bool)
 			count=devParPatRecService.editByPdpIdPtId(dppr);
-		else
+		else {
+			int daprId=devAccPatRecService.getIdByPdaIdPtId(pdaId,ptId);
+			
+			dppr.setDaprId(daprId);
 			count=devParPatRecService.add(dppr);
+		}
 			
 		if(count>0) {
 			jsonMap.put("message", "ok");

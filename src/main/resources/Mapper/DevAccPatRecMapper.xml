@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqZnxj.dao.DevAccPatRecMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.DevAccPatRec">
+		insert into dev_acc_pat_rec
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				patParCount,
+				finishParCount,
+				createTime,
+			<if test="plId!=null">
+				plId,
+			</if>
+			<if test="paId!=null">
+				paId,
+			</if>
+			<if test="pdaId!=null">
+				pdaId,
+			</if>
+			<if test="ptId!=null">
+				ptId,
+			</if>
+			<if test="psId!=null">
+				psId,
+			</if>
+			<if test="aprId!=null">
+				aprId,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				0,
+				0,
+				now(),
+			<if test="plId!=null">
+				#{plId},
+			</if>
+			<if test="paId!=null">
+				#{paId},
+			</if>
+			<if test="pdaId!=null">
+				#{pdaId},
+			</if>
+			<if test="ptId!=null">
+				#{ptId},
+			</if>
+			<if test="psId!=null">
+				#{psId},
+			</if>
+			<if test="aprId!=null">
+				#{aprId},
+			</if>
+		</trim>
+	</insert>
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from dev_acc_pat_rec where pdaId=#{pdaId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
+	<select id="getIdByPdaIdPtId" resultType="java.lang.Integer">
+		select id from dev_acc_pat_rec where pdaId=#{pdaId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
+</mapper>

@@ -44,4 +44,7 @@
 	<select id="getCount" resultType="java.lang.Integer">
 		select count(*) from area_pat_rec where paId=#{paId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<select id="getIdByPaIdPtId" resultType="java.lang.Integer">
+		select id from area_pat_rec where paId=#{paId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
 </mapper>
