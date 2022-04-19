@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqZnxj.dao.DevParPatRecMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.DevParPatRec">
+		insert into dev_par_pat_rec
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="paramIfExce!=null">
+				paramIfExce,
+			</if>
+			<if test="paramValue!=null">
+				paramValue,
+			</if>
+			<if test="paramMemo!=null">
+				paramMemo,
+			</if>
+				createTime,
+			<if test="plId!=null">
+				plId,
+			</if>
+			<if test="paId!=null">
+				paId,
+			</if>
+			<if test="pdaId!=null">
+				pdaId,
+			</if>
+			<if test="pdpId!=null">
+				pdpId,
+			</if>
+			<if test="ptId!=null">
+				ptId,
+			</if>
+			<if test="psId!=null">
+				psId,
+			</if>
+			<if test="daprId!=null">
+				daprId,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="paramIfExce!=null">
+				#{paramIfExce},
+			</if>
+			<if test="paramValue!=null">
+				#{paramValue},
+			</if>
+			<if test="paramMemo!=null">
+				#{paramMemo},
+			</if>
+				now(),
+			<if test="plId!=null">
+				#{plId},
+			</if>
+			<if test="paId!=null">
+				#{paId},
+			</if>
+			<if test="pdaId!=null">
+				#{pdaId},
+			</if>
+			<if test="pdpId!=null">
+				#{pdpId},
+			</if>
+			<if test="ptId!=null">
+				#{ptId},
+			</if>
+			<if test="psId!=null">
+				#{psId},
+			</if>
+			<if test="daprId!=null">
+				#{daprId},
+			</if>
+		</trim>
+	</insert>
+	<update id="editByPdpIdPtId" parameterType="com.cqZnxj.entity.DevParPatRec">
+		update dev_par_pat_rec set 
+		<trim suffixOverrides=",">
+			<if test="paramIfExce!=null">
+				paramIfExce=#{paramIfExce},
+			</if>
+			<if test="paramValue!=null">
+				paramValue=#{paramValue},
+			</if>
+			<if test="paramMemo!=null">
+				paramMemo=#{paramMemo},
+			</if>
+			<if test="psId!=null">
+				psId=#{psId},
+			</if>
+		</trim>
+		where pdpId=#{pdpId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</update>
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from dev_par_pat_rec where pdpId=#{pdpId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
+	<select id="selectByPdpIdPtId" resultType="com.cqZnxj.entity.DevParPatRec">
+		select * from dev_par_pat_rec where pdpId=#{pdpId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
+</mapper>

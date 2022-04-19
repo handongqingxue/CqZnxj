@@ -9,11 +9,11 @@ public class DevParPatRec {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getDaprId() {
-		return daprId;
+	public Integer getPdaId() {
+		return pdaId;
 	}
-	public void setDaprId(Integer daprId) {
-		this.daprId = daprId;
+	public void setPdaId(Integer pdaId) {
+		this.pdaId = pdaId;
 	}
 	public Integer getPdpId() {
 		return pdpId;
@@ -51,6 +51,12 @@ public class DevParPatRec {
 	public void setPlId(Integer plId) {
 		this.plId = plId;
 	}
+	public Integer getPaId() {
+		return paId;
+	}
+	public void setPaId(Integer paId) {
+		this.paId = paId;
+	}
 	public Integer getPtId() {
 		return ptId;
 	}
@@ -63,20 +69,28 @@ public class DevParPatRec {
 	public void setPsId(Integer psId) {
 		this.psId = psId;
 	}
+	public Integer getDaprId() {
+		return daprId;
+	}
+	public void setDaprId(Integer daprId) {
+		this.daprId = daprId;
+	}
 	public Boolean getFinish() {
 		return finish;
 	}
 	public void setFinish(Boolean finish) {
 		this.finish = finish;
 	}
-	private Integer daprId;
-	private Integer pdpId;
 	private Boolean paramIfExce;
 	private Float paramValue;
 	private String paramMemo;
 	private String createTime;
 	private Integer plId;
+	private Integer paId;
+	private Integer pdaId;
+	private Integer pdpId;
 	private Integer ptId;
 	private Integer psId;
+	private Integer daprId;
 	private Boolean finish;
 }

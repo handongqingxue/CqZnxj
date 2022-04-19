@@ -20,6 +20,8 @@ public class PhoneController {
 	private PatrolDeviceAccountService patrolDeviceAccountService;
 	@Autowired
 	private PatrolDeviceParamService patrolDeviceParamService;
+	@Autowired
+	private DevParPatRecService devParPatRecService;
 
 	@RequestMapping(value="/getPDAQrcodeInfo")
 	@ResponseBody
@@ -38,14 +40,35 @@ public class PhoneController {
 
 	@RequestMapping(value="/getPDPInfo")
 	@ResponseBody
-	public Map<String, Object> getPDPInfo(Integer id) {
+	public Map<String, Object> getPDPInfo(Integer id,Integer ptId) {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		PatrolDeviceParam pdp=patrolDeviceParamService.selectPhInfoById(id);
+		DevParPatRec dppr=devParPatRecService.selectByPdpIdPtId(pdp.getId(),ptId);
 		
 		jsonMap.put("pdp", pdp);
+		jsonMap.put("dppr", dppr);
 		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/saveDevParPatRec")
+	@ResponseBody
+	public Map<String, Object> saveDevParPatRec(DevParPatRec dppr) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		//select date_format(now(),'%Y-%m-%d')
+		int count=devParPatRecService.save(dppr);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "保存设备参数巡检记录成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "保存设备参数巡检记录失败！");
+		}
 		return jsonMap;
 	}
 }
