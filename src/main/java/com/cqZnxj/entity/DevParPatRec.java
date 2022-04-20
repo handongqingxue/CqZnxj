@@ -39,6 +39,36 @@ public class DevParPatRec {
 	public void setParamMemo(String paramMemo) {
 		this.paramMemo = paramMemo;
 	}
+	public Integer getFileNum() {
+		return fileNum;
+	}
+	public void setFileNum(Integer fileNum) {
+		this.fileNum = fileNum;
+	}
+	public String getPhotoUrl1() {
+		return photoUrl1;
+	}
+	public void setPhotoUrl1(String photoUrl1) {
+		this.photoUrl1 = photoUrl1;
+	}
+	public String getPhotoUrl2() {
+		return photoUrl2;
+	}
+	public void setPhotoUrl2(String photoUrl2) {
+		this.photoUrl2 = photoUrl2;
+	}
+	public String getPhotoUrl3() {
+		return photoUrl3;
+	}
+	public void setPhotoUrl3(String photoUrl3) {
+		this.photoUrl3 = photoUrl3;
+	}
+	public String getVideoUrl1() {
+		return videoUrl1;
+	}
+	public void setVideoUrl1(String videoUrl1) {
+		this.videoUrl1 = videoUrl1;
+	}
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -84,6 +114,11 @@ public class DevParPatRec {
 	private Boolean paramIfExce;
 	private Float paramValue;
 	private String paramMemo;
+	private Integer fileNum;
+	private String photoUrl1;
+	private String photoUrl2;
+	private String photoUrl3;
+	private String videoUrl1;
 	private String createTime;
 	private Integer plId;
 	private Integer paId;

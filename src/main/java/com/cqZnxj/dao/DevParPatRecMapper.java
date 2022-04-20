@@ -14,4 +14,6 @@ public interface DevParPatRecMapper {
 
 	DevParPatRec selectByPdpIdPtId(@Param("pdpId") Integer pdpId, @Param("ptId") Integer ptId);
 
+	int updateFileUrlByPdpIdPtId(DevParPatRec dppr);
+
 }

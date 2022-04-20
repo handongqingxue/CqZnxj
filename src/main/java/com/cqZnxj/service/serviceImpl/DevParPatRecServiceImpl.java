@@ -36,4 +36,10 @@ public class DevParPatRecServiceImpl implements DevParPatRecService {
 		// TODO Auto-generated method stub
 		return devParPatRecDao.getCount(pdpId,ptId)==0?false:true;
 	}
+
+	@Override
+	public int updateFileUrlByPdpIdPtId(DevParPatRec dppr) {
+		// TODO Auto-generated method stub
+		return devParPatRecDao.updateFileUrlByPdpIdPtId(dppr);
+	}
 }

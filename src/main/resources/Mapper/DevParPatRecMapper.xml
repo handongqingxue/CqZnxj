@@ -97,4 +97,22 @@
 	<select id="selectByPdpIdPtId" resultType="com.cqZnxj.entity.DevParPatRec">
 		select * from dev_par_pat_rec where pdpId=#{pdpId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<update id="updateFileUrlByPdpIdPtId" parameterType="com.cqZnxj.entity.DevParPatRec">
+		update dev_par_pat_rec set 
+		<trim suffixOverrides=",">
+			<if test="photoUrl1!=null">
+				photoUrl1=#{photoUrl1},
+			</if>
+			<if test="photoUrl2!=null">
+				photoUrl2=#{photoUrl2},
+			</if>
+			<if test="photoUrl3!=null">
+				photoUrl3=#{photoUrl3},
+			</if>
+			<if test="videoUrl1!=null">
+				videoUrl1=#{videoUrl1},
+			</if>
+		</trim>
+		where pdpId=#{pdpId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</update>
 </mapper>

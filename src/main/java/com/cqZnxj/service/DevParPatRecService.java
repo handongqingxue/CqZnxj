@@ -12,4 +12,6 @@ public interface DevParPatRecService {
 
 	boolean checkIfExist(Integer pdpId, Integer ptId);
 
+	int updateFileUrlByPdpIdPtId(DevParPatRec dppr);
+
 }
