@@ -59,4 +59,7 @@
 	<select id="getIdByPdaIdPtId" resultType="java.lang.Integer">
 		select id from dev_acc_pat_rec where pdaId=#{pdaId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<select id="getTodayList" resultType="com.cqZnxj.entity.DevAccPatRec">
+		select * from dev_acc_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
 </mapper>

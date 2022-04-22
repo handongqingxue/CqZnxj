@@ -15,6 +15,10 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 
 	@Autowired
 	private PatrolLineMapper patrolLineDao;
+	@Autowired
+	private DevAccPatRecMapper devAccPatRecDao;
+	@Autowired
+	private AreaPatRecMapper areaPatRecDao;
 
 	@Override
 	public int add(PatrolLine pl) {
@@ -59,6 +63,39 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 	@Override
 	public List<PatrolLine> getTotalInfo() {
 		// TODO Auto-generated method stub
-		return patrolLineDao.getTotalInfo();
+		List<PatrolLine> plList = patrolLineDao.getTotalInfo();
+		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
+		List<AreaPatRec> aprList = areaPatRecDao.getTodayList();
+		for (int i = 0; i < plList.size(); i++) {
+			PatrolLine pl = plList.get(i);
+			int finishParCount = 0;
+			int patParCount = 0;
+			for (int j = 0; j < daprList.size(); j++) {
+				DevAccPatRec dapr = daprList.get(j);
+				if(pl.getId()==dapr.getPlId()) {
+					finishParCount += dapr.getFinishParCount();
+					patParCount += dapr.getPatParCount();
+				}
+			}
+			pl.setFinishParCount(finishParCount);
+			pl.setPatParCount(patParCount);
+
+			int finishAccCount = 0;
+			int patAccCount = 0;
+			int finishAccPercent = 0;
+			for (int j = 0; j < aprList.size(); j++) {
+				AreaPatRec apr = aprList.get(j);
+				if(pl.getId()==apr.getPlId()) {
+					finishAccCount += apr.getFinishAccCount();
+					patAccCount += apr.getPatAccCount();
+				}
+			}
+			finishAccPercent=finishAccCount/patAccCount*100;
+			
+			pl.setFinishAccCount(finishAccCount);
+			pl.setPatAccCount(patAccCount);
+			pl.setFinishAccPercent(finishAccPercent);
+		}
+		return plList;
 	}
 }

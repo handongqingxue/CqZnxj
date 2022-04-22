@@ -1,5 +1,7 @@
 package com.cqZnxj.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.cqZnxj.entity.*;
@@ -15,5 +17,7 @@ public interface DevParPatRecMapper {
 	DevParPatRec selectByPdpIdPtId(@Param("pdpId") Integer pdpId, @Param("ptId") Integer ptId);
 
 	int updateFileUrlByPdpIdPtId(DevParPatRec dppr);
+
+	List<DevParPatRec> getTodayList();
 
 }

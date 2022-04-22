@@ -124,4 +124,7 @@
 		</trim>
 		where pdpId=#{pdpId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</update>
+	<select id="getTodayList" resultType="com.cqZnxj.entity.DevParPatRec">
+		select * from dev_par_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
 </mapper>
