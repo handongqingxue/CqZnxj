@@ -63,6 +63,12 @@ public class DevAccPatRec {
 	public void setAprId(Integer aprId) {
 		this.aprId = aprId;
 	}
+	public Boolean getFinish() {
+		return finish;
+	}
+	public void setFinish(Boolean finish) {
+		this.finish = finish;
+	}
 	private Integer patParCount;
 	private Integer finishParCount;
 	private String createTime;
@@ -72,4 +78,5 @@ public class DevAccPatRec {
 	private Integer ptId;
 	private Integer psId;
 	private Integer aprId;
+	private Boolean finish;
 }

@@ -16,4 +16,10 @@ public interface LinePatRecMapper {
 
 	List<LinePatRec> getTodayList();
 
+	int updateFinishAreaCountById(@Param("id") int id);
+
+	LinePatRec selectById(@Param("id") int id);
+
+	int updateFinishById(@Param("id") int id);
+
 }

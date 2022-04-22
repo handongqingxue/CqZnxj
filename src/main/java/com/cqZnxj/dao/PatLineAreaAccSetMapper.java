@@ -18,4 +18,8 @@ public interface PatLineAreaAccSetMapper {
 
 	int edit(PatLineAreaAccSet plaas);
 
+	int getAreaCountByPlId(@Param("plId") Integer plId);
+
+	String getPdaIdsByPlIdPaId(@Param("plId") Integer plId, @Param("paId") Integer paId);
+
 }

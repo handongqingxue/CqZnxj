@@ -69,4 +69,17 @@ public class PatLineAreaAccSetServiceImpl implements PatLineAreaAccSetService {
 		// TODO Auto-generated method stub
 		return patLineAreaAccSetDao.edit(plaas);
 	}
+
+	@Override
+	public int getAreaCountByPlId(Integer plId) {
+		// TODO Auto-generated method stub
+		return patLineAreaAccSetDao.getAreaCountByPlId(plId);
+	}
+
+	@Override
+	public int getAccCountByPlIdPaId(Integer plId, Integer paId) {
+		// TODO Auto-generated method stub
+		String pdaIds=patLineAreaAccSetDao.getPdaIdsByPlIdPaId(plId,paId);
+		return pdaIds.split(",").length;
+	}
 }

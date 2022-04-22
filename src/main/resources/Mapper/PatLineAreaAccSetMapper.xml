@@ -71,4 +71,10 @@
 		</if> 
 		limit #{rowNum},#{rows}
 	</select>
+	<select id="getAreaCountByPlId" resultType="java.lang.Integer">
+		select count(*) from pat_line_area_acc_set where plId=#{plId}
+	</select>
+	<select id="getPdaIdsByPlIdPaId" resultType="java.lang.String">
+		select pdaIds from pat_line_area_acc_set where plId=#{plId} and paId=#{paId}
+	</select>
 </mapper>

@@ -51,6 +51,12 @@ public class AreaPatRec {
 	public void setLprId(Integer lprId) {
 		this.lprId = lprId;
 	}
+	public Boolean getFinish() {
+		return finish;
+	}
+	public void setFinish(Boolean finish) {
+		this.finish = finish;
+	}
 	private Integer patAccCount;
 	private Integer finishAccCount;
 	private String createTime;
@@ -58,4 +64,5 @@ public class AreaPatRec {
 	private Integer paId;
 	private Integer ptId;
 	private Integer lprId;
+	private Boolean finish;
 }

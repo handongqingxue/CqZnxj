@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,5 +67,13 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 	public PatrolDeviceParam selectPhInfoById(Integer id) {
 		// TODO Auto-generated method stub
 		return patrolDeviceParamDao.selectPhInfoById(id);
+	}
+
+	@Override
+	public int getCountByPdaId(Integer pdaId) {
+		// TODO Auto-generated method stub
+		List<String> pdaIdList = new ArrayList<String>();
+		pdaIdList.add(pdaId+"");
+		return patrolDeviceParamDao.getCountByPdaIdList(pdaIdList);
 	}
 }

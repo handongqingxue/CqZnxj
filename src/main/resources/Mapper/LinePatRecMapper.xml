@@ -6,7 +6,9 @@
 	<insert id="add" parameterType="com.cqZnxj.entity.LinePatRec">
 		insert into line_pat_rec
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="patAreaCount!=null">
 				patAreaCount,
+			</if>
 				finishAreaCount,
 				createTime,
 			<if test="plId!=null">
@@ -15,10 +17,13 @@
 			<if test="ptId!=null">
 				ptId,
 			</if>
+				finish
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-				0,
+			<if test="patAreaCount!=null">
+				#{patAreaCount},
+			</if>
 				0,
 				now(),
 			<if test="plId!=null">
@@ -27,6 +32,7 @@
 			<if test="ptId!=null">
 				#{ptId},
 			</if>
+				0
 		</trim>
 	</insert>
 	<select id="getCount" resultType="java.lang.Integer">
@@ -38,4 +44,13 @@
 	<select id="getTodayList" resultType="com.cqZnxj.entity.LinePatRec">
 		select * from line_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<update id="updateFinishAreaCountById">
+		update line_pat_rec set finishAreaCount=finishAreaCount+1 where id=#{id}
+	</update>
+	<select id="selectById" resultType="com.cqZnxj.entity.LinePatRec">
+		select * from line_pat_rec where id=#{id}
+	</select>
+	<update id="updateFinishById">
+		update line_pat_rec set finish=1 where id=#{id}
+	</update>
 </mapper>

@@ -6,7 +6,9 @@
 	<insert id="add" parameterType="com.cqZnxj.entity.DevAccPatRec">
 		insert into dev_acc_pat_rec
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="patParCount!=null">
 				patParCount,
+			</if>
 				finishParCount,
 				createTime,
 			<if test="plId!=null">
@@ -27,10 +29,13 @@
 			<if test="aprId!=null">
 				aprId,
 			</if>
+				finish
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-				0,
+			<if test="patParCount!=null">
+				#{patParCount},
+			</if>
 				0,
 				now(),
 			<if test="plId!=null">
@@ -51,6 +56,7 @@
 			<if test="aprId!=null">
 				#{aprId},
 			</if>
+				0
 		</trim>
 	</insert>
 	<select id="getCount" resultType="java.lang.Integer">
@@ -62,4 +68,13 @@
 	<select id="getTodayList" resultType="com.cqZnxj.entity.DevAccPatRec">
 		select * from dev_acc_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<update id="updateFinishParCountById">
+		update dev_acc_pat_rec set finishParCount=finishParCount+1 where id=#{id}
+	</update>
+	<select id="selectById" resultType="com.cqZnxj.entity.DevAccPatRec">
+		select * from dev_acc_pat_rec where id=#{id}
+	</select>
+	<update id="updateFinishById">
+		update dev_acc_pat_rec set finish=1 where id=#{id}
+	</update>
 </mapper>

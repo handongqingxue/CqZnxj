@@ -23,4 +23,6 @@ public interface PatrolDeviceParamService {
 
 	PatrolDeviceParam selectPhInfoById(Integer id);
 
+	int getCountByPdaId(Integer pdaId);
+
 }

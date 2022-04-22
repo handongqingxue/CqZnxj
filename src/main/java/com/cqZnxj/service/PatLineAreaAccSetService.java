@@ -16,4 +16,8 @@ public interface PatLineAreaAccSetService {
 
 	int edit(PatLineAreaAccSet plaas);
 
+	int getAreaCountByPlId(Integer plId);
+
+	int getAccCountByPlIdPaId(Integer plId, Integer paId);
+
 }

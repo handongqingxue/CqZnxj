@@ -40,6 +40,8 @@ public class PhoneController {
 	private DevAccPatRecService devAccPatRecService;
 	@Autowired
 	private PatrolLineService patrolLineService;
+	@Autowired
+	private PatLineAreaAccSetService patLineAreaAccSetService;
 
 	@RequestMapping(value="/getPLTotalInfo")
 	@ResponseBody
@@ -103,20 +105,28 @@ public class PhoneController {
 		boolean bool;
 		Integer plId = dppr.getPlId();
 		Integer ptId = dppr.getPtId();
+		int lprId=0;
+		int aprId=0;
+		int daprId;
 		bool=linePatRecService.checkIfExist(plId,ptId);
 		if(!bool) {
+			int patAreaCount=patLineAreaAccSetService.getAreaCountByPlId(plId);
+			
 			LinePatRec lpr=new LinePatRec();
 			lpr.setPlId(dppr.getPlId());
 			lpr.setPtId(dppr.getPtId());
+			lpr.setPatAreaCount(patAreaCount);
 			linePatRecService.add(lpr);
 		}
 		
 		Integer paId = dppr.getPaId();
 		bool=areaPatRecService.checkIfExist(paId,ptId);
 		if(!bool) {
-			int lprId = linePatRecService.getIdByPlIdPtId(plId,ptId);
+			lprId = linePatRecService.getIdByPlIdPtId(plId,ptId);
+			int patAccCount=patLineAreaAccSetService.getAccCountByPlIdPaId(plId,paId);
 			
 			AreaPatRec apr=new AreaPatRec();
+			apr.setPatAccCount(patAccCount);
 			apr.setPlId(dppr.getPlId());
 			apr.setPaId(dppr.getPaId());
 			apr.setPtId(dppr.getPtId());
@@ -127,9 +137,11 @@ public class PhoneController {
 		Integer pdaId = dppr.getPdaId();
 		bool=devAccPatRecService.checkIfExist(pdaId,ptId);
 		if(!bool) {
-			int aprId = areaPatRecService.getIdByPaIdPtId(paId,ptId);
+			aprId = areaPatRecService.getIdByPaIdPtId(paId,ptId);
+			int patParCount=patrolDeviceParamService.getCountByPdaId(pdaId);
 			
 			DevAccPatRec dapr=new DevAccPatRec();
+			dapr.setPatParCount(patParCount);
 			dapr.setPlId(dppr.getPlId());
 			dapr.setPaId(dppr.getPaId());
 			dapr.setPdaId(dppr.getPdaId());
@@ -143,10 +155,12 @@ public class PhoneController {
 		if(bool)
 			count=devParPatRecService.editByPdpIdPtId(dppr);
 		else {
-			int daprId=devAccPatRecService.getIdByPdaIdPtId(pdaId,ptId);
+			daprId=devAccPatRecService.getIdByPdaIdPtId(pdaId,ptId);
 			
 			dppr.setDaprId(daprId);
 			count=devParPatRecService.add(dppr);
+			if(count>0)
+				count=devAccPatRecService.updateFinishCountById(daprId,aprId,lprId);
 		}
 			
 		if(count>0) {

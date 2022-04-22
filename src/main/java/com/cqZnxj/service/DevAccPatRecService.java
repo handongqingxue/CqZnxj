@@ -10,4 +10,6 @@ public interface DevAccPatRecService {
 
 	int getIdByPdaIdPtId(Integer pdaId, Integer ptId);
 
+	int updateFinishCountById(int daprId, int aprId, int lprId);
+
 }

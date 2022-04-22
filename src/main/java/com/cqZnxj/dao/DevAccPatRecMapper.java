@@ -16,4 +16,10 @@ public interface DevAccPatRecMapper {
 
 	List<DevAccPatRec> getTodayList();
 
+	int updateFinishParCountById(@Param("id") int id);
+
+	DevAccPatRec selectById(@Param("id") int id);
+
+	int updateFinishById(@Param("id") int id);
+
 }

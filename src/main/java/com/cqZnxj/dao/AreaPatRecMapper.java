@@ -16,4 +16,10 @@ public interface AreaPatRecMapper {
 
 	List<AreaPatRec> getTodayList();
 
+	int updateFinishAccCountById(@Param("id") int id);
+
+	AreaPatRec selectById(@Param("id") int id);
+
+	int updateFinishById(@Param("id") int id);
+
 }
