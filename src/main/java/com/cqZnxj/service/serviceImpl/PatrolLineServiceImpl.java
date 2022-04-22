@@ -55,4 +55,10 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 		// TODO Auto-generated method stub
 		return patrolLineDao.queryCBBList();
 	}
+
+	@Override
+	public List<PatrolLine> getTotalInfo() {
+		// TODO Auto-generated method stub
+		return patrolLineDao.getTotalInfo();
+	}
 }

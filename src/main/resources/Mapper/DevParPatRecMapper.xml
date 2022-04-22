@@ -12,6 +12,9 @@
 			<if test="paramValue!=null">
 				paramValue,
 			</if>
+			<if test="paramExceInfo!=null">
+				paramExceInfo,
+			</if>
 			<if test="paramMemo!=null">
 				paramMemo,
 			</if>
@@ -45,6 +48,9 @@
 			</if>
 			<if test="paramValue!=null">
 				#{paramValue},
+			</if>
+			<if test="paramExceInfo!=null">
+				#{paramExceInfo},
 			</if>
 			<if test="paramMemo!=null">
 				#{paramMemo},
@@ -81,6 +87,9 @@
 			</if>
 			<if test="paramValue!=null">
 				paramValue=#{paramValue},
+			</if>
+			<if test="paramExceInfo!=null">
+				paramExceInfo=#{paramExceInfo},
 			</if>
 			<if test="paramMemo!=null">
 				paramMemo=#{paramMemo},

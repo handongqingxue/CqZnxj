@@ -25,6 +25,7 @@ public class PhoneController {
 
 	//小程序上传图片:https://blog.csdn.net/zhaoyazhi2129/article/details/53926507/?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1.pc_relevant_antiscanv2&spm=1001.2101.3001.4242.2&utm_relevant_index=4
 	//多张图片上传:https://blog.csdn.net/weixin_52309490/article/details/118421189
+	//小程序录制视频:https://blog.csdn.net/Cris_are/article/details/108751409
 	@Autowired
 	private PatrolDeviceAccountService patrolDeviceAccountService;
 	@Autowired
@@ -37,6 +38,28 @@ public class PhoneController {
 	private AreaPatRecService areaPatRecService;
 	@Autowired
 	private DevAccPatRecService devAccPatRecService;
+	@Autowired
+	private PatrolLineService patrolLineService;
+
+	@RequestMapping(value="/getPLTotalInfo")
+	@ResponseBody
+	public Map<String, Object> getPLTotalInfo() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolLine> plList=patrolLineService.getTotalInfo();
+		List<LinePatRec> lprList=linePatRecService.getTodayList();
+		int todayFinishCount=0;
+		for (LinePatRec lpr : lprList) {
+			if(lpr.getFinish())
+				todayFinishCount++;
+		}
+		
+		jsonMap.put("plList", plList);
+		jsonMap.put("jrxjwcl", todayFinishCount/lprList.size());
+		
+		return jsonMap;
+	}
 
 	@RequestMapping(value="/getPDAQrcodeInfo")
 	@ResponseBody

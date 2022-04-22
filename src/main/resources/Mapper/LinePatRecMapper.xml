@@ -35,4 +35,7 @@
 	<select id="getIdByPlIdPtId" resultType="java.lang.Integer">
 		select id from line_pat_rec where plId=#{plId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<select id="getTodayList" resultType="com.cqZnxj.entity.LinePatRec">
+		select * from line_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+	</select>
 </mapper>

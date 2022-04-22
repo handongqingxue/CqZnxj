@@ -33,6 +33,12 @@ public class DevParPatRec {
 	public void setParamValue(Float paramValue) {
 		this.paramValue = paramValue;
 	}
+	public String getParamExceInfo() {
+		return paramExceInfo;
+	}
+	public void setParamExceInfo(String paramExceInfo) {
+		this.paramExceInfo = paramExceInfo;
+	}
 	public String getParamMemo() {
 		return paramMemo;
 	}
@@ -113,6 +119,7 @@ public class DevParPatRec {
 	}
 	private Boolean paramIfExce;
 	private Float paramValue;
+	private String paramExceInfo;
 	private String paramMemo;
 	private Integer fileNum;
 	private String photoUrl1;

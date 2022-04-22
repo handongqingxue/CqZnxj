@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.cqZnxj.entity.PatrolLine;
+import com.cqZnxj.entity.*;
 
 public interface PatrolLineMapper {
 
@@ -20,5 +20,7 @@ public interface PatrolLineMapper {
 			@Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 	List<PatrolLine> queryCBBList();
+
+	List<PatrolLine> getTotalInfo();
 
 }

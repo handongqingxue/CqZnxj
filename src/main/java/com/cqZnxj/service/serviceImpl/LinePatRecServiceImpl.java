@@ -1,5 +1,7 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,11 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 	public int getIdByPlIdPtId(Integer plId, Integer ptId) {
 		// TODO Auto-generated method stub
 		return linePatRecDao.getIdByPlIdPtId(plId, ptId);
+	}
+
+	@Override
+	public List<LinePatRec> getTodayList() {
+		// TODO Auto-generated method stub
+		return linePatRecDao.getTodayList();
 	}
 }

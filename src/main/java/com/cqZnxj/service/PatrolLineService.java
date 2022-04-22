@@ -19,4 +19,6 @@ public interface PatrolLineService {
 
 	List<PatrolLine> queryCBBList();
 
+	List<PatrolLine> getTotalInfo();
+
 }

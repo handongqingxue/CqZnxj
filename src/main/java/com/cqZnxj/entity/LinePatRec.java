@@ -39,9 +39,16 @@ public class LinePatRec {
 	public void setPtId(Integer ptId) {
 		this.ptId = ptId;
 	}
+	public Boolean getFinish() {
+		return finish;
+	}
+	public void setFinish(Boolean finish) {
+		this.finish = finish;
+	}
 	private Integer patAreaCount;
 	private Integer finishAreaCount;
 	private String createTime;
 	private Integer plId;
 	private Integer ptId;
+	private Boolean finish;
 }
