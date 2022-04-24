@@ -1,5 +1,7 @@
 package com.cqZnxj.entity;
 
+import java.util.List;
+
 public class PatrolArea {
 
 	private Integer id;
@@ -75,6 +77,24 @@ public class PatrolArea {
 	public void setFinish(Boolean finish) {
 		this.finish = finish;
 	}
+	public Integer getPatParCount() {
+		return patParCount;
+	}
+	public void setPatParCount(Integer patParCount) {
+		this.patParCount = patParCount;
+	}
+	public Integer getFinishParCount() {
+		return finishParCount;
+	}
+	public void setFinishParCount(Integer finishParCount) {
+		this.finishParCount = finishParCount;
+	}
+	public List<PatrolDeviceAccount> getPdaList() {
+		return pdaList;
+	}
+	public void setPdaList(List<PatrolDeviceAccount> pdaList) {
+		this.pdaList = pdaList;
+	}
 	private String name;
 	private String createTime;
 	private String pdaIds;
@@ -86,4 +106,7 @@ public class PatrolArea {
 	private Integer firstDeptId;
 	private String firstDeptName;
 	private Boolean finish;
+	private Integer patParCount=0;
+	private Integer finishParCount=0;
+	private List<PatrolDeviceAccount> pdaList;
 }

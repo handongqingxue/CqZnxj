@@ -99,6 +99,18 @@ public class PatrolDeviceAccount {
 	public void setQrcodeUrl(String qrcodeUrl) {
 		this.qrcodeUrl = qrcodeUrl;
 	}
+	public Integer getPatParCount() {
+		return patParCount;
+	}
+	public void setPatParCount(Integer patParCount) {
+		this.patParCount = patParCount;
+	}
+	public Integer getFinishParCount() {
+		return finishParCount;
+	}
+	public void setFinishParCount(Integer finishParCount) {
+		this.finishParCount = finishParCount;
+	}
 	private String no;
 	private Integer pdId;
 	private String pdName;
@@ -114,4 +126,6 @@ public class PatrolDeviceAccount {
 	private Integer createStaffId;
 	private String startTime;
 	private String qrcodeUrl;
+	private Integer patParCount=0;
+	private Integer finishParCount=0;
 }
