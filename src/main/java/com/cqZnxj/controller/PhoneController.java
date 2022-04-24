@@ -41,6 +41,8 @@ public class PhoneController {
 	@Autowired
 	private PatrolLineService patrolLineService;
 	@Autowired
+	private PatrolAreaService patrolAreaService;
+	@Autowired
 	private PatLineAreaAccSetService patLineAreaAccSetService;
 
 	@RequestMapping(value="/getPLTotalInfo")
@@ -59,6 +61,21 @@ public class PhoneController {
 		
 		jsonMap.put("plList", plList);
 		jsonMap.put("jrxjwcl", todayFinishCount/lprList.size()*100);
+		
+		return jsonMap;
+	}
+
+	@RequestMapping(value="/getPAList")
+	@ResponseBody
+	public Map<String, Object> getPAList(Integer plId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		PatrolLine pl=patrolLineService.selectById(plId);
+		List<PatrolArea> paList=patrolAreaService.selectPhListByPlId(plId);
+		
+		jsonMap.put("plName", pl.getName());
+		jsonMap.put("paList", paList);
 		
 		return jsonMap;
 	}

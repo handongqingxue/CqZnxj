@@ -25,4 +25,6 @@ public interface PatrolAreaMapper {
 
 	String getPdaIdsById(@Param("id") String id);
 
+	List<PatrolArea> selectPhListByPlId(@Param("plId") Integer plId);
+
 }

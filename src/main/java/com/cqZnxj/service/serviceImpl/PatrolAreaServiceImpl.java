@@ -17,6 +17,8 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	private PatrolAreaMapper patrolAreaDao;
 	@Autowired
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
+	@Autowired
+	private AreaPatRecMapper areaPatRecDao;
 
 	@Override
 	public int add(PatrolArea pa) {
@@ -97,5 +99,24 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	public List<PatrolArea> queryCBBList(int deptId) {
 		// TODO Auto-generated method stub
 		return patrolAreaDao.queryCBBList(deptId);
+	}
+
+	@Override
+	public List<PatrolArea> selectPhListByPlId(Integer plId) {
+		// TODO Auto-generated method stub
+		List<PatrolArea> paList = patrolAreaDao.selectPhListByPlId(plId);
+		List<AreaPatRec> aprList = areaPatRecDao.getTodayList();
+		for (int i = 0; i < paList.size(); i++) {
+			PatrolArea pa = paList.get(i);
+			for (int j = 0; j < aprList.size(); j++) {
+				AreaPatRec apr = aprList.get(j);
+				if(pa.getId()==apr.getPaId()) {
+					Boolean finish = apr.getFinish();
+					pa.setFinish(finish);
+					break;
+				}
+			}
+		}
+		return paList;
 	}
 }

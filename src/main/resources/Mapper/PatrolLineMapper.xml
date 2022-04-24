@@ -60,4 +60,7 @@
 	<select id="getTotalInfo" resultType="com.cqZnxj.entity.PatrolLine">
 		select pl.* from patrol_line pl,patrol_plan pp where now() BETWEEN pp.startDate and pp.endDate and pp.plIds in(pl.id) ORDER BY pl.createTime
 	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.PatrolLine">
+		select * from patrol_line where id=#{id}
+	</select>
 </mapper>

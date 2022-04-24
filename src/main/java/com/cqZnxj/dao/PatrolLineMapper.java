@@ -23,4 +23,6 @@ public interface PatrolLineMapper {
 
 	List<PatrolLine> getTotalInfo();
 
+	PatrolLine selectById(Integer id);
+
 }

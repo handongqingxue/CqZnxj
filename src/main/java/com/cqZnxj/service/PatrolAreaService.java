@@ -21,4 +21,6 @@ public interface PatrolAreaService {
 
 	List<PatrolArea> queryCBBList(int deptId);
 
+	List<PatrolArea> selectPhListByPlId(Integer plId);
+
 }

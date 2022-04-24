@@ -98,4 +98,10 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 		}
 		return plList;
 	}
+
+	@Override
+	public PatrolLine selectById(Integer id) {
+		// TODO Auto-generated method stub
+		return patrolLineDao.selectById(id);
+	}
 }

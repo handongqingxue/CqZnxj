@@ -21,4 +21,6 @@ public interface PatrolLineService {
 
 	List<PatrolLine> getTotalInfo();
 
+	PatrolLine selectById(Integer id);
+
 }

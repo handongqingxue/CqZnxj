@@ -92,4 +92,7 @@
 	<select id="getPdaIdsById" resultType="java.lang.String">
 		select pdaIds from patrol_area where id=#{id}
 	</select>
+	<select id="selectPhListByPlId" resultType="com.cqZnxj.entity.PatrolArea">
+		select pa.* from patrol_area pa,pat_line_area_acc_set plaas where pa.id=plaas.paId and plaas.plId=#{plId}
+	</select>
 </mapper>

@@ -69,6 +69,12 @@ public class PatrolArea {
 	public void setFirstDeptName(String firstDeptName) {
 		this.firstDeptName = firstDeptName;
 	}
+	public Boolean getFinish() {
+		return finish;
+	}
+	public void setFinish(Boolean finish) {
+		this.finish = finish;
+	}
 	private String name;
 	private String createTime;
 	private String pdaIds;
@@ -79,4 +85,5 @@ public class PatrolArea {
 	private String secondDeptName;
 	private Integer firstDeptId;
 	private String firstDeptName;
+	private Boolean finish;
 }
