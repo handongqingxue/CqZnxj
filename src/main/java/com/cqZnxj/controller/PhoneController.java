@@ -58,7 +58,7 @@ public class PhoneController {
 		}
 		
 		jsonMap.put("plList", plList);
-		jsonMap.put("jrxjwcl", todayFinishCount/lprList.size());
+		jsonMap.put("jrxjwcl", todayFinishCount/lprList.size()*100);
 		
 		return jsonMap;
 	}
@@ -118,11 +118,11 @@ public class PhoneController {
 			lpr.setPatAreaCount(patAreaCount);
 			linePatRecService.add(lpr);
 		}
+		lprId = linePatRecService.getIdByPlIdPtId(plId,ptId);
 		
 		Integer paId = dppr.getPaId();
 		bool=areaPatRecService.checkIfExist(paId,ptId);
 		if(!bool) {
-			lprId = linePatRecService.getIdByPlIdPtId(plId,ptId);
 			int patAccCount=patLineAreaAccSetService.getAccCountByPlIdPaId(plId,paId);
 			
 			AreaPatRec apr=new AreaPatRec();
@@ -133,11 +133,11 @@ public class PhoneController {
 			apr.setLprId(lprId);
 			count=areaPatRecService.add(apr);
 		}
+		aprId = areaPatRecService.getIdByPaIdPtId(paId,ptId);
 
 		Integer pdaId = dppr.getPdaId();
 		bool=devAccPatRecService.checkIfExist(pdaId,ptId);
 		if(!bool) {
-			aprId = areaPatRecService.getIdByPaIdPtId(paId,ptId);
 			int patParCount=patrolDeviceParamService.getCountByPdaId(pdaId);
 			
 			DevAccPatRec dapr=new DevAccPatRec();
@@ -150,12 +150,12 @@ public class PhoneController {
 			dapr.setAprId(aprId);
 			count=devAccPatRecService.add(dapr);
 		}
+		daprId=devAccPatRecService.getIdByPdaIdPtId(pdaId,ptId);
 		
 		bool=devParPatRecService.checkIfExist(dppr.getPdpId(),ptId);
 		if(bool)
 			count=devParPatRecService.editByPdpIdPtId(dppr);
 		else {
-			daprId=devAccPatRecService.getIdByPdaIdPtId(pdaId,ptId);
 			
 			dppr.setDaprId(daprId);
 			count=devParPatRecService.add(dppr);
