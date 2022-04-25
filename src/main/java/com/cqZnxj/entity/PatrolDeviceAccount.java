@@ -27,6 +27,12 @@ public class PatrolDeviceAccount {
 	public void setPdName(String pdName) {
 		this.pdName = pdName;
 	}
+	public Integer getPaId() {
+		return paId;
+	}
+	public void setPaId(Integer paId) {
+		this.paId = paId;
+	}
 	public String getPaName() {
 		return paName;
 	}
@@ -93,6 +99,12 @@ public class PatrolDeviceAccount {
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 	public String getQrcodeUrl() {
 		return qrcodeUrl;
 	}
@@ -114,6 +126,7 @@ public class PatrolDeviceAccount {
 	private String no;
 	private Integer pdId;
 	private String pdName;
+	private Integer paId;
 	private String paName;
 	private String plName;
 	private Integer deptId;
@@ -125,6 +138,7 @@ public class PatrolDeviceAccount {
 	private String createTime;
 	private Integer createStaffId;
 	private String startTime;
+	private String endTime;
 	private String qrcodeUrl;
 	private Integer patParCount=0;
 	private Integer finishParCount=0;

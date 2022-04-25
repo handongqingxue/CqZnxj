@@ -109,6 +109,7 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 		// TODO Auto-generated method stub
 		List<PatrolArea> paList = patrolAreaDao.selectPhListByPlId(plId);
 		List<AreaPatRec> aprList = areaPatRecDao.getTodayList();
+		List<PatrolDeviceAccount> pdaList = patrolDeviceAccountDao.selectPhListByPlId(plId);
 		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
 		for (int i = 0; i < paList.size(); i++) {
 			PatrolArea pa = paList.get(i);
@@ -121,21 +122,32 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 				}
 			}
 			
-			for (int j = 0; j < daprList.size(); j++) {
-				DevAccPatRec dapr = daprList.get(j);
-				if(pa.getId()==dapr.getPaId()) {
-					List<PatrolDeviceAccount> pdaList = pa.getPdaList();
-					if(pdaList==null) {
-						pdaList=new ArrayList<>();
-						pa.setPdaList(pdaList);
+			for (int j = 0; j < pdaList.size(); j++) {
+				PatrolDeviceAccount pda = pdaList.get(j);
+				if(pa.getId()==pda.getPaId()) {
+					List<PatrolDeviceAccount> paPdaList = pa.getPdaList();
+					if(paPdaList==null) {
+						paPdaList=new ArrayList<>();
+						pa.setPdaList(paPdaList);
 					}
-					PatrolDeviceAccount pda=new PatrolDeviceAccount();
-					int finishParCount = dapr.getFinishParCount();
-					int patParCount = dapr.getPatParCount();
-					pda.setFinishParCount(finishParCount);
-					pda.setPatParCount(patParCount);
-					pdaList.add(pda);
-					//select dapr.*,pda.`no` pdaNo,pd.`name` pdName from dev_acc_pat_rec dapr,patrol_device_account pda,patrol_device pd where dapr.pdaId=pda.id and pda.pdId=pd.id and date_format(dapr.createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+					paPdaList.add(pda);
+				}
+			}
+		}
+		
+		for (int i = 0; i < paList.size(); i++) {
+			PatrolArea pa = paList.get(i);
+			List<PatrolDeviceAccount> paPdaList = pa.getPdaList();
+			for (int j = 0; j < paPdaList.size(); j++) {
+				PatrolDeviceAccount paPda = paPdaList.get(j);
+				for (int z = 0; z < daprList.size(); z++) {
+					DevAccPatRec dapr = daprList.get(z);
+					if(paPda.getId()==dapr.getPdaId()) {
+						int finishParCount = dapr.getFinishParCount();
+						int patParCount = dapr.getPatParCount();
+						paPda.setFinishParCount(finishParCount);
+						paPda.setPatParCount(patParCount);
+					}
 				}
 			}
 		}

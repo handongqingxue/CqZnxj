@@ -130,4 +130,7 @@
 	<select id="getQrcodeInfoByNo" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
 		select pda.id,pda.no,pd.name pdName,pa.name paName,pl.name plName from patrol_device_account pda,pat_line_area_acc_set plaas,patrol_area pa,patrol_line pl,patrol_device pd where plaas.pdaIds in(pda.id) and plaas.paId=pa.id and plaas.plId=pl.id and pda.pdId=pd.id and pda.no=#{no}
 	</select>
+	<select id="selectPhListByPlId" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
+		select pda.*,pd.name pdName,plaas.paId from patrol_device_account pda,patrol_device pd,pat_line_area_acc_set plaas where pda.pdId=pd.id and CONCAT(',',plaas.pdaIds,',') like CONCAT('%,',pda.id,',%') and plaas.plId=#{plId}
+	</select>
 </mapper>

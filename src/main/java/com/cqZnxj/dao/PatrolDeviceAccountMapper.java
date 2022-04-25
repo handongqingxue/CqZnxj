@@ -33,4 +33,6 @@ public interface PatrolDeviceAccountMapper {
 
 	PatrolDeviceAccount getQrcodeInfoByNo(@Param("no") String no);
 
+	List<PatrolDeviceAccount> selectPhListByPlId(@Param("plId") Integer plId);
+
 }
