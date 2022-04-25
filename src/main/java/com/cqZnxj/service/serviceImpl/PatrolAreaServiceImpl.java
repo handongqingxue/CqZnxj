@@ -143,10 +143,16 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 				for (int z = 0; z < daprList.size(); z++) {
 					DevAccPatRec dapr = daprList.get(z);
 					if(paPda.getId()==dapr.getPdaId()) {
+						Boolean finish = dapr.getFinish();
 						int finishParCount = dapr.getFinishParCount();
 						int patParCount = dapr.getPatParCount();
+						String startTimeHi = dapr.getStartTimeHi();
+						String endTimeHi = dapr.getEndTimeHi();
+						paPda.setFinish(finish);
 						paPda.setFinishParCount(finishParCount);
 						paPda.setPatParCount(patParCount);
+						paPda.setStartTimeHi(startTimeHi);
+						paPda.setEndTimeHi(endTimeHi);
 					}
 				}
 			}

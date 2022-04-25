@@ -133,6 +133,7 @@ public class PhoneController {
 			lpr.setPlId(dppr.getPlId());
 			lpr.setPtId(dppr.getPtId());
 			lpr.setPatAreaCount(patAreaCount);
+			lpr.setStartTime(dppr.getStartTime());
 			linePatRecService.add(lpr);
 		}
 		lprId = linePatRecService.getIdByPlIdPtId(plId,ptId);
@@ -148,6 +149,7 @@ public class PhoneController {
 			apr.setPaId(dppr.getPaId());
 			apr.setPtId(dppr.getPtId());
 			apr.setLprId(lprId);
+			apr.setStartTime(apr.getStartTime());
 			count=areaPatRecService.add(apr);
 		}
 		aprId = areaPatRecService.getIdByPaIdPtId(paId,ptId);
@@ -165,6 +167,7 @@ public class PhoneController {
 			dapr.setPtId(dppr.getPtId());
 			dapr.setPsId(dppr.getPsId());
 			dapr.setAprId(aprId);
+			dapr.setStartTime(dppr.getStartTime());
 			count=devAccPatRecService.add(dapr);
 		}
 		daprId=devAccPatRecService.getIdByPdaIdPtId(pdaId,ptId);

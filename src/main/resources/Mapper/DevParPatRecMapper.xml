@@ -19,6 +19,10 @@
 				paramMemo,
 			</if>
 				createTime,
+			<if test="startTime!=null">
+				startTime,
+			</if>
+				endTime,
 			<if test="plId!=null">
 				plId,
 			</if>
@@ -54,6 +58,10 @@
 			</if>
 			<if test="paramMemo!=null">
 				#{paramMemo},
+			</if>
+				now(),
+			<if test="startTime!=null">
+				#{startTime},
 			</if>
 				now(),
 			<if test="plId!=null">

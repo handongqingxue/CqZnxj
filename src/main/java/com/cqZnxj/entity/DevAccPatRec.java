@@ -39,6 +39,18 @@ public class DevAccPatRec {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+	public String getStartTimeHi() {
+		return startTimeHi;
+	}
+	public void setStartTimeHi(String startTimeHi) {
+		this.startTimeHi = startTimeHi;
+	}
+	public String getEndTimeHi() {
+		return endTimeHi;
+	}
+	public void setEndTimeHi(String endTimeHi) {
+		this.endTimeHi = endTimeHi;
+	}
 	public Integer getPlId() {
 		return plId;
 	}
@@ -86,6 +98,8 @@ public class DevAccPatRec {
 	private String createTime;
 	private String startTime;
 	private String endTime;
+	private String startTimeHi;
+	private String endTimeHi;
 	private Integer plId;
 	private Integer paId;
 	private Integer pdaId;

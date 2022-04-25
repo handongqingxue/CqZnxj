@@ -27,6 +27,18 @@ public class LinePatRec {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 	public Integer getPlId() {
 		return plId;
 	}
@@ -48,6 +60,8 @@ public class LinePatRec {
 	private Integer patAreaCount;
 	private Integer finishAreaCount;
 	private String createTime;
+	private String startTime;
+	private String endTime;
 	private Integer plId;
 	private Integer ptId;
 	private Boolean finish;

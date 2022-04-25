@@ -11,6 +11,9 @@
 			</if>
 				finishParCount,
 				createTime,
+			<if test="startTime!=null">
+				startTime,
+			</if>
 			<if test="plId!=null">
 				plId,
 			</if>
@@ -38,6 +41,9 @@
 			</if>
 				0,
 				now(),
+			<if test="startTime!=null">
+				#{startTime},
+			</if>
 			<if test="plId!=null">
 				#{plId},
 			</if>
@@ -66,7 +72,7 @@
 		select id from dev_acc_pat_rec where pdaId=#{pdaId} and ptId=#{ptId} and date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
 	<select id="getTodayList" resultType="com.cqZnxj.entity.DevAccPatRec">
-		select * from dev_acc_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+		select *,date_format(startTime,'%H:%i') startTimeHi,date_format(endTime,'%H:%i') endTimeHi from dev_acc_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
 	<update id="updateFinishParCountById">
 		update dev_acc_pat_rec set finishParCount=finishParCount+1 where id=#{id}
@@ -75,6 +81,6 @@
 		select * from dev_acc_pat_rec where id=#{id}
 	</select>
 	<update id="updateFinishById">
-		update dev_acc_pat_rec set finish=1 where id=#{id}
+		update dev_acc_pat_rec set endTime=now(),finish=1 where id=#{id}
 	</update>
 </mapper>

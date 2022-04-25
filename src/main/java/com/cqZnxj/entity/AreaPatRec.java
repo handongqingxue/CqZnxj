@@ -27,6 +27,18 @@ public class AreaPatRec {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 	public Integer getPlId() {
 		return plId;
 	}
@@ -60,6 +72,8 @@ public class AreaPatRec {
 	private Integer patAccCount;
 	private Integer finishAccCount;
 	private String createTime;
+	private String startTime;
+	private String endTime;
 	private Integer plId;
 	private Integer paId;
 	private Integer ptId;

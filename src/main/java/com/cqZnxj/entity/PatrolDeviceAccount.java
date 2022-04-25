@@ -105,6 +105,18 @@ public class PatrolDeviceAccount {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+	public String getStartTimeHi() {
+		return startTimeHi;
+	}
+	public void setStartTimeHi(String startTimeHi) {
+		this.startTimeHi = startTimeHi;
+	}
+	public String getEndTimeHi() {
+		return endTimeHi;
+	}
+	public void setEndTimeHi(String endTimeHi) {
+		this.endTimeHi = endTimeHi;
+	}
 	public String getQrcodeUrl() {
 		return qrcodeUrl;
 	}
@@ -123,6 +135,12 @@ public class PatrolDeviceAccount {
 	public void setFinishParCount(Integer finishParCount) {
 		this.finishParCount = finishParCount;
 	}
+	public Boolean getFinish() {
+		return finish;
+	}
+	public void setFinish(Boolean finish) {
+		this.finish = finish;
+	}
 	private String no;
 	private Integer pdId;
 	private String pdName;
@@ -139,7 +157,10 @@ public class PatrolDeviceAccount {
 	private Integer createStaffId;
 	private String startTime;
 	private String endTime;
+	private String startTimeHi;
+	private String endTimeHi;
 	private String qrcodeUrl;
 	private Integer patParCount=0;
 	private Integer finishParCount=0;
+	private Boolean finish;
 }

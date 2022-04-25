@@ -11,6 +11,9 @@
 			</if>
 				finishAreaCount,
 				createTime,
+			<if test="startTime!=null">
+				startTime,
+			</if>
 			<if test="plId!=null">
 				plId,
 			</if>
@@ -26,6 +29,9 @@
 			</if>
 				0,
 				now(),
+			<if test="startTime!=null">
+				#{startTime},
+			</if>
 			<if test="plId!=null">
 				#{plId},
 			</if>
@@ -51,6 +57,6 @@
 		select * from line_pat_rec where id=#{id}
 	</select>
 	<update id="updateFinishById">
-		update line_pat_rec set finish=1 where id=#{id}
+		update line_pat_rec set endTime=now(),finish=1 where id=#{id}
 	</update>
 </mapper>
