@@ -6,9 +6,9 @@ import com.cqZnxj.entity.PatrolDeviceParam;
 
 public interface PatrolDeviceParamService {
 
-	int queryForInt(Integer deptId, String deptName, String pdName, String pdaNo, String name, String createTimeStart, String createTimeEnd);
+	int queryForInt(Integer deptId, String secondDeptName, String pdName, String pdaNo, String name, String createTimeStart, String createTimeEnd);
 
-	List<PatrolDeviceParam> queryList(Integer deptId, String deptName, String pdName, String pdaNo, String name, 
+	List<PatrolDeviceParam> queryList(Integer deptId, String secondDeptName, String pdName, String pdaNo, String name, 
 			String createTimeStart, String createTimeEnd, int page, int rows, String sort, String order);
 
 	int add(PatrolDeviceParam pdp);

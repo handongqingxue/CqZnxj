@@ -8,9 +8,9 @@ import com.cqZnxj.entity.PatrolDeviceParam;
 
 public interface PatrolDeviceParamMapper {
 
-	int queryForInt(@Param("deptId") Integer deptId, @Param("deptName") String deptName, @Param("pdName") String pdName, @Param("pdaNo") String pdaNo, @Param("name") String name, @Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd);
+	int queryForInt(@Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName, @Param("pdName") String pdName, @Param("pdaNo") String pdaNo, @Param("name") String name, @Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd);
 
-	List<PatrolDeviceParam> queryList(@Param("deptId") Integer deptId, @Param("deptName") String deptName, @Param("pdName") String pdName, @Param("pdaNo") String pdaNo, @Param("name") String name, 
+	List<PatrolDeviceParam> queryList(@Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName, @Param("pdName") String pdName, @Param("pdaNo") String pdaNo, @Param("name") String name, 
 			@Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 	int add(PatrolDeviceParam pdp);
