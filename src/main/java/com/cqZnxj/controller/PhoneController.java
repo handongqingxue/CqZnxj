@@ -59,8 +59,12 @@ public class PhoneController {
 				todayFinishCount++;
 		}
 		
+		int jrxjwcl=0;
+		int lprListSize=lprList.size();
+		if(lprListSize>0)
+			jrxjwcl=todayFinishCount/lprListSize*100;
 		jsonMap.put("plList", plList);
-		jsonMap.put("jrxjwcl", todayFinishCount/lprList.size()*100);
+		jsonMap.put("jrxjwcl", jrxjwcl);
 		
 		return jsonMap;
 	}

@@ -90,7 +90,8 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 					patAccCount += apr.getPatAccCount();
 				}
 			}
-			finishAccPercent=finishAccCount/patAccCount*100;
+			if(patAccCount>0)
+				finishAccPercent=finishAccCount/patAccCount*100;
 			
 			pl.setFinishAccCount(finishAccCount);
 			pl.setPatAccCount(patAccCount);

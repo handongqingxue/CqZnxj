@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cqZnxj.dao.*;
+import com.cqZnxj.entity.DevAccPatRec;
 import com.cqZnxj.entity.PatrolDeviceAccount;
 import com.cqZnxj.service.*;
 
@@ -15,6 +16,8 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 
 	@Autowired
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
+	@Autowired
+	private DevAccPatRecMapper devAccPatRecDao;
 	@Autowired
 	private PatrolDeviceParamMapper patrolDeviceParamDao;
 	@Autowired
@@ -89,6 +92,15 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	@Override
 	public PatrolDeviceAccount getQrcodeInfoByNo(String no) {
 		// TODO Auto-generated method stub
-		return patrolDeviceAccountDao.getQrcodeInfoByNo(no);
+		PatrolDeviceAccount pda = patrolDeviceAccountDao.getQrcodeInfoByNo(no);
+		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
+		for (int i = 0; i < daprList.size(); i++) {
+			DevAccPatRec dapr = daprList.get(i);
+			if(pda.getId()==dapr.getPdaId()) {
+				pda.setFinishParCount(dapr.getFinishParCount());
+				pda.setPatParCount(dapr.getPatParCount());
+			}
+		}
+		return pda;
 	}
 }
