@@ -225,13 +225,13 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryDeviceList")
 	@ResponseBody
-	public Map<String, Object> queryDeviceList(String name,Integer deptId, String deptName,int page,int rows,String sort,String order) {
+	public Map<String, Object> queryDeviceList(String name,Integer deptId, String secondDeptName,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceService.queryForInt(name,deptId, deptName);
-			List<PatrolDevice> pdList=patrolDeviceService.queryList(name, deptId, deptName, page, rows, sort, order);
+			int count = patrolDeviceService.queryForInt(name,deptId, secondDeptName);
+			List<PatrolDevice> pdList=patrolDeviceService.queryList(name, deptId, secondDeptName, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdList);
@@ -308,14 +308,14 @@ public class DeviceMgmtController {
 	
 	@RequestMapping(value="/queryAccountList")
 	@ResponseBody
-	public Map<String, Object> queryAccountList(String no,String pdName,Integer deptId, String deptName,String createTimeStart,String createTimeEnd,
+	public Map<String, Object> queryAccountList(String no,String pdName,Integer deptId, String secondDeptName,String createTimeStart,String createTimeEnd,
 			String startTimeStart,String startTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolDeviceAccountService.queryForInt(no,pdName,deptId,deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
-			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, deptId,deptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
+			int count = patrolDeviceAccountService.queryForInt(no,pdName,deptId,secondDeptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd);
+			List<PatrolDeviceAccount> pdaList=patrolDeviceAccountService.queryList(no,pdName, deptId,secondDeptName,createTimeStart,createTimeEnd,startTimeStart,startTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", pdaList);

@@ -33,10 +33,10 @@
 .tab1_div .toolbar{
 	height:32px;
 }
-.tab1_div .toolbar .name_span,.tab1_div .toolbar .deptName_span,.tab1_div .toolbar .search_but{
+.tab1_div .toolbar .name_span,.tab1_div .toolbar .sdn_span,.tab1_div .toolbar .search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .name_inp,.tab1_div .toolbar .deptName_inp{
+.tab1_div .toolbar .name_inp,.tab1_div .toolbar .sdn_inp{
 	width: 120px;height: 25px;
 }
 a {
@@ -105,8 +105,8 @@ function initSearchLB(){
 
 function loadTab1Data(){
 	var name=$("#toolbar #name_inp").val();
-	var deptName=$("#toolbar #deptName_inp").val();
-	tab1.datagrid("load",{name:name,deptId:deptId,deptName:deptName});
+	var secondDeptName=$("#toolbar #sdn_inp").val();
+	tab1.datagrid("load",{name:name,deptId:deptId,secondDeptName:secondDeptName});
 }
 
 function initAddLB(){
@@ -137,7 +137,8 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"name",title:"名称",width:200},
-            {field:"deptName",title:"部门",width:200},
+            {field:"firstDeptName",title:"一级部门",width:200},
+            {field:"secondDeptName",title:"二级部门",width:200},
 			{field:"makeDate",title:"创建时间",width:200},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
@@ -148,7 +149,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:4});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:5});
 				data.total=0;
 			}
 			
@@ -210,8 +211,8 @@ function setFitWidthInParent(o){
 	<div class="toolbar" id="toolbar">
 		<span class="name_span">名称：</span>
 		<input type="text" class="name_inp" id="name_inp" placeholder="请输入名称"/>
-		<span class="deptName_span">部门：</span>
-		<input type="text" class="deptName_inp" id="deptName_inp" placeholder="请输入部门"/>
+		<span class="sdn_span">二级部门：</span>
+		<input type="text" class="sdn_inp" id="sdn_inp" placeholder="请输入二级部门"/>
 		<a class="search_but" id="search_but">查询</a>
 		<a id="add_but">添加</a>
 		<a id="remove_but">删除</a>

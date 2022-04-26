@@ -188,7 +188,7 @@ function checkNew(){
 }
 
 function newArea(){
-	var deptId=deptCBB.combobox("getValue");
+	var deptId=secondDeptCBB.combobox("getValue");
 	$("#new_div #deptId").val(deptId);
 	var pdaIdsArr=pdaCBB.combobox("getValues");
 	var pdaIds=pdaIdsArr.sort().toString();

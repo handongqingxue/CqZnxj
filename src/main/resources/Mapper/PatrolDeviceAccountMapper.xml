@@ -62,7 +62,7 @@
 		where id=#{id}
 	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from patrol_device_account pda,patrol_device pd,dept d where 1=1 and pda.pdId=pd.id and pd.deptId=d.deptId
+		select count(*) from patrol_device_account pda,patrol_device pd,dept sd,dept fd where 1=1 and pda.pdId=pd.id and pd.deptId=sd.deptId and sd.parentId=fd.deptId
 		<if test="no!=''&amp;no!=null">
 			and pda.no like CONCAT('%',#{no},'%')
 		</if>
@@ -70,10 +70,10 @@
 			and pd.name like CONCAT('%',#{pdName},'%')
 		</if>
 		<if test="deptId!=''&amp;deptId!=null">
-			and d.deptId=#{deptId}
+			and (fd.deptId=#{deptId} or sd.deptId=#{deptId})
 		</if>
-		<if test="deptName!=''&amp;deptName!=null">
-			and d.name like CONCAT('%',#{deptName},'%')
+		<if test="secondDeptName!=''&amp;secondDeptName!=null">
+			and sd.deptName like CONCAT('%',#{secondDeptName},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and pda.createTime between #{createTimeStart} and #{createTimeEnd}
@@ -83,7 +83,7 @@
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
-		select pda.*,pd.name pdName,d.deptName from patrol_device_account pda,patrol_device pd,dept d where 1=1 and pda.pdId=pd.id and pd.deptId=d.deptId
+		select pda.*,pd.name pdName,sd.deptName secondDeptName,fd.deptName firstDeptName from patrol_device_account pda,patrol_device pd,dept sd,dept fd where 1=1 and pda.pdId=pd.id and pd.deptId=sd.deptId and sd.parentId=fd.deptId
 		<if test="no!=''&amp;no!=null">
 			and pda.no like CONCAT('%',#{no},'%')
 		</if>
@@ -91,10 +91,10 @@
 			and pd.name like CONCAT('%',#{pdName},'%')
 		</if>
 		<if test="deptId!=''&amp;deptId!=null">
-			and d.deptId=#{deptId}
+			and (fd.deptId=#{deptId} or sd.deptId=#{deptId})
 		</if>
-		<if test="deptName!=''&amp;deptName!=null">
-			and d.deptName like CONCAT('%',#{deptName},'%')
+		<if test="secondDeptName!=''&amp;secondDeptName!=null">
+			and sd.deptName like CONCAT('%',#{secondDeptName},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and pda.createTime between #{createTimeStart} and #{createTimeEnd}
@@ -114,7 +114,7 @@
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolDeviceAccount">
 		select pda.id,pda.no from patrol_device_account pda,patrol_device pd where pda.pdId=pd.id
 		<if test="deptId!=''&amp;deptId!=null">
-			and pd.id=#{deptId}
+			and pd.deptId=#{deptId}
 		</if>
 		<if test="pdId!=''&amp;pdId!=null">
 			and pda.pdId=#{pdId}

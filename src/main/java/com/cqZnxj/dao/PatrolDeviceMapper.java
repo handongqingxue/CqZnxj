@@ -10,9 +10,9 @@ public interface PatrolDeviceMapper {
 
 	int add(PatrolDevice pd);
 
-	int queryForInt(@Param("name") String name, @Param("deptId") Integer deptId, @Param("deptName") String deptName);
+	int queryForInt(@Param("name") String name, @Param("deptId") Integer deptId, @Param("secondDeptName") String deptName);
 
-	List<PatrolDevice> queryList(@Param("name") String name, @Param("deptId") Integer deptId, @Param("deptName") String deptName, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
+	List<PatrolDevice> queryList(@Param("name") String name, @Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName, @Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 	int deleteByIds(List<String> idList);
 
