@@ -2,6 +2,9 @@ package com.cqZnxj.entity;
 
 public class PatrolDeviceParam {
 
+	public static final int SHU_ZHI_LEI=1;
+	public static final int GUAN_CHA_LEI=2;
+
 	private Integer id;
 	public Integer getId() {
 		return id;
@@ -129,6 +132,18 @@ public class PatrolDeviceParam {
 	public void setPlName(String plName) {
 		this.plName = plName;
 	}
+	public Boolean getParamIfExce() {
+		return paramIfExce;
+	}
+	public void setParamIfExce(Boolean paramIfExce) {
+		this.paramIfExce = paramIfExce;
+	}
+	public Float getParamValue() {
+		return paramValue;
+	}
+	public void setParamValue(Float paramValue) {
+		this.paramValue = paramValue;
+	}
 	private String name;
 	private Integer type;
 	private Float warnDown;
@@ -149,4 +164,6 @@ public class PatrolDeviceParam {
 	private String paName;
 	private Integer plId;
 	private String plName;
+	private Boolean paramIfExce;
+	private Float paramValue;
 }

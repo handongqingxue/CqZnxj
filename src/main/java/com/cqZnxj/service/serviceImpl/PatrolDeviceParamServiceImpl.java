@@ -16,6 +16,8 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 
 	@Autowired
 	private PatrolDeviceParamMapper patrolDeviceParamDao;
+	@Autowired
+	private DevParPatRecMapper devParPatRecDao;
 
 	@Override
 	public int queryForInt(Integer deptId, String secondDeptName, String pdName, String pdaNo, String name, String createTimeStart, String createTimeEnd) {
@@ -60,7 +62,24 @@ public class PatrolDeviceParamServiceImpl implements PatrolDeviceParamService {
 	@Override
 	public List<PatrolDeviceParam> selectPhListByPdaId(Integer pdaId) {
 		// TODO Auto-generated method stub
-		return patrolDeviceParamDao.selectPhListByPdaId(pdaId);
+		List<PatrolDeviceParam> pdpList = patrolDeviceParamDao.selectPhListByPdaId(pdaId);
+		List<DevParPatRec> dpprList = devParPatRecDao.getTodayList();
+		for (int i = 0; i < pdpList.size(); i++) {
+			PatrolDeviceParam pdp = pdpList.get(i);
+			for (int j = 0; j < dpprList.size(); j++) {
+				DevParPatRec dppr = dpprList.get(j);
+				if(pdp.getId()==dppr.getPdpId()) {
+					if(PatrolDeviceParam.SHU_ZHI_LEI==pdp.getType()) {
+						pdp.setParamValue(dppr.getParamValue());
+					}
+					else if(PatrolDeviceParam.GUAN_CHA_LEI==pdp.getType()) {
+						pdp.setParamIfExce(dppr.getParamIfExce());
+					}
+					break;
+				}
+			}
+		}
+		return pdpList;
 	}
 
 	@Override

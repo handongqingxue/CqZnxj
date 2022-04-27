@@ -352,14 +352,14 @@ public class PatrolMgmtController {
 	
 	@RequestMapping(value="/queryAreaList")
 	@ResponseBody
-	public Map<String, Object> queryAreaList(String name,Integer deptId, String deptName,String createTimeStart,String createTimeEnd,
+	public Map<String, Object> queryAreaList(String name,Integer deptId, String secondDeptName,String createTimeStart,String createTimeEnd,
 			int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = patrolAreaService.queryForInt(name,deptId, deptName,createTimeStart, createTimeEnd);
-			List<PatrolArea> paList=patrolAreaService.queryList(name, deptId, deptName,createTimeStart, createTimeEnd, page, rows, sort, order);
+			int count = patrolAreaService.queryForInt(name,deptId, secondDeptName,createTimeStart, createTimeEnd);
+			List<PatrolArea> paList=patrolAreaService.queryList(name, deptId, secondDeptName,createTimeStart, createTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", paList);

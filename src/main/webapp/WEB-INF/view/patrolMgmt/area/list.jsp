@@ -35,7 +35,7 @@
 .tab1_div .toolbar .row_div{
 	height:32px;
 }
-.tab1_div .toolbar .row_div .deptName_span,
+.tab1_div .toolbar .row_div .sdn_span,
 .tab1_div .toolbar .row_div .name_span,
 .tab1_div .toolbar .row_div .pdaNo_span,
 .tab1_div .toolbar .row_div .name_span,
@@ -43,7 +43,7 @@
 .tab1_div .toolbar .row_div .search_but{
 	margin-left: 13px;
 }
-.tab1_div .toolbar .row_div .deptName_inp,
+.tab1_div .toolbar .row_div .sdn_inp,
 .tab1_div .toolbar .row_div .name_inp,
 .tab1_div .toolbar .row_div .pdaNo_inp,
 .tab1_div .toolbar .row_div .name_inp{
@@ -132,11 +132,11 @@ function initSearchLB(){
 }
 
 function loadTab1Data(){
-	var deptName=$("#toolbar #deptName_inp").val();
+	var secondDeptName=$("#toolbar #sdn_inp").val();
 	var name=$("#toolbar #name_inp").val();
 	var createTimeStart=createTimeStDTB.datetimebox("getValue");
 	var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
-	tab1.datagrid("load",{deptId:deptId,deptName:deptName,name:name,
+	tab1.datagrid("load",{deptId:deptId,secondDeptName:secondDeptName,name:name,
 		createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
 }
 
@@ -168,7 +168,8 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"name",title:"区域名称",width:150},
-			{field:"deptName",title:"部门",width:150},
+			{field:"firstDeptName",title:"一级部门",width:150},
+			{field:"secondDeptName",title:"二级部门",width:150},
 			{field:"pdaNos",title:"设备编号",width:150},
 			{field:"createTime",title:"创建时间",width:180},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
@@ -180,7 +181,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:5});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:6});
 				data.total=0;
 			}
 			
@@ -243,8 +244,8 @@ function setFitWidthInParent(o){
 		<div class="row_div">
 			<span class="name_span">区域名称：</span>
 			<input type="text" class="name_inp" id="name_inp" placeholder="请输入区域名称"/>
-			<span class="deptName_span">部门：</span>
-			<input type="text" class="deptName_inp" id="deptName_inp" placeholder="请输入部门名称"/>
+			<span class="sdn_span">二级部门：</span>
+			<input type="text" class="sdn_inp" id="sdn_inp" placeholder="请输入二级部门"/>
 			<span class="createTime_span">创建时间：</span>
 			<input id="createTimeSt_dtb"/>
 			-

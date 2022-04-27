@@ -12,9 +12,9 @@ public interface PatrolAreaService {
 
 	int edit(PatrolArea pa);
 
-	int queryForInt(String name, Integer deptId, String deptName,String createTimeStart,String createTimeEnd);
+	int queryForInt(String name, Integer deptId, String secondDeptName,String createTimeStart,String createTimeEnd);
 
-	List<PatrolArea> queryList(String name, Integer deptId, String deptName,String createTimeStart,String createTimeEnd, int page, int rows, String sort,
+	List<PatrolArea> queryList(String name, Integer deptId, String secondDeptName,String createTimeStart,String createTimeEnd, int page, int rows, String sort,
 			String order);
 
 	PatrolArea selectById(String id);

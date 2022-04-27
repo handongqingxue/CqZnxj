@@ -14,9 +14,9 @@ public interface PatrolAreaMapper {
 
 	int edit(PatrolArea pa);
 
-	int queryForInt(@Param("name") String name, @Param("deptId") Integer deptId, @Param("deptName") String deptName,@Param("createTimeStart") String createTimeStart,@Param("createTimeEnd") String createTimeEnd);
+	int queryForInt(@Param("name") String name, @Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName,@Param("createTimeStart") String createTimeStart,@Param("createTimeEnd") String createTimeEnd);
 
-	List<PatrolArea> queryList(@Param("name") String name, @Param("deptId") Integer deptId, @Param("deptName") String deptName,@Param("createTimeStart") String createTimeStart,@Param("createTimeEnd") String createTimeEnd, 
+	List<PatrolArea> queryList(@Param("name") String name, @Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName,@Param("createTimeStart") String createTimeStart,@Param("createTimeEnd") String createTimeEnd, 
 			@Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
 
 	PatrolArea selectById(String id);

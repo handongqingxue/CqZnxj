@@ -251,7 +251,7 @@ public class DeviceMgmtController {
 
 		String no = pda.getNo();
 		String fileName = no + ".jpg";
-		String avaPath="/CqZnxj/upload/devAcc"+fileName;
+		String avaPath="/CqZnxj/upload/devAcc/"+fileName;
 		String path = "D:/resource/CqZnxj/devAcc";
         QrcodeUtil.createQrCode(no, path, fileName);
 		
