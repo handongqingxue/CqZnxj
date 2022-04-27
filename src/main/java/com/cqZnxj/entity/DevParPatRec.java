@@ -9,17 +9,53 @@ public class DevParPatRec {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	public String getPdName() {
+		return pdName;
+	}
+	public void setPdName(String pdName) {
+		this.pdName = pdName;
+	}
+	public Integer getPdLevel() {
+		return pdLevel;
+	}
+	public void setPdLevel(Integer pdLevel) {
+		this.pdLevel = pdLevel;
+	}
 	public Integer getPdaId() {
 		return pdaId;
 	}
 	public void setPdaId(Integer pdaId) {
 		this.pdaId = pdaId;
 	}
+	public String getPdaNo() {
+		return pdaNo;
+	}
+	public void setPdaNo(String pdaNo) {
+		this.pdaNo = pdaNo;
+	}
 	public Integer getPdpId() {
 		return pdpId;
 	}
 	public void setPdpId(Integer pdpId) {
 		this.pdpId = pdpId;
+	}
+	public String getPdpName() {
+		return pdpName;
+	}
+	public void setPdpName(String pdpName) {
+		this.pdpName = pdpName;
+	}
+	public String getPdpUnit() {
+		return pdpUnit;
+	}
+	public void setPdpUnit(String pdpUnit) {
+		this.pdpUnit = pdpUnit;
+	}
+	public Integer getPdpType() {
+		return pdpType;
+	}
+	public void setPdpType(Integer pdpType) {
+		this.pdpType = pdpType;
 	}
 	public Boolean getParamIfExce() {
 		return paramIfExce;
@@ -99,11 +135,23 @@ public class DevParPatRec {
 	public void setPlId(Integer plId) {
 		this.plId = plId;
 	}
+	public String getPlName() {
+		return plName;
+	}
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
 	public Integer getPaId() {
 		return paId;
 	}
 	public void setPaId(Integer paId) {
 		this.paId = paId;
+	}
+	public String getPaName() {
+		return paName;
+	}
+	public void setPaName(String paName) {
+		this.paName = paName;
 	}
 	public Integer getPtId() {
 		return ptId;
@@ -142,9 +190,17 @@ public class DevParPatRec {
 	private String startTime;
 	private String endTime;
 	private Integer plId;
+	private String plName;
 	private Integer paId;
+	private String paName;
+	private String pdName;
+	private Integer pdLevel;
 	private Integer pdaId;
+	private String pdaNo;
 	private Integer pdpId;
+	private String pdpName;
+	private String pdpUnit;
+	private Integer pdpType;
 	private Integer ptId;
 	private Integer psId;
 	private Integer daprId;

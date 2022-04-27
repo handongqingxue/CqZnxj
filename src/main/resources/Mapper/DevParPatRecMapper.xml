@@ -135,4 +135,54 @@
 	<select id="getTodayList" resultType="com.cqZnxj.entity.DevParPatRec">
 		select * from dev_par_pat_rec where date_format(createTime,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
 	</select>
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl where dppr.pdpId=pdp.id and dppr.pdaId=pda.id and pda.pdId=pd.id and dppr.paId=pa.id and dppr.plId=pl.id
+		<if test="plName!=''&amp;plName!=null">
+			and pl.name like CONCAT('%',#{plName},'%')
+		</if>
+		<if test="paName!=''&amp;paName!=null">
+			and pa.name like CONCAT('%',#{paName},'%')
+		</if>
+		<if test="pdName!=''&amp;pdName!=null">
+			and pd.name like CONCAT('%',#{pdName},'%')
+		</if>
+		<if test="pdaNo!=''&amp;pdaNo!=null">
+			and pda.no like CONCAT('%',#{pdaNo},'%')
+		</if>
+		<if test="pdpName!=''&amp;pdpName!=null">
+			and pdp.name like CONCAT('%',#{pdpName},'%')
+		</if>
+		<if test="pdpUnit!=''&amp;pdpUnit!=null">
+			and pdp.unit like CONCAT('%',#{pdpUnit},'%')
+		</if>
+		<if test="startTime!=''&amp;startTime!=null&amp;endTime!=''&amp;endTime!=null">
+			and dppr.startTime&gt;=#{startTime} and dppr.endTime&lt;=#{endTime}
+		</if>
+	</select>
+	<select id="queryList" resultType="com.cqZnxj.entity.DevParPatRec">
+		select pdp.id,pdp.`name` pdpName,pdp.unit pdpUnit,pdp.type pdpType,pda.`no` pdaNo,pd.`name` pdName,pd.`level` pdLevel,pa.`name` paName,pl.`name` plName,dppr.paramIfExce,dppr.paramValue,dppr.paramExceInfo,dppr.startTime,dppr.endTime from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl
+		 where dppr.pdpId=pdp.id and dppr.pdaId=pda.id and pda.pdId=pd.id and dppr.paId=pa.id and dppr.plId=pl.id
+		<if test="plName!=''&amp;plName!=null">
+			and pl.name like CONCAT('%',#{plName},'%')
+		</if>
+		<if test="paName!=''&amp;paName!=null">
+			and pa.name like CONCAT('%',#{paName},'%')
+		</if>
+		<if test="pdName!=''&amp;pdName!=null">
+			and pd.name like CONCAT('%',#{pdName},'%')
+		</if>
+		<if test="pdaNo!=''&amp;pdaNo!=null">
+			and pda.no like CONCAT('%',#{pdaNo},'%')
+		</if>
+		<if test="pdpName!=''&amp;pdpName!=null">
+			and pdp.name like CONCAT('%',#{pdpName},'%')
+		</if>
+		<if test="pdpUnit!=''&amp;pdpUnit!=null">
+			and pdp.unit like CONCAT('%',#{pdpUnit},'%')
+		</if>
+		<if test="startTime!=''&amp;startTime!=null&amp;endTime!=''&amp;endTime!=null">
+			and dppr.startTime&gt;=#{startTime} and dppr.endTime&lt;=#{endTime}
+		</if>
+		  order by dppr.startTime desc limit #{rowNum},#{rows}
+	</select>
 </mapper>

@@ -35,6 +35,8 @@ public class PatrolMgmtController {
 	@Autowired
 	private PatrolPlanService patrolPlanService;
 	@Autowired
+	private DevParPatRecService devParPatRecService;
+	@Autowired
 	private StaffService staffService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
@@ -68,6 +70,12 @@ public class PatrolMgmtController {
 		request.setAttribute("pa", pa);
 		
 		return MODULE_NAME+"/area/detail";
+	}
+
+	@RequestMapping(value="/rec/list")
+	public String goRecList(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/rec/list";
 	}
 
 	@RequestMapping(value="/line/list")
@@ -363,6 +371,29 @@ public class PatrolMgmtController {
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", paList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryRecList")
+	@ResponseBody
+	public Map<String, Object> queryRecList(String plName,String paName,String pdName,String pdaNo,String pdpName,String pdpUnit,Integer pdLevel,
+			String startTime,String endTime,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		//select pdp.id,pdp.`name` pdpName,pdp.unit pdpUnit,pda.`no` pdaNo,pd.`name` pdName,pd.`level` pdLevel,pa.`name` paName,pl.`name` plName,dppr.paramIfExce,dppr.paramValue,dppr.paramExceInfo,dppr.startTime,dppr.endTime from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl where dppr.pdpId=pdp.id and dppr.pdaId=pda.id and pda.pdId=pd.id and dppr.paId=pa.id and dppr.plId=pl.id order by dppr.startTime desc
+		
+		try {
+			int count = devParPatRecService.queryForInt(plName, paName, pdName, pdaNo, pdpName, pdpUnit, pdLevel, startTime, endTime);
+			List<DevParPatRec> dpprList=devParPatRecService.queryList(plName, paName, pdName, pdaNo, pdpName, pdpUnit, pdLevel,
+					 startTime, endTime, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", dpprList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
