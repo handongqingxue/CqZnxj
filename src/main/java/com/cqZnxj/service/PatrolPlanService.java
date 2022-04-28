@@ -18,4 +18,8 @@ public interface PatrolPlanService {
 
 	PatrolPlan selectById(String id);
 
+	int getSumDayCount(Integer ptId);
+
+	int getReachDayCount(Integer ptId);
+
 }

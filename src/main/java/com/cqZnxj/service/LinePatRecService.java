@@ -14,4 +14,6 @@ public interface LinePatRecService {
 
 	List<LinePatRec> getTodayList();
 
+	float getReachPercent(Integer ptId);
+
 }

@@ -37,6 +37,8 @@ public class PatrolMgmtController {
 	@Autowired
 	private DevParPatRecService devParPatRecService;
 	@Autowired
+	private LinePatRecService linePatRecService;
+	@Autowired
 	private StaffService staffService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
@@ -86,6 +88,13 @@ public class PatrolMgmtController {
 		request.setAttribute("dppr", dppr);
 		
 		return MODULE_NAME+"/rec/detail";
+	}
+
+	@RequestMapping(value="/cen/info")
+	public String goCenInfo(HttpServletRequest request) {
+		
+		//https://blog.csdn.net/weixin_42418754/article/details/113274973
+		return MODULE_NAME+"/cen/info";
 	}
 
 	@RequestMapping(value="/line/list")
@@ -566,6 +575,23 @@ public class PatrolMgmtController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return jsonMap;
+	}
+
+	@RequestMapping(value="/getCenAnaData")
+	@ResponseBody
+	public Map<String, Object> getCenAnaData(Integer ptId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		int reachDayCount=patrolPlanService.getReachDayCount(ptId);
+		int sumDayCount=patrolPlanService.getSumDayCount(ptId);
+		float reachPercent=linePatRecService.getReachPercent(ptId);
+		
+		jsonMap.put("reachDayCount", reachDayCount);
+		jsonMap.put("sumDayCount", sumDayCount);
+		jsonMap.put("reachPercent", reachPercent);
 		
 		return jsonMap;
 	}

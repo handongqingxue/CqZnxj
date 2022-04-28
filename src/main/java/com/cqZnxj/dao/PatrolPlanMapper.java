@@ -20,4 +20,8 @@ public interface PatrolPlanMapper {
 
 	PatrolPlan selectById(String id);
 
+	int getSumDayCount(@Param("ptId") Integer ptId);
+
+	int getReachDayCount(@Param("ptId") Integer ptId);
+
 }

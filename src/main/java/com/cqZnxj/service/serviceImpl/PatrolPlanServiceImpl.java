@@ -127,4 +127,16 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 		pp.setPlNames(plNames.substring(1));
 		return pp;
 	}
+
+	@Override
+	public int getSumDayCount(Integer ptId) {
+		// TODO Auto-generated method stub
+		return patrolPlanDao.getSumDayCount(ptId);
+	}
+
+	@Override
+	public int getReachDayCount(Integer ptId) {
+		// TODO Auto-generated method stub
+		return patrolPlanDao.getReachDayCount(ptId);
+	}
 }
