@@ -160,7 +160,7 @@
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.DevParPatRec">
-		select pdp.id,pdp.`name` pdpName,pdp.unit pdpUnit,pdp.type pdpType,pda.`no` pdaNo,pd.`name` pdName,pd.`level` pdLevel,pa.`name` paName,pl.`name` plName,dppr.paramIfExce,dppr.paramValue,dppr.paramExceInfo,dppr.startTime,dppr.endTime from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl
+		select dppr.id,pdp.`name` pdpName,pdp.unit pdpUnit,pdp.type pdpType,pda.`no` pdaNo,pd.`name` pdName,pd.`level` pdLevel,pa.`name` paName,pl.`name` plName,dppr.paramIfExce,dppr.paramValue,dppr.paramExceInfo,dppr.startTime,dppr.endTime from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl
 		 where dppr.pdpId=pdp.id and dppr.pdaId=pda.id and pda.pdId=pd.id and dppr.paId=pa.id and dppr.plId=pl.id
 		<if test="plName!=''&amp;plName!=null">
 			and pl.name like CONCAT('%',#{plName},'%')
@@ -184,5 +184,9 @@
 			and dppr.startTime&gt;=#{startTime} and dppr.endTime&lt;=#{endTime}
 		</if>
 		  order by dppr.startTime desc limit #{rowNum},#{rows}
+	</select>
+	<select id="selectById" resultType="com.cqZnxj.entity.DevParPatRec">
+		select dppr.id,pdp.`name` pdpName,pdp.unit pdpUnit,pdp.type pdpType,pda.`no` pdaNo,pd.`name` pdName,pd.`level` pdLevel,pa.`name` paName,pl.`name` plName,dppr.paramIfExce,dppr.paramValue,dppr.paramExceInfo,dppr.startTime,dppr.endTime from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl
+		 where dppr.pdpId=pdp.id and dppr.pdaId=pda.id and pda.pdId=pd.id and dppr.paId=pa.id and dppr.plId=pl.id and dppr.id=#{id}
 	</select>
 </mapper>

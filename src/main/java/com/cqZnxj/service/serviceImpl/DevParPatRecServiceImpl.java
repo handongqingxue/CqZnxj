@@ -59,4 +59,10 @@ public class DevParPatRecServiceImpl implements DevParPatRecService {
 		return devParPatRecDao.queryList(plName, paName, pdName, pdaNo, pdpName, pdpUnit, pdLevel,
 				startTime, endTime, (page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public DevParPatRec selectById(String id) {
+		// TODO Auto-generated method stub
+		return devParPatRecDao.selectById(id);
+	}
 }

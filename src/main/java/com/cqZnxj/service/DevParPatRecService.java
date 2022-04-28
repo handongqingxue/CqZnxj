@@ -22,4 +22,6 @@ public interface DevParPatRecService {
 	List<DevParPatRec> queryList(String plName, String paName, String pdName, String pdaNo, String pdpName, String pdpUnit, Integer pdLevel,
 			String startTime, String endTime, int page, int rows, String sort, String order);
 
+	DevParPatRec selectById(String id);
+
 }

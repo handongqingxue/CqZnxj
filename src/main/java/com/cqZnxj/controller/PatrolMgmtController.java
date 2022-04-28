@@ -77,6 +77,16 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/rec/list";
 	}
+	
+	@RequestMapping(value="/rec/detail")
+	public String goRecDetail(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+		DevParPatRec dppr=devParPatRecService.selectById(id);
+		request.setAttribute("dppr", dppr);
+		
+		return MODULE_NAME+"/rec/detail";
+	}
 
 	@RequestMapping(value="/line/list")
 	public String goLineList(HttpServletRequest request) {
@@ -385,7 +395,6 @@ public class PatrolMgmtController {
 			String startTime,String endTime,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		//select pdp.id,pdp.`name` pdpName,pdp.unit pdpUnit,pda.`no` pdaNo,pd.`name` pdName,pd.`level` pdLevel,pa.`name` paName,pl.`name` plName,dppr.paramIfExce,dppr.paramValue,dppr.paramExceInfo,dppr.startTime,dppr.endTime from dev_par_pat_rec dppr,patrol_device_param pdp,patrol_device_account pda,patrol_device pd,patrol_area pa,patrol_line pl where dppr.pdpId=pdp.id and dppr.pdaId=pda.id and pda.pdId=pd.id and dppr.paId=pa.id and dppr.plId=pl.id order by dppr.startTime desc
 		
 		try {
 			int count = devParPatRecService.queryForInt(plName, paName, pdName, pdaNo, pdpName, pdpUnit, pdLevel, startTime, endTime);

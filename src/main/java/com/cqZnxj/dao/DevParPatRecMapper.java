@@ -27,4 +27,6 @@ public interface DevParPatRecMapper {
 			@Param("pdpName") String pdpName, @Param("pdpUnit") String pdpUnit, @Param("pdLevel") Integer pdLevel, @Param("startTime") String startTime, @Param("endTime") String endTime,
 			@Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
 
+	DevParPatRec selectById(String id);
+
 }
