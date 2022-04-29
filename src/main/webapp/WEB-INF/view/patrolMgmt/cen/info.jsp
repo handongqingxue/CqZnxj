@@ -24,10 +24,15 @@
 .cen_div .toolbar .row_div .firstDept_span,
 .cen_div .toolbar .row_div .secondDept_span,
 .cen_div .toolbar .row_div .date_span,
-.cen_div .toolbar .row_div .patrolTeam_span{
+.cen_div .toolbar .row_div .patrolTeam_span,
+.cen_div .toolbar .row_div .patrolStaff_span{
 	margin-top:10px;
 	margin-left: 13px;
 	position: absolute;
+}
+.cen_div .toolbar .row_div .search_but{
+	margin-top:8px;
+	margin-left: 13px;
 }
 .cen_div .toolbar .row_div .to_span{
 	margin-top:10px;
@@ -46,16 +51,35 @@ $(function(){
 	initFirstDeptCBB();
 	initSecondDeptCBB();
 	initPatrolTeamCBB();
+	initPatrolStaffCBB();
 	initStartDateDB();
 	initEndDateDB();
+	initSearchLB();
 	setTimeout(function(){
 		var comboLength=$(".cen_div .toolbar .combo").length;
 		for(var i=0;i<comboLength;i++){
 			setComboLocation(i);
 		}
 	},"1000");
+	resizeDiv();
 	//getCenAnaData();
 });
+
+function resizeDiv(){
+	var cenDiv=$("#cen_div");
+	var leftNavDiv=$("#left_nav_div");
+	var bodyWidth=$("body").width();
+	var leftNavWidth=leftNavDiv.width();
+	cenDiv.css("width",bodyWidth-leftNavWidth-40+"px");
+
+	var cenDivWidth=cenDiv.width();
+	var toolbarDiv=$("#cen_div #toolbar");
+	toolbarDiv.css("width",cenDivWidth-20+"px");
+	
+	var toolbarDivWidth=toolbarDiv.width();
+	var dataDiv=$("#data_div");
+	dataDiv.css("width",toolbarDivWidth+"px");
+}
 
 function initFirstDeptCBB(){
 	var data=[];
@@ -136,6 +160,32 @@ function loadPatrolTeamCBBData(){
 	,"json");
 }
 
+function initPatrolStaffCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择巡检人员"});
+	patrolStaffCBB=$("#cen_div #patrolStaff_cbb").combobox({
+		valueField:"value",
+		textField:"text",
+		data:data
+	});
+}
+
+function loadPatrolStaffCBBData(){
+	var ptId=patrolTeamCBB.combobox("getValue");
+	var data=[];
+	data.push({"value":"","text":"请选择巡检人员"});
+	$.post(patrolMgmtPath+"queryTeamStaffCBBList",
+		{ptId:ptId},
+		function(result){
+			var rows=result.rows;
+			for(var i=0;i<rows.length;i++){
+				data.push({"value":rows[i].id,"text":rows[i].name});
+			}
+			patrolStaffCBB.combobox("loadData",data);
+		}
+	,"json");
+}
+
 function initStartDateDB(){
 	startDateDB=$("#startDate_db").datebox({
 		required:false
@@ -145,6 +195,24 @@ function initStartDateDB(){
 function initEndDateDB(){
 	endDateDB=$("#endDate_db").datebox({
 		required:false
+	});
+}
+
+function initSearchLB(){
+	$("#search_but").linkbutton({
+		iconCls:"icon-search",
+		onClick:function(){
+			var plName=$("#toolbar #plName").val();
+			var paName=$("#toolbar #paName").val();
+			var pdName=$("#toolbar #pdName").val();
+			var pdaNo=$("#toolbar #pdaNo").val();
+			var pdpName=$("#toolbar #pdpName").val();
+			var pdpUnit=$("#toolbar #pdpUnit").val();
+			var startTime=startTimeDTB.datetimebox("getValue");
+			var endTime=endTimeDTB.datetimebox("getValue");
+			tab1.datagrid("load",{plName:plName,paName:paName,pdName:pdName,pdaNo:pdaNo,
+				pdpName:pdpName,pdpUnit:pdpUnit,startTime:startTime,endTime:endTime});
+		}
 	});
 }
 
@@ -159,10 +227,11 @@ function setComboLocation(num){
 		break;
 	case 2:
 	case 3:
+	case 4:
 		marginTop=10;
 		marginLeft=70;
 		break;
-	case 4:
+	case 5:
 		marginTop=10;
 		marginLeft=35;
 		break;
@@ -192,11 +261,17 @@ function getCenAnaData(){
 			<input id="secondDept_cbb"/>
 			<span class="patrolTeam_span">班组：</span>
 			<input id="patrolTeam_cbb"/>
+			<span class="patrolStaff_span">人员：</span>
+			<input id="patrolStaff_cbb"/>
 			<span class="date_span">时间：</span>
 			<input id="startDate_db"/>
 			<span class="to_span">至</span>
 			<input id="endDate_db"/>
+			<a class="search_but" id="search_but">查询</a>
 		</div>
+	</div>
+	<div class="data_div" id="data_div" style="height: 500px;background-color: #fff;margin-top: 20px;margin-left: 10px;padding: 1px;">
+		<div class="reachPercent_div" style="width: 800px;height: 50px;background-color: #0f0;margin-top: 5px;margin-left: 5px;"></div>
 	</div>
 </div>
 </body>
