@@ -30,13 +30,76 @@
 	margin-left: 13px;
 	position: absolute;
 }
+.cen_div .toolbar .row_div .to_span{
+	margin-top:10px;
+	margin-left: 5px;
+	position: absolute;
+}
 .cen_div .toolbar .row_div .search_but{
 	margin-top:8px;
 	margin-left: 13px;
 }
-.cen_div .toolbar .row_div .to_span{
-	margin-top:10px;
+.data_div{
+	height: 500px;
+	margin-top: 20px;
+	margin-left: 10px;
+	background-color: #fff;
+	padding: 1px;
+}
+.reachPercent_div{
+	width: 800px;
+	height: 80px;
+	margin-top: 5px;
 	margin-left: 5px;
+}
+.reachPercent_div .item_div{
+	height: 80px;
+}
+.reachPercent_div .rdc_item_div{
+	background-color: #62BF82;
+}
+.reachPercent_div .plrp_item_div{
+	margin-top: -80px;
+	background-color: #6F78B9;
+}
+.reachPercent_div .parp_item_div{
+	margin-top: -80px;
+	background-color: #5E87C6;
+}
+.reachPercent_div .item_div .icon_img{
+	width: 45px;
+	height:45px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+.reachPercent_div .item_div .rdc_span,
+.reachPercent_div .item_div .plrp_span,
+.reachPercent_div .item_div .parp_span{
+	margin-top: 8px;
+	margin-left: 10px;
+	color: #fff;
+	font-size: 25px;
+	position: absolute;
+}
+.reachPercent_div .item_div .fgx_span{
+	margin-top: 15px;
+	margin-left: 30px;
+	color: #fff;
+	font-size: 15px;
+	position: absolute;
+}
+.reachPercent_div .item_div .sdc_span{
+	margin-top: 16px;
+	margin-left: 40px;
+	color: #fff;
+	font-size: 15px;
+	position: absolute;
+}
+.reachPercent_div .item_div .text_span{
+	margin-top: 40px;
+	margin-left: 10px;
+	color: #fff;
+	font-size: 13px;
 	position: absolute;
 }
 </style>
@@ -79,6 +142,18 @@ function resizeDiv(){
 	var toolbarDivWidth=toolbarDiv.width();
 	var dataDiv=$("#data_div");
 	dataDiv.css("width",toolbarDivWidth+"px");
+	
+	var dataDivWidth=dataDiv.width();
+	var reachPercentDiv=$("#reachPercent_div");
+	reachPercentDiv.css("width",dataDivWidth-10+"px");
+	
+	var reachPercentDivWidth=reachPercentDiv.width();
+	var itemDiv=reachPercentDiv.find(".item_div");
+	itemDiv.css("width",(reachPercentDivWidth-40)/3+"px");
+	
+	var itemDivWidth=itemDiv.width();
+	$(".plrp_item_div").css("margin-left",itemDivWidth+20+"px");
+	$(".parp_item_div").css("margin-left",(itemDivWidth+20)*2+"px");
 }
 
 function initFirstDeptCBB(){
@@ -270,8 +345,26 @@ function getCenAnaData(){
 			<a class="search_but" id="search_but">查询</a>
 		</div>
 	</div>
-	<div class="data_div" id="data_div" style="height: 500px;background-color: #fff;margin-top: 20px;margin-left: 10px;padding: 1px;">
-		<div class="reachPercent_div" style="width: 800px;height: 50px;background-color: #0f0;margin-top: 5px;margin-left: 5px;"></div>
+	<div class="data_div" id="data_div">
+		<div class="reachPercent_div" id="reachPercent_div">
+			<div class="item_div rdc_item_div">
+				<img class="icon_img" alt="" src="<%=basePath %>/resource/image/002.png">
+				<span class="rdc_span">0</span>
+				<span class="fgx_span">/</span>
+				<span class="sdc_span">7</span>
+				<span class="text_span">达标天数</span>
+			</div>
+			<div class="item_div plrp_item_div">
+				<img class="icon_img" alt="" src="<%=basePath %>/resource/image/003.png">
+				<span class="plrp_span">36%</span>
+				<span class="text_span">巡检路线达标率</span>
+			</div>
+			<div class="item_div parp_item_div">
+				<img class="icon_img" alt="" src="<%=basePath %>/resource/image/004.png">
+				<span class="parp_span">70%</span>
+				<span class="text_span">巡检区域达标率</span>
+			</div>
+		</div>
 	</div>
 </div>
 </body>
