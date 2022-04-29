@@ -20,4 +20,6 @@ public interface PatrolTeamService {
 
 	List<PatrolTeam> queryCBBList();
 
+	List<PatrolTeam> queryCBBListByDeptId(Integer deptId);
+
 }

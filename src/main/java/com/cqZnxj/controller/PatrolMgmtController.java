@@ -635,6 +635,19 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/queryTeamCBBListByDeptId")
+	@ResponseBody
+	public Map<String, Object> queryTeamCBBListByDeptId(Integer deptId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<PatrolTeam> ptList=patrolTeamService.queryCBBListByDeptId(deptId);
+		
+		jsonMap.put("rows", ptList);
+		
+		return jsonMap;
+	}
+	
 	@RequestMapping(value="/queryTeamStaffCBBList")
 	@ResponseBody
 	public Map<String, Object> queryTeamStaffCBBList(Integer ptId) {

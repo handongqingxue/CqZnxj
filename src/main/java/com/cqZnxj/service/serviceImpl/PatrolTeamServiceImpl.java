@@ -97,4 +97,10 @@ public class PatrolTeamServiceImpl implements PatrolTeamService {
 		// TODO Auto-generated method stub
 		return patrolTeamDao.queryCBBList();
 	}
+
+	@Override
+	public List<PatrolTeam> queryCBBListByDeptId(Integer deptId) {
+		// TODO Auto-generated method stub
+		return patrolTeamDao.queryCBBListByDeptId(deptId);
+	}
 }
