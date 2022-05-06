@@ -125,7 +125,7 @@ $(function(){
 		}
 	},"1000");
 	resizeDiv();
-	//getCenAnaData();
+	getCenAnaData();
 });
 
 function resizeDiv(){
@@ -319,7 +319,14 @@ function getCenAnaData(){
 	$.post(patrolMgmtPath+"getCenAnaData",
 		{ptId:2},
 		function(data){
-			alert(data.reachDayCount+"/"+data.sumDayCount+","+data.reachPercent);
+			var reachDayCount=data.reachDayCount;
+			var sumDayCount=data.sumDayCount;
+			var lineReachPercent=data.lineReachPercent;
+			var areaReachPercent=data.areaReachPercent;
+			$("#rdc_span").text(reachDayCount);
+			$("#sdc_span").text(sumDayCount);
+			$("#plrp_span").text(lineReachPercent+"%");
+			$("#parp_span").text(areaReachPercent+"%");
 		}
 	,"json");
 }
@@ -349,19 +356,19 @@ function getCenAnaData(){
 		<div class="reachPercent_div" id="reachPercent_div">
 			<div class="item_div rdc_item_div">
 				<img class="icon_img" alt="" src="<%=basePath %>/resource/image/002.png">
-				<span class="rdc_span">0</span>
+				<span class="rdc_span" id="rdc_span"></span>
 				<span class="fgx_span">/</span>
-				<span class="sdc_span">7</span>
+				<span class="sdc_span" id="sdc_span"></span>
 				<span class="text_span">达标天数</span>
 			</div>
 			<div class="item_div plrp_item_div">
 				<img class="icon_img" alt="" src="<%=basePath %>/resource/image/003.png">
-				<span class="plrp_span">36%</span>
+				<span class="plrp_span" id="plrp_span"></span>
 				<span class="text_span">巡检路线达标率</span>
 			</div>
 			<div class="item_div parp_item_div">
 				<img class="icon_img" alt="" src="<%=basePath %>/resource/image/004.png">
-				<span class="parp_span">70%</span>
+				<span class="parp_span" id="parp_span"></span>
 				<span class="text_span">巡检区域达标率</span>
 			</div>
 		</div>

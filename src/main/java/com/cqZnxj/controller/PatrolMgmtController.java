@@ -39,6 +39,8 @@ public class PatrolMgmtController {
 	@Autowired
 	private LinePatRecService linePatRecService;
 	@Autowired
+	private AreaPatRecService areaPatRecService;
+	@Autowired
 	private StaffService staffService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
@@ -587,11 +589,13 @@ public class PatrolMgmtController {
 
 		int reachDayCount=patrolPlanService.getReachDayCount(ptId);
 		int sumDayCount=patrolPlanService.getSumDayCount(ptId);
-		float reachPercent=linePatRecService.getReachPercent(ptId);
+		float lineReachPercent=linePatRecService.getReachPercent(ptId);
+		float areaReachPercent=areaPatRecService.getReachPercent(ptId);
 		
 		jsonMap.put("reachDayCount", reachDayCount);
 		jsonMap.put("sumDayCount", sumDayCount);
-		jsonMap.put("reachPercent", reachPercent);
+		jsonMap.put("lineReachPercent", lineReachPercent);
+		jsonMap.put("areaReachPercent", areaReachPercent);
 		
 		return jsonMap;
 	}

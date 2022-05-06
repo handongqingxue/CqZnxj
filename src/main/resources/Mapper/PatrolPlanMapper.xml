@@ -113,7 +113,7 @@
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolPlan">
 		select pp.*,pt.name ptName from patrol_plan pp,patrol_team pt where pp.ptId=pt.id and pp.id=#{id}
 	</select>
-	<select id="getSumDayCount" resultType="java.lang.Integer">
+	<select id="getSumDayCount" resultType="java.lang.String">
 		select sum(timestampdiff(day,startDate,endDate)) from patrol_plan where startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
 	</select>
 	<select id="getReachDayCount" resultType="java.lang.Integer">

@@ -71,4 +71,8 @@
 	<update id="updateFinishById">
 		update area_pat_rec set endTime=now(),finish=1 where id=#{id}
 	</update>
+	<select id="getIfFinishCount" resultType="java.util.Map">
+		select count(*) count,apr.finish from patrol_plan pp,pat_line_area_acc_set plaas,area_pat_rec apr where CONCAT(',',pp.plIds,',') like CONCAT('%,',plaas.plId,',%') and plaas.plId=apr.plId and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		and current_date() and pp.ptId=#{ptId} group by apr.finish
+	</select>
 </mapper>

@@ -10,4 +10,6 @@ public interface AreaPatRecService {
 
 	int getIdByPaIdPtId(Integer paId, Integer ptId);
 
+	float getReachPercent(Integer ptId);
+
 }

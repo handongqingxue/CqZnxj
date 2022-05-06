@@ -3,6 +3,7 @@ package com.cqZnxj.service.serviceImpl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,7 +132,8 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 	@Override
 	public int getSumDayCount(Integer ptId) {
 		// TODO Auto-generated method stub
-		return patrolPlanDao.getSumDayCount(ptId);
+		String countStr=patrolPlanDao.getSumDayCount(ptId);
+		return StringUtils.isEmpty(countStr)?0:Integer.valueOf(countStr);
 	}
 
 	@Override

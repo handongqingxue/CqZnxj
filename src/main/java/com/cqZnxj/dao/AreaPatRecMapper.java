@@ -1,6 +1,7 @@
 package com.cqZnxj.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -21,5 +22,7 @@ public interface AreaPatRecMapper {
 	AreaPatRec selectById(@Param("id") int id);
 
 	int updateFinishById(@Param("id") int id);
+
+	List<Map<String, Object>> getIfFinishCount(@Param("ptId") Integer ptId);
 
 }

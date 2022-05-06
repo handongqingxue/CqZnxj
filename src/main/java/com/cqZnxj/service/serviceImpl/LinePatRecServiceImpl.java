@@ -55,6 +55,6 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 			}
 			sumCount+=count;
 		}
-		return finishCount/sumCount*100;
+		return sumCount==0?0:finishCount/sumCount*100;
 	}
 }
