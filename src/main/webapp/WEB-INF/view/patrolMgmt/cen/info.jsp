@@ -102,14 +102,26 @@
 	font-size: 13px;
 	position: absolute;
 }
+.lpb_chart_div{
+	width:100%;
+	height: 300px;
+	margin-top: 15px;
+	margin-left: 5px;
+	/*
+	background-color: #0f0;
+	*/
+}
 </style>
 <title>Insert title here</title>
 <%@include file="../../inc/js.jsp"%>
+<script type="text/javascript" src="<%=basePath %>resource/js/echarts.min.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
 var mainPath=path+'main/';
 var patrolMgmtPath=path+'patrolMgmt/';
 var nav='${param.nav}';
+var zhAlignWithLabel=false;
+var zhxzzh=10;//综合X轴字号
 $(function(){
 	initFirstDeptCBB();
 	initSecondDeptCBB();
@@ -154,6 +166,9 @@ function resizeDiv(){
 	var itemDivWidth=itemDiv.width();
 	$(".plrp_item_div").css("margin-left",itemDivWidth+20+"px");
 	$(".parp_item_div").css("margin-left",(itemDivWidth+20)*2+"px");
+	
+	var lpbChartDiv=$("#lpb_chart_div");
+	lpbChartDiv.css("width",dataDivWidth-10+"px");
 }
 
 function initFirstDeptCBB(){
@@ -327,8 +342,90 @@ function getCenAnaData(){
 			$("#sdc_span").text(sumDayCount);
 			$("#plrp_span").text(lineReachPercent+"%");
 			$("#parp_span").text(areaReachPercent+"%");
+			
+			initLPBChartDiv(data.lpXAxisDataList,data.lpSeriesDataList);
 		}
 	,"json");
+}
+
+function initLPBChartDiv(xAxisDataList,seriesDataList){
+	var chartDom = document.getElementById('lpb_chart_div');
+	var myChart = echarts.init(chartDom);
+	var option;
+	option = {
+		title:{
+			text:'各路线巡更情况'
+		},
+	    tooltip: {
+	        trigger: 'axis'
+	    },
+	    legend: {
+               itemWidth:10,
+               itemHeight:10,
+               x:'center',
+               y: '15px',
+               textStyle:{
+                   fontSize:9
+               }
+	    },
+	    xAxis: [
+	        {
+	            type: 'category',
+	            //data: ['1月', '2月', '3月'],
+	            data: xAxisDataList,
+	            axisTick:{alignWithLabel:zhAlignWithLabel},
+	            axisLine:{
+	                lineStyle:{
+	                    color:"#999",
+	                    width:0.5
+	                }
+	            },
+	            axisLabel: {
+	                fontSize:zhxzzh,
+	                interval:0,
+	                rotate:45
+	            }
+	        }
+	    ],
+	    yAxis: [
+	        {
+	        	type:'value',
+                minInterval: 1,
+                axisLine:{
+                    lineStyle:{
+                        color:"#999",
+                        width:0.5
+                    }
+                },
+                axisLabel:{
+                    fontSize:9
+                },
+                splitLine:{
+                    lineStyle:{
+                        color:"#ddd",
+                        width:0.5
+                    }
+                },
+                axisLabel: {  
+                    formatter:'{value}%'  
+                }
+	        }
+	    ],
+	    series: [
+	        {
+	            type: 'bar',
+	            //data: [2.0, 4.9, 7.0],
+	            data:seriesDataList,
+	            barGap:0,
+	            showBackground: true,
+	            backgroundStyle: {
+	              color: 'rgb(247, 247, 250)'
+	            }
+	        }
+	    ]
+	};
+
+	option && myChart.setOption(option);
 }
 </script>
 </head>
@@ -372,6 +469,7 @@ function getCenAnaData(){
 				<span class="text_span">巡检区域达标率</span>
 			</div>
 		</div>
+		<div class="lpb_chart_div" id="lpb_chart_div"></div>
 	</div>
 </div>
 </body>

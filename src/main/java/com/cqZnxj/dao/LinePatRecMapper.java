@@ -25,4 +25,6 @@ public interface LinePatRecMapper {
 
 	List<Map<String, Object>> getIfFinishCount(@Param("ptId") Integer ptId);
 
+	List<LinePatRec> selectBarChartData(@Param("ptId") Integer ptId);
+
 }

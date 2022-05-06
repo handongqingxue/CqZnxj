@@ -21,6 +21,12 @@ public class LinePatRec {
 	public void setFinishAreaCount(Integer finishAreaCount) {
 		this.finishAreaCount = finishAreaCount;
 	}
+	public Integer getFinishPercent() {
+		return finishPercent;
+	}
+	public void setFinishPercent(Integer finishPercent) {
+		this.finishPercent = finishPercent;
+	}
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -45,6 +51,12 @@ public class LinePatRec {
 	public void setPlId(Integer plId) {
 		this.plId = plId;
 	}
+	public String getPlName() {
+		return plName;
+	}
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
 	public Integer getPtId() {
 		return ptId;
 	}
@@ -59,10 +71,12 @@ public class LinePatRec {
 	}
 	private Integer patAreaCount;
 	private Integer finishAreaCount;
+	private Integer finishPercent;
 	private String createTime;
 	private String startTime;
 	private String endTime;
 	private Integer plId;
+	private String plName;
 	private Integer ptId;
 	private Boolean finish;
 }

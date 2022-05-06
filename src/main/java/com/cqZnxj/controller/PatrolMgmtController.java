@@ -1,5 +1,6 @@
 package com.cqZnxj.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -591,11 +592,23 @@ public class PatrolMgmtController {
 		int sumDayCount=patrolPlanService.getSumDayCount(ptId);
 		float lineReachPercent=linePatRecService.getReachPercent(ptId);
 		float areaReachPercent=areaPatRecService.getReachPercent(ptId);
+		List<String> lpXAxisDataList=new ArrayList<String>();
+		List<Integer> lpSeriesDataList=new ArrayList<Integer>();
+		List<LinePatRec> lpbcdList=linePatRecService.selectBarChartData(ptId);
+		for (int i = 0; i < lpbcdList.size(); i++) {
+			LinePatRec lpbcdItem = lpbcdList.get(i);
+			String plName = lpbcdItem.getPlName();
+			Integer finishPercent = lpbcdItem.getFinishPercent();
+			lpXAxisDataList.add(plName);
+			lpSeriesDataList.add(finishPercent);
+		}
 		
 		jsonMap.put("reachDayCount", reachDayCount);
 		jsonMap.put("sumDayCount", sumDayCount);
 		jsonMap.put("lineReachPercent", lineReachPercent);
 		jsonMap.put("areaReachPercent", areaReachPercent);
+		jsonMap.put("lpXAxisDataList", lpXAxisDataList);
+		jsonMap.put("lpSeriesDataList", lpSeriesDataList);
 		
 		return jsonMap;
 	}

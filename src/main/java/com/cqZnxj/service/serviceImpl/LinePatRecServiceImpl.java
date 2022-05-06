@@ -57,4 +57,10 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 		}
 		return sumCount==0?0:finishCount/sumCount*100;
 	}
+
+	@Override
+	public List<LinePatRec> selectBarChartData(Integer ptId) {
+		// TODO Auto-generated method stub
+		return linePatRecDao.selectBarChartData(ptId);
+	}
 }

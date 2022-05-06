@@ -16,4 +16,6 @@ public interface LinePatRecService {
 
 	float getReachPercent(Integer ptId);
 
+	List<LinePatRec> selectBarChartData(Integer ptId);
+
 }
