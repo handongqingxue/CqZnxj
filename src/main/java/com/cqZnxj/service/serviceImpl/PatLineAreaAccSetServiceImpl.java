@@ -82,4 +82,10 @@ public class PatLineAreaAccSetServiceImpl implements PatLineAreaAccSetService {
 		String pdaIds=patLineAreaAccSetDao.getPdaIdsByPlIdPaId(plId,paId);
 		return pdaIds.split(",").length;
 	}
+
+	@Override
+	public PatLineAreaAccSet getCurrentTeamInfoByPdaNo(String pdaNo) {
+		// TODO Auto-generated method stub
+		return patLineAreaAccSetDao.getCurrentTeamInfoByPdaNo(pdaNo);
+	}
 }

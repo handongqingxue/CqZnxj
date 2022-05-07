@@ -21,6 +21,12 @@ public class AreaPatRec {
 	public void setFinishAccCount(Integer finishAccCount) {
 		this.finishAccCount = finishAccCount;
 	}
+	public Integer getFinishPercent() {
+		return finishPercent;
+	}
+	public void setFinishPercent(Integer finishPercent) {
+		this.finishPercent = finishPercent;
+	}
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -51,6 +57,12 @@ public class AreaPatRec {
 	public void setPaId(Integer paId) {
 		this.paId = paId;
 	}
+	public String getPaName() {
+		return paName;
+	}
+	public void setPaName(String paName) {
+		this.paName = paName;
+	}
 	public Integer getPtId() {
 		return ptId;
 	}
@@ -71,11 +83,13 @@ public class AreaPatRec {
 	}
 	private Integer patAccCount;
 	private Integer finishAccCount;
+	private Integer finishPercent;
 	private String createTime;
 	private String startTime;
 	private String endTime;
 	private Integer plId;
 	private Integer paId;
+	private String paName;
 	private Integer ptId;
 	private Integer lprId;
 	private Boolean finish;

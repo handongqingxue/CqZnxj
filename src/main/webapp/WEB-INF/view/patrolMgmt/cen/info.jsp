@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 .cen_div{
+	height:805px;
 	margin-top:65px;
 	margin-left: 220px;
 	background-color: #EFF3F6;
@@ -40,7 +41,7 @@
 	margin-left: 13px;
 }
 .data_div{
-	height: 500px;
+	height: 720px;
 	margin-top: 20px;
 	margin-left: 10px;
 	background-color: #fff;
@@ -102,7 +103,7 @@
 	font-size: 13px;
 	position: absolute;
 }
-.lpb_chart_div{
+.lpb_chart_div,.apb_chart_div{
 	width:100%;
 	height: 300px;
 	margin-top: 15px;
@@ -344,6 +345,7 @@ function getCenAnaData(){
 			$("#parp_span").text(areaReachPercent+"%");
 			
 			initLPBChartDiv(data.lpXAxisDataList,data.lpSeriesDataList);
+			initAPBChartDiv(data.apXAxisDataList,data.apSeriesDataList);
 		}
 	,"json");
 }
@@ -355,6 +357,86 @@ function initLPBChartDiv(xAxisDataList,seriesDataList){
 	option = {
 		title:{
 			text:'各路线巡更情况'
+		},
+	    tooltip: {
+	        trigger: 'axis'
+	    },
+	    legend: {
+               itemWidth:10,
+               itemHeight:10,
+               x:'center',
+               y: '15px',
+               textStyle:{
+                   fontSize:9
+               }
+	    },
+	    xAxis: [
+	        {
+	            type: 'category',
+	            //data: ['1月', '2月', '3月'],
+	            data: xAxisDataList,
+	            axisTick:{alignWithLabel:zhAlignWithLabel},
+	            axisLine:{
+	                lineStyle:{
+	                    color:"#999",
+	                    width:0.5
+	                }
+	            },
+	            axisLabel: {
+	                fontSize:zhxzzh,
+	                interval:0,
+	                rotate:45
+	            }
+	        }
+	    ],
+	    yAxis: [
+	        {
+	        	type:'value',
+                minInterval: 1,
+                axisLine:{
+                    lineStyle:{
+                        color:"#999",
+                        width:0.5
+                    }
+                },
+                axisLabel:{
+                    fontSize:9
+                },
+                splitLine:{
+                    lineStyle:{
+                        color:"#ddd",
+                        width:0.5
+                    }
+                },
+                axisLabel: {  
+                    formatter:'{value}%'  
+                }
+	        }
+	    ],
+	    series: [
+	        {
+	            type: 'bar',
+	            //data: [2.0, 4.9, 7.0],
+	            data:seriesDataList,
+	            barGap:0,
+	            showBackground: true,
+	            backgroundStyle: {
+	              color: 'rgb(247, 247, 250)'
+	            }
+	        }
+	    ]
+	};
+
+	option && myChart.setOption(option);
+}
+
+function initAPBChartDiv(xAxisDataList,seriesDataList){
+	var chartDom = document.getElementById('apb_chart_div');
+	var myChart = echarts.init(chartDom);
+	var option;
+	option = {
+		title:{
+			text:'各区域巡更情况'
 		},
 	    tooltip: {
 	        trigger: 'axis'
@@ -470,6 +552,7 @@ function initLPBChartDiv(xAxisDataList,seriesDataList){
 			</div>
 		</div>
 		<div class="lpb_chart_div" id="lpb_chart_div"></div>
+		<div class="apb_chart_div" id="apb_chart_div"></div>
 	</div>
 </div>
 </body>

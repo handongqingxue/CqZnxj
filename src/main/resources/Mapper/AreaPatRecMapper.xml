@@ -75,4 +75,7 @@
 		select count(*) count,apr.finish from patrol_plan pp,pat_line_area_acc_set plaas,area_pat_rec apr where CONCAT(',',pp.plIds,',') like CONCAT('%,',plaas.plId,',%') and plaas.plId=apr.plId and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY)
 		and current_date() and pp.ptId=#{ptId} group by apr.finish
 	</select>
+	<select id="selectBarChartData" resultType="com.cqZnxj.entity.AreaPatRec">
+		select pa.name paName,sum(finishAccCount)/sum(patAccCount)*100 finishPercent from area_pat_rec apr,patrol_area pa where apr.paId=pa.id and apr.createTime between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId} GROUP BY pa.name
+	</select>
 </mapper>

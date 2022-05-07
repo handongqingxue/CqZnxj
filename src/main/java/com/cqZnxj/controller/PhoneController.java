@@ -115,6 +115,19 @@ public class PhoneController {
 		
 		return jsonMap;
 	}
+
+	@RequestMapping(value="/getCurrentTeamPLAASByPdaNo")
+	@ResponseBody
+	public Map<String, Object> getCurrentTeamPLAASByPdaNo(String pdaNo) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		PatLineAreaAccSet plaas = patLineAreaAccSetService.getCurrentTeamInfoByPdaNo(pdaNo);
+		
+		jsonMap.put("plaas", plaas);
+		
+		return jsonMap;
+	}
 	
 	@RequestMapping(value="/saveDevParPatRec")
 	@ResponseBody

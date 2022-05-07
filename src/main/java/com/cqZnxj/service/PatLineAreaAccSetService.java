@@ -20,4 +20,6 @@ public interface PatLineAreaAccSetService {
 
 	int getAccCountByPlIdPaId(Integer plId, Integer paId);
 
+	PatLineAreaAccSet getCurrentTeamInfoByPdaNo(String pdaNo);
+
 }

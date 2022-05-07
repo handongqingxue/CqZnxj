@@ -51,4 +51,10 @@ public class AreaPatRecServiceImpl implements AreaPatRecService {
 		}
 		return sumCount==0?0:finishCount/sumCount*100;
 	}
+
+	@Override
+	public List<AreaPatRec> selectBarChartData(Integer ptId) {
+		// TODO Auto-generated method stub
+		return areaPatRecDao.selectBarChartData(ptId);
+	}
 }

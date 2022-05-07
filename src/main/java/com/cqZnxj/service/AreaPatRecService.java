@@ -1,5 +1,7 @@
 package com.cqZnxj.service;
 
+import java.util.List;
+
 import com.cqZnxj.entity.*;
 
 public interface AreaPatRecService {
@@ -11,5 +13,7 @@ public interface AreaPatRecService {
 	int getIdByPaIdPtId(Integer paId, Integer ptId);
 
 	float getReachPercent(Integer ptId);
+
+	List<AreaPatRec> selectBarChartData(Integer ptId);
 
 }

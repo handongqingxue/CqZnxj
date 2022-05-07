@@ -592,6 +592,7 @@ public class PatrolMgmtController {
 		int sumDayCount=patrolPlanService.getSumDayCount(ptId);
 		float lineReachPercent=linePatRecService.getReachPercent(ptId);
 		float areaReachPercent=areaPatRecService.getReachPercent(ptId);
+		
 		List<String> lpXAxisDataList=new ArrayList<String>();
 		List<Integer> lpSeriesDataList=new ArrayList<Integer>();
 		List<LinePatRec> lpbcdList=linePatRecService.selectBarChartData(ptId);
@@ -603,12 +604,27 @@ public class PatrolMgmtController {
 			lpSeriesDataList.add(finishPercent);
 		}
 		
+		List<String> apXAxisDataList=new ArrayList<String>();
+		List<Integer> apSeriesDataList=new ArrayList<Integer>();
+		List<AreaPatRec> apbcdList=areaPatRecService.selectBarChartData(ptId);
+		for (int i = 0; i < apbcdList.size(); i++) {
+			AreaPatRec apbcdItem = apbcdList.get(i);
+			String paName = apbcdItem.getPaName();
+			Integer finishPercent = apbcdItem.getFinishPercent();
+			apXAxisDataList.add(paName);
+			apSeriesDataList.add(finishPercent);
+		}
+		
 		jsonMap.put("reachDayCount", reachDayCount);
 		jsonMap.put("sumDayCount", sumDayCount);
 		jsonMap.put("lineReachPercent", lineReachPercent);
 		jsonMap.put("areaReachPercent", areaReachPercent);
+		
 		jsonMap.put("lpXAxisDataList", lpXAxisDataList);
 		jsonMap.put("lpSeriesDataList", lpSeriesDataList);
+
+		jsonMap.put("apXAxisDataList", apXAxisDataList);
+		jsonMap.put("apSeriesDataList", apSeriesDataList);
 		
 		return jsonMap;
 	}

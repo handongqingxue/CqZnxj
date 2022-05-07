@@ -25,4 +25,6 @@ public interface AreaPatRecMapper {
 
 	List<Map<String, Object>> getIfFinishCount(@Param("ptId") Integer ptId);
 
+	List<AreaPatRec> selectBarChartData(@Param("ptId") Integer ptId);
+
 }
