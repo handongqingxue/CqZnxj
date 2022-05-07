@@ -22,6 +22,4 @@ public interface PatrolPlanMapper {
 
 	String getSumDayCount(@Param("ptId") Integer ptId);
 
-	int getReachDayCount(@Param("ptId") Integer ptId);
-
 }

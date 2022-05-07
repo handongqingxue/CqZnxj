@@ -65,4 +65,7 @@
 	<select id="selectBarChartData" resultType="com.cqZnxj.entity.LinePatRec">
 		select pl.name plName,sum(finishAreaCount)/sum(patAreaCount)*100 finishPercent from line_pat_rec lpr,patrol_line pl where lpr.plId=pl.id and lpr.createTime between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId} GROUP BY pl.name
 	</select>
+	<select id="getReachDayCount" resultType="java.lang.Integer">
+		select count(*) from line_pat_rec where date_format(now(),'%Y-%m-%d')=date_format(createTime,'%Y-%m-%d') and finish=1 and ptId=#{ptId}
+	</select>
 </mapper>

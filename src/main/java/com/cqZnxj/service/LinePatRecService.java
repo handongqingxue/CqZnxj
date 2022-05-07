@@ -18,4 +18,6 @@ public interface LinePatRecService {
 
 	List<LinePatRec> selectBarChartData(Integer ptId);
 
+	int getReachDayCount(Integer ptId);
+
 }

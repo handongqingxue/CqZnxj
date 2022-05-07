@@ -588,7 +588,7 @@ public class PatrolMgmtController {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 
-		int reachDayCount=patrolPlanService.getReachDayCount(ptId);
+		int reachDayCount=linePatRecService.getReachDayCount(ptId);
 		int sumDayCount=patrolPlanService.getSumDayCount(ptId);
 		float lineReachPercent=linePatRecService.getReachPercent(ptId);
 		float areaReachPercent=areaPatRecService.getReachPercent(ptId);

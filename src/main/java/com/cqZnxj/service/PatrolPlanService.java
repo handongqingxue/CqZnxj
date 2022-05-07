@@ -20,6 +20,4 @@ public interface PatrolPlanService {
 
 	int getSumDayCount(Integer ptId);
 
-	int getReachDayCount(Integer ptId);
-
 }

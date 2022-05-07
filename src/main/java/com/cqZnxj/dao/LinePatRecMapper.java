@@ -27,4 +27,6 @@ public interface LinePatRecMapper {
 
 	List<LinePatRec> selectBarChartData(@Param("ptId") Integer ptId);
 
+	int getReachDayCount(@Param("ptId") Integer ptId);
+
 }

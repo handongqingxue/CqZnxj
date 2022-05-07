@@ -114,9 +114,6 @@
 		select pp.*,pt.name ptName from patrol_plan pp,patrol_team pt where pp.ptId=pt.id and pp.id=#{id}
 	</select>
 	<select id="getSumDayCount" resultType="java.lang.String">
-		select sum(timestampdiff(day,startDate,endDate)) from patrol_plan where startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
-	</select>
-	<select id="getReachDayCount" resultType="java.lang.Integer">
-		select count(*) from patrol_plan pp,line_pat_rec lpr where CONCAT(',',pp.plIds,',') like CONCAT('%,',lpr.plId,',%') and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and lpr.finish=1 and pp.ptId=#{ptId}
+		select sum(timestampdiff(day,startDate,endDate)+1) from patrol_plan where startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
 	</select>
 </mapper>

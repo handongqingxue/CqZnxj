@@ -135,10 +135,4 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 		String countStr=patrolPlanDao.getSumDayCount(ptId);
 		return StringUtils.isEmpty(countStr)?0:Integer.valueOf(countStr);
 	}
-
-	@Override
-	public int getReachDayCount(Integer ptId) {
-		// TODO Auto-generated method stub
-		return patrolPlanDao.getReachDayCount(ptId);
-	}
 }

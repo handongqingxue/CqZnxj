@@ -63,4 +63,10 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 		// TODO Auto-generated method stub
 		return linePatRecDao.selectBarChartData(ptId);
 	}
+
+	@Override
+	public int getReachDayCount(Integer ptId) {
+		// TODO Auto-generated method stub
+		return linePatRecDao.getReachDayCount(ptId);
+	}
 }
