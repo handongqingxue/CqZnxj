@@ -63,4 +63,7 @@
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolLine">
 		select * from patrol_line where id=#{id}
 	</select>
+	<select id="selectXAxisData" resultType="java.lang.String">
+		select pl.name from patrol_plan pp,patrol_line pl where CONCAT(',',pp.plIds,',') like CONCAT('%,',pl.id,',%') and startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 7 DAY) and endDate&lt;=current_date() and pp.ptId=#{ptId}
+	</select>
 </mapper>

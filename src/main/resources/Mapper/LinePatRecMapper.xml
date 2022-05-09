@@ -63,7 +63,7 @@
 		select count(*) count,finish from patrol_plan pp,line_pat_rec lpr where CONCAT(',',pp.plIds,',') like CONCAT('%,',lpr.plId,',%') and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and pp.ptId=#{ptId} group by finish
 	</select>
 	<select id="selectBarChartData" resultType="com.cqZnxj.entity.LinePatRec">
-		select pl.name plName,sum(finishAreaCount)/sum(patAreaCount)*100 finishPercent from line_pat_rec lpr,patrol_line pl where lpr.plId=pl.id and lpr.createTime between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId} GROUP BY pl.name
+		select pl.name plName,finishAreaCount/patAreaCount*100 finishPercent from line_pat_rec lpr,patrol_line pl where lpr.plId=pl.id and date_format(lpr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
 	</select>
 	<select id="getReachDayCount" resultType="java.lang.Integer">
 		select count(*) from line_pat_rec where date_format(now(),'%Y-%m-%d')=date_format(createTime,'%Y-%m-%d') and finish=1 and ptId=#{ptId}

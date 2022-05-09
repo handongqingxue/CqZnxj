@@ -24,4 +24,6 @@ public interface PatrolTeamMapper {
 
 	List<PatrolTeam> queryCBBListByDeptId(@Param("deptId") Integer deptId);
 
+	PatrolTeam selectByStaffId(@Param("staffId") Integer staffId);
+
 }

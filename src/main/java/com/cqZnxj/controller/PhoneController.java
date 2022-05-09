@@ -43,7 +43,35 @@ public class PhoneController {
 	@Autowired
 	private PatrolAreaService patrolAreaService;
 	@Autowired
+	private PatrolTeamService patrolTeamService;
+	@Autowired
 	private PatLineAreaAccSetService patLineAreaAccSetService;
+	@Autowired
+	private StaffService staffService;
+
+	@RequestMapping(value="/login")
+	@ResponseBody
+	public Map<String, Object> login(String jobNumber) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		Staff staff=null;
+		PatrolTeam patrolTeam=null;
+		staff=staffService.selectByJobNumber(jobNumber);
+		if(staff!=null)
+			patrolTeam=patrolTeamService.selectByStaffId(staff.getId());
+
+		if(staff==null||patrolTeam==null) {
+			jsonMap.put("status", "no");
+		}
+		else {
+			jsonMap.put("status", "ok");
+			jsonMap.put("staff", staff);
+			jsonMap.put("patrolTeam", patrolTeam);
+		}
+		
+		return jsonMap;
+	}
 
 	@RequestMapping(value="/getPLTotalInfo")
 	@ResponseBody

@@ -12,4 +12,7 @@
 	<select id="queryCBBListByPtId" resultType="com.cqZnxj.entity.Staff">
 		select id,name from staff where id in(select staffIds from patrol_team where id=#{ptId})
 	</select>
+	<select id="selectByJobNumber" resultType="com.cqZnxj.entity.Staff">
+		select * from staff where jobNumber=#{jobNumber}
+	</select>
 </mapper>

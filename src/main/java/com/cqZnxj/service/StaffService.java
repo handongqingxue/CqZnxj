@@ -10,4 +10,6 @@ public interface StaffService {
 
 	List<Staff> queryCBBListByPtId(Integer ptId);
 
+	Staff selectByJobNumber(String jobNumber);
+
 }

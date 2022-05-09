@@ -26,4 +26,10 @@ public class StaffServiceImpl implements StaffService {
 		// TODO Auto-generated method stub
 		return staffDao.queryCBBListByPtId(ptId);
 	}
+
+	@Override
+	public Staff selectByJobNumber(String jobNumber) {
+		// TODO Auto-generated method stub
+		return staffDao.selectByJobNumber(jobNumber);
+	}
 }

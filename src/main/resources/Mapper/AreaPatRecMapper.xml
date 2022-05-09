@@ -76,6 +76,6 @@
 		and current_date() and pp.ptId=#{ptId} group by apr.finish
 	</select>
 	<select id="selectBarChartData" resultType="com.cqZnxj.entity.AreaPatRec">
-		select pa.name paName,sum(finishAccCount)/sum(patAccCount)*100 finishPercent from area_pat_rec apr,patrol_area pa where apr.paId=pa.id and apr.createTime between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId} GROUP BY pa.name
+		select pa.name paName,finishAccCount/patAccCount*100 finishPercent from area_pat_rec apr,patrol_area pa where apr.paId=pa.id and date_format(apr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
 	</select>
 </mapper>

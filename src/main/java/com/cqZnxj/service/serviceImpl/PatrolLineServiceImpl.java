@@ -105,4 +105,10 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 		// TODO Auto-generated method stub
 		return patrolLineDao.selectById(id);
 	}
+
+	@Override
+	public List<String> selectXAxisData(Integer ptId) {
+		// TODO Auto-generated method stub
+		return patrolLineDao.selectXAxisData(ptId);
+	}
 }

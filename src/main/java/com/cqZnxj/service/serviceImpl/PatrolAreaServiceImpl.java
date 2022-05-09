@@ -159,4 +159,10 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 		}
 		return paList;
 	}
+
+	@Override
+	public List<String> selectXAxisData(Integer ptId) {
+		// TODO Auto-generated method stub
+		return patrolAreaDao.selectXAxisData(ptId);
+	}
 }

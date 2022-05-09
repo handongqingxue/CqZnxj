@@ -25,4 +25,6 @@ public interface PatrolLineMapper {
 
 	PatrolLine selectById(Integer id);
 
+	List<String> selectXAxisData(@Param("ptId") Integer ptId);
+
 }

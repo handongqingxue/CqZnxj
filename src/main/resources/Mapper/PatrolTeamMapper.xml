@@ -114,4 +114,7 @@
 	<select id="queryCBBListByDeptId" resultType="com.cqZnxj.entity.PatrolTeam">
 		select id,name from patrol_team where 1=1 and deptId=#{deptId} order by createTime
 	</select>
+	<select id="selectByStaffId" resultType="com.cqZnxj.entity.PatrolTeam">
+		select * from patrol_team where now() between CONCAT(date_format(now(),'%Y-%m-%d'),' ',startTime) and CONCAT(date_format(now(),'%Y-%m-%d'),' ',endTime) and CONCAT(',',staffIds,',') like CONCAT('%,',#{staffId},',%')
+	</select>
 </mapper>

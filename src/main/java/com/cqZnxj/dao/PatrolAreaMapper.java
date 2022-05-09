@@ -27,4 +27,6 @@ public interface PatrolAreaMapper {
 
 	List<PatrolArea> selectPhListByPlId(@Param("plId") Integer plId);
 
+	List<String> selectXAxisData(@Param("ptId") Integer ptId);
+
 }

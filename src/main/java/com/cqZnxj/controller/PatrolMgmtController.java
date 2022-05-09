@@ -593,26 +593,34 @@ public class PatrolMgmtController {
 		float lineReachPercent=linePatRecService.getReachPercent(ptId);
 		float areaReachPercent=areaPatRecService.getReachPercent(ptId);
 		
-		List<String> lpXAxisDataList=new ArrayList<String>();
+		List<String> lpXAxisDataList=patrolLineService.selectXAxisData(ptId);
 		List<Integer> lpSeriesDataList=new ArrayList<Integer>();
 		List<LinePatRec> lpbcdList=linePatRecService.selectBarChartData(ptId);
-		for (int i = 0; i < lpbcdList.size(); i++) {
-			LinePatRec lpbcdItem = lpbcdList.get(i);
-			String plName = lpbcdItem.getPlName();
-			Integer finishPercent = lpbcdItem.getFinishPercent();
-			lpXAxisDataList.add(plName);
-			lpSeriesDataList.add(finishPercent);
+		for (int i = 0; i < lpXAxisDataList.size(); i++) {
+			String xAxisName = lpXAxisDataList.get(i);
+			for (int j = 0; j < lpbcdList.size(); j++) {
+				LinePatRec lpbcdItem = lpbcdList.get(j);
+				String plName = lpbcdItem.getPlName();
+				if(xAxisName.equals(plName)) {
+					Integer finishPercent = lpbcdItem.getFinishPercent();
+					lpSeriesDataList.add(finishPercent);
+				}
+			}
 		}
 		
-		List<String> apXAxisDataList=new ArrayList<String>();
+		List<String> apXAxisDataList=patrolAreaService.selectXAxisData(ptId);
 		List<Integer> apSeriesDataList=new ArrayList<Integer>();
 		List<AreaPatRec> apbcdList=areaPatRecService.selectBarChartData(ptId);
-		for (int i = 0; i < apbcdList.size(); i++) {
-			AreaPatRec apbcdItem = apbcdList.get(i);
-			String paName = apbcdItem.getPaName();
-			Integer finishPercent = apbcdItem.getFinishPercent();
-			apXAxisDataList.add(paName);
-			apSeriesDataList.add(finishPercent);
+		for (int i = 0; i < apXAxisDataList.size(); i++) {
+			String xAxisName = apXAxisDataList.get(i);
+			for (int j = 0; j < apbcdList.size(); j++) {
+				AreaPatRec apbcdItem = apbcdList.get(j);
+				String paName = apbcdItem.getPaName();
+				if(xAxisName.equals(paName)) {
+					Integer finishPercent = apbcdItem.getFinishPercent();
+					apSeriesDataList.add(finishPercent);
+				}
+			}
 		}
 		
 		jsonMap.put("reachDayCount", reachDayCount);

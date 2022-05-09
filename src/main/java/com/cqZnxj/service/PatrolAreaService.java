@@ -23,4 +23,6 @@ public interface PatrolAreaService {
 
 	List<PatrolArea> selectPhListByPlId(Integer plId);
 
+	List<String> selectXAxisData(Integer ptId);
+
 }
