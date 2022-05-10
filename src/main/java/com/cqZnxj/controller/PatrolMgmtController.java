@@ -42,6 +42,8 @@ public class PatrolMgmtController {
 	@Autowired
 	private AreaPatRecService areaPatRecService;
 	@Autowired
+	private TrackingService trackingService;
+	@Autowired
 	private StaffService staffService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
@@ -503,6 +505,25 @@ public class PatrolMgmtController {
 			e.printStackTrace();
 		}
 		
+		return jsonMap;
+	}
+
+	@RequestMapping(value="/getGJCKCanvasData")
+	@ResponseBody
+	public Map<String, Object> getGJCKCanvasData(Integer areaId, Integer tagId, String timeStart, String timeEnd) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<Tracking> trackingList=trackingService.selectCanvasData(areaId,tagId,timeStart,timeEnd);
+		
+		if(trackingList.size()==0) {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "ÔÝÎÞ¹ì¼££¡");
+		}
+		else {
+			jsonMap.put("message", "ok");
+			jsonMap.put("trackingList", trackingList);
+		}
 		return jsonMap;
 	}
 	
