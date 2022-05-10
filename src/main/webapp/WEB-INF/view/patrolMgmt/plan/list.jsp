@@ -54,6 +54,24 @@
 .gjckCanvas_div{
 	width: 100%;
 }
+
+.load_gj_div{
+	width: 100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.5);
+	position: fixed;
+	display:none;
+	z-index: 9025;
+}
+.load_gj_div .text_div{
+	width: 100%;
+	color:#fff;
+	text-align:center;
+	font-size:25px;
+	top:45%;
+	position: absolute;
+}
+
 a {
   color: #333;
   text-decoration: none;
@@ -83,6 +101,7 @@ var widthScale;
 var heightScale;
 var lineWidth=5;
 var trackingList;
+var loadingGJ=false;
 
 $(function(){
 	initSearchLB();
@@ -178,20 +197,45 @@ function initTrackingSearchLB(){
 	});
 }
 
-function getGJCKCanvasData(){
+function checkArea(){
 	var areaId=areaCBB.combobox("getValue");
+	if(areaId==""||areaId==null){
+		alert("请选择区域");
+		return false;
+	}
+	else
+		return true;
+}
+
+function checkStaff(){
 	var tagId=staffCBB.combobox("getValue");
-	var timeStart=timeStDTB.datetimebox("getValue");
-	var timeEnd=timeEtDTB.datetimebox("getValue");
-	$.post(patrolMgmtPath + "getGJCKCanvasData",
-		{areaId:areaId,tagId:tagId,timeStart:timeStart,timeEnd:timeEnd},
-		function(data){
-			if(data.message=="ok"){
-				trackingList=data.trackingList;
-				initGJCKCanvas();
-			}
+	if(tagId==""||tagId==null){
+		alert("请选择人员");
+		return false;
+	}
+	else
+		return true;
+}
+
+function getGJCKCanvasData(){
+	if(checkArea()){
+		if(checkStaff()){
+			showLoadGJDiv(true);
+			var areaId=areaCBB.combobox("getValue");
+			var tagId=staffCBB.combobox("getValue");
+			var timeStart=timeStDTB.datetimebox("getValue");
+			var timeEnd=timeEtDTB.datetimebox("getValue");
+			$.post(patrolMgmtPath + "getGJCKCanvasData",
+				{areaId:areaId,tagId:tagId,timeStart:timeStart,timeEnd:timeEnd},
+				function(data){
+					if(data.message=="ok"){
+						trackingList=data.trackingList;
+						initGJCKCanvas();
+					}
+				}
+			,"json");
 		}
-	,"json");
+	}
 }
 
 function jiSuanScale(){
@@ -227,6 +271,8 @@ function initGJCKCanvas(){
 	gjckCanvas.height=gjckCanvasHeight;
 	gjckCanvasContext = gjckCanvas.getContext("2d");
 	gjckCanvasImg.onload=function(){
+		if(loadingGJ)
+			showLoadGJDiv(false);
 		gjckCanvasContext.drawImage(gjckCanvasImg, 0, 0, gjckCanvasWidth, gjckCanvasHeight);
 		if(trackingList!=undefined){//判断集合是否存在，第一次访问页面是不存在的，搜索之后才存在
 			for(var i=0;i<trackingList.length;i++){
@@ -248,16 +294,6 @@ function initGJCKCanvas(){
 }
 
 function setPointLocation(context,x1,y1,x2,y2){
-	/*
-	context.beginPath();
-	context.strokeStyle = 'red';//点填充
-	context.fillStyle='red';
-	context.lineWidth=arcR*1.5;
-	context.arc(x/widthScale,gjfxCanvasHeight-y/heightScale,arcR,0,2*Math.PI);
-	context.stroke();
-	*/
-
-	//console.log(x1+","+y1+","+x2+","+y2);
 	context.strokeStyle = 'red';//点填充
 	context.fillStyle='red';
 	context.lineWidth=lineWidth;
@@ -436,6 +472,17 @@ function openShowTrackingDialog(flag){
 	}
 }
 
+function showLoadGJDiv(flag){
+	if(flag){
+		loadingGJ=true;
+		$("#load_gj_div").css("display","block");
+	}
+	else{
+		loadingGJ=false;
+		$("#load_gj_div").css("display","none");
+	}
+}
+
 function setFitWidthInParent(parent,self){
 	var space=0;
 	switch (self) {
@@ -485,6 +532,10 @@ function setFitWidthInParent(parent,self){
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="load_gj_div" id="load_gj_div">
+	<div class="text_div">轨迹加载中</div>
 </div>
 </body>
 </html>

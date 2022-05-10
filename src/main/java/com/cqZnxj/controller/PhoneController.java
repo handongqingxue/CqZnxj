@@ -52,6 +52,8 @@ public class PhoneController {
 	@RequestMapping(value="/login")
 	@ResponseBody
 	public Map<String, Object> login(String jobNumber) {
+		
+		System.out.println("jobNumber==="+jobNumber);
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
