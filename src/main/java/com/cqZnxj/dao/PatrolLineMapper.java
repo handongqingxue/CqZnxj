@@ -21,7 +21,7 @@ public interface PatrolLineMapper {
 
 	List<PatrolLine> queryCBBList();
 
-	List<PatrolLine> getTotalInfo();
+	List<PatrolLine> getPhList(@Param("ppType") int ppType);
 
 	PatrolLine selectById(Integer id);
 

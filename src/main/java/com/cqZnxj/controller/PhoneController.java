@@ -81,7 +81,8 @@ public class PhoneController {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		List<PatrolLine> plList=patrolLineService.getTotalInfo();
+		List<PatrolLine> usualPlList=patrolLineService.getPhList(PatrolPlan.USUAL);
+		List<PatrolLine> tempPlList=patrolLineService.getPhList(PatrolPlan.TEMP);
 		List<LinePatRec> lprList=linePatRecService.getTodayList();
 		int todayFinishCount=0;
 		for (LinePatRec lpr : lprList) {
@@ -93,7 +94,8 @@ public class PhoneController {
 		int lprListSize=lprList.size();
 		if(lprListSize>0)
 			jrxjwcl=todayFinishCount/lprListSize*100;
-		jsonMap.put("plList", plList);
+		jsonMap.put("usualPlList", usualPlList);
+		jsonMap.put("tempPlList", tempPlList);
 		jsonMap.put("jrxjwcl", jrxjwcl);
 		
 		return jsonMap;

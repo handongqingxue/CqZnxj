@@ -1,6 +1,9 @@
 package com.cqZnxj.entity;
 
 public class PatrolPlan {
+	
+	public static final int USUAL=1;
+	public static final int TEMP=2;
 
 	private Integer id;
 	public Integer getId() {

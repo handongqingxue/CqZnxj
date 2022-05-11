@@ -99,7 +99,7 @@ var gjckCanvasWidth;//=gjckCanvasMaxWidth;
 var gjckCanvasHeight;//=gjckCanvasMaxHeight;
 var widthScale;
 var heightScale;
-var lineWidth=5;
+var lineWidth=2;
 var trackingList;
 var loadingGJ=false;
 
@@ -341,7 +341,7 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"name",title:"名称",width:150},
-			{field:"type",title:"类型",width:100,formatter:function(value,row){
+			{field:"type",title:"类型",width:60,formatter:function(value,row){
 				var str;
 				switch (value) {
 				case 1:

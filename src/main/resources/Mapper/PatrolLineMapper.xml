@@ -57,8 +57,15 @@
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.PatrolLine">
 		select id,name from patrol_line order by createTime
 	</select>
-	<select id="getTotalInfo" resultType="com.cqZnxj.entity.PatrolLine">
-		select pl.* from patrol_line pl,patrol_plan pp where date_format(now(),'%Y-%m-%d') BETWEEN pp.startDate and pp.endDate and pp.plIds in(pl.id) ORDER BY pl.createTime
+	<select id="getPhList" resultType="com.cqZnxj.entity.PatrolLine">
+		select pl.* from patrol_line pl,patrol_plan pp where pp.plIds in(pl.id)
+		<if test="ppType==1">
+			and date_format(now(),'%Y-%m-%d') BETWEEN pp.startDate and pp.endDate
+		</if>
+		<if test="ppType==2">
+			and date_format(now(),'%Y-%m-%d')=pp.startDate
+		</if>
+		 ORDER BY pl.createTime
 	</select>
 	<select id="selectById" resultType="com.cqZnxj.entity.PatrolLine">
 		select * from patrol_line where id=#{id}

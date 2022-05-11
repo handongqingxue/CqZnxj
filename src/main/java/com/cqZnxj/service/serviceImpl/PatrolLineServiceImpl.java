@@ -61,9 +61,9 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 	}
 
 	@Override
-	public List<PatrolLine> getTotalInfo() {
+	public List<PatrolLine> getPhList(int ppType) {
 		// TODO Auto-generated method stub
-		List<PatrolLine> plList = patrolLineDao.getTotalInfo();
+		List<PatrolLine> plList = patrolLineDao.getPhList(ppType);
 		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
 		List<AreaPatRec> aprList = areaPatRecDao.getTodayList();
 		for (int i = 0; i < plList.size(); i++) {

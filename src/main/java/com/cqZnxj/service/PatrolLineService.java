@@ -19,7 +19,7 @@ public interface PatrolLineService {
 
 	List<PatrolLine> queryCBBList();
 
-	List<PatrolLine> getTotalInfo();
+	List<PatrolLine> getPhList(int ppType);
 
 	PatrolLine selectById(Integer id);
 

@@ -108,7 +108,14 @@ function initTypeCBB(){
 	typeCBB=$("#new_div #type_cbb").combobox({
 		valueField:"value",
 		textField:"text",
-		data:data
+		data:data,
+		onSelect:function(){
+			var type=typeCBB.combobox("getValue");
+			if(type==1||type=="")
+				$("#new_div table tr").eq(3).css("visibility","visible");
+			else if(type==2)
+				$("#new_div table tr").eq(3).css("visibility","hidden");
+		}
 	});
 }
 
@@ -326,6 +333,9 @@ function checkStartDate(){
 }
 
 function checkEndDate(){
+	var type=typeCBB.combobox("getValue");
+	if(type==2)
+		return true;
 	var endDate=edDB.datebox("getValue");
 	if(endDate==null||endDate==""){
 		alert("请选择结束日期");
