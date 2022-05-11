@@ -35,11 +35,11 @@ public class AreaPatRecServiceImpl implements AreaPatRecService {
 	}
 
 	@Override
-	public float getReachPercent(Integer ptId) {
+	public float getReachPercent(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		int finishCount=0;
 		int sumCount=0;
-		List<Map<String,Object>> countMapList=areaPatRecDao.getIfFinishCount(ptId);
+		List<Map<String,Object>> countMapList=areaPatRecDao.getIfFinishCount(recently, ptId, staffId, startDate, endDate);
 		for (int i = 0; i < countMapList.size(); i++) {
 			Map<String, Object> countMap = countMapList.get(i);
 			Boolean finish = Boolean.valueOf(countMap.get("finish").toString());

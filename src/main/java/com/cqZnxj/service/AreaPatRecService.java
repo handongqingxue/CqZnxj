@@ -12,7 +12,7 @@ public interface AreaPatRecService {
 
 	int getIdByPaIdPtId(Integer paId, Integer ptId);
 
-	float getReachPercent(Integer ptId);
+	float getReachPercent(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
 	List<AreaPatRec> selectBarChartData(Integer ptId);
 

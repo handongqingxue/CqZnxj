@@ -20,6 +20,6 @@ public interface PatrolPlanMapper {
 
 	PatrolPlan selectById(String id);
 
-	String getSumDayCount(@Param("ptId") Integer ptId);
+	String getSumDayCount(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 }

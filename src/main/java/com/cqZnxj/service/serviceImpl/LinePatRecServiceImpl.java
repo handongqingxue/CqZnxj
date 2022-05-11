@@ -41,11 +41,11 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 	}
 
 	@Override
-	public float getReachPercent(Integer ptId) {
+	public float getReachPercent(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		int finishCount=0;
 		int sumCount=0;
-		List<Map<String,Object>> countMapList=linePatRecDao.getIfFinishCount(ptId);
+		List<Map<String,Object>> countMapList=linePatRecDao.getIfFinishCount(recently,ptId,staffId,startDate,endDate);
 		for (int i = 0; i < countMapList.size(); i++) {
 			Map<String, Object> countMap = countMapList.get(i);
 			Boolean finish = Boolean.valueOf(countMap.get("finish").toString());
@@ -65,8 +65,8 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 	}
 
 	@Override
-	public int getReachDayCount(Integer ptId) {
+	public int getReachDayCount(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		return linePatRecDao.getReachDayCount(ptId);
+		return linePatRecDao.getReachDayCount(recently, ptId, staffId, startDate, endDate);
 	}
 }

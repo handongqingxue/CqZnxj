@@ -23,6 +23,6 @@ public interface PatrolLineService {
 
 	PatrolLine selectById(Integer id);
 
-	List<String> selectXAxisData(Integer ptId);
+	List<String> selectXAxisData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
 }

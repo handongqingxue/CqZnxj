@@ -60,12 +60,47 @@
 		update line_pat_rec set endTime=now(),finish=1 where id=#{id}
 	</update>
 	<select id="getIfFinishCount" resultType="java.util.Map">
-		select count(*) count,finish from patrol_plan pp,line_pat_rec lpr where CONCAT(',',pp.plIds,',') like CONCAT('%,',lpr.plId,',%') and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and pp.ptId=#{ptId} group by finish
+		select count(*) count,finish from patrol_plan pp,patrol_team pt,line_pat_rec lpr where pp.ptId=pt.id and CONCAT(',',pp.plIds,',') like CONCAT('%,',lpr.plId,',%')
+		<if test="recently!=''&amp;recently!=null">
+			<if test="recently==1">
+			 	and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 0 DAY) and current_date()
+			</if>
+			<if test="recently==2">
+			 	and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 1 DAY) and current_date()
+			</if>
+			<if test="recently==3">
+			 	and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date()
+			</if>
+		</if>
+		<if test="ptId!=''&amp;ptId!=null">
+		   and pt.id=#{ptId}
+		</if>
+		<if test="staffId!=''&amp;staffId!=null">
+		   and CONCAT(',',pt.staffIds,',') like CONCAT('%,',#{staffId},',%')
+		</if>
+		 group by finish
 	</select>
 	<select id="selectBarChartData" resultType="com.cqZnxj.entity.LinePatRec">
 		select pl.name plName,finishAreaCount/patAreaCount*100 finishPercent from line_pat_rec lpr,patrol_line pl where lpr.plId=pl.id and date_format(lpr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
 	</select>
 	<select id="getReachDayCount" resultType="java.lang.Integer">
-		select count(*) from line_pat_rec where date_format(now(),'%Y-%m-%d')=date_format(createTime,'%Y-%m-%d') and finish=1 and ptId=#{ptId}
+		select count(*) from line_pat_rec lpr,patrol_team pt where lpr.ptId=pt.id and lpr.finish=1
+		<if test="recently!=''&amp;recently!=null">
+			<if test="recently==1">
+				and date_format(lpr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 0 DAY) and current_date()
+			</if>
+			<if test="recently==2">
+				and date_format(lpr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 1 DAY) and current_date()
+			</if>
+			<if test="recently==3">
+				and date_format(lpr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date()
+			</if>
+		</if>
+		<if test="ptId!=''&amp;ptId!=null">
+			 and pt.id=#{ptId}
+		</if>
+		<if test="staffId!=''&amp;staffId!=null">
+			 and CONCAT(',',pt.staffIds,',') like CONCAT('%,',#{staffId},',%')
+		</if>
 	</select>
 </mapper>

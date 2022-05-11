@@ -71,6 +71,23 @@
 		select * from patrol_line where id=#{id}
 	</select>
 	<select id="selectXAxisData" resultType="java.lang.String">
-		select pl.name from patrol_plan pp,patrol_line pl where CONCAT(',',pp.plIds,',') like CONCAT('%,',pl.id,',%') and startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 7 DAY) and endDate&lt;=current_date() and pp.ptId=#{ptId}
+		select DISTINCT pl.name from patrol_plan pp,patrol_team pt,patrol_line pl where pp.ptId=pt.id and CONCAT(',',pp.plIds,',') like CONCAT('%,',pl.id,',%')
+		<if test="recently!=''&amp;recently!=null">
+			<if test="recently==1">
+				 and pp.startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 0 DAY) and pp.endDate&lt;=current_date()
+			</if>
+			<if test="recently==2">
+				 and pp.startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 1 DAY) and pp.endDate&lt;=current_date()
+			</if>
+			<if test="recently==3">
+				 and pp.startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 7 DAY) and pp.endDate&lt;=current_date()
+			</if>
+		</if>
+		<if test="ptId!=''&amp;ptId!=null">
+			 and pt.id=#{ptId}
+		</if>
+		<if test="staffId!=''&amp;staffId!=null">
+		   and CONCAT(',',pt.staffIds,',') like CONCAT('%,',#{staffId},',%')
+		</if>
 	</select>
 </mapper>

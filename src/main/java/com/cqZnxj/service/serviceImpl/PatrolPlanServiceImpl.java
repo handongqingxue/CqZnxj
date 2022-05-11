@@ -130,9 +130,9 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 	}
 
 	@Override
-	public int getSumDayCount(Integer ptId) {
+	public int getSumDayCount(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		String countStr=patrolPlanDao.getSumDayCount(ptId);
+		String countStr=patrolPlanDao.getSumDayCount(recently, ptId, staffId, startDate, endDate);
 		return StringUtils.isEmpty(countStr)?0:Integer.valueOf(countStr);
 	}
 }

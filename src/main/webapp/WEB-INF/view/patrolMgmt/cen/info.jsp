@@ -22,6 +22,7 @@
 .cen_div .toolbar .row_div{
 	height:40px;
 }
+.cen_div .toolbar .row_div .recently_span,
 .cen_div .toolbar .row_div .firstDept_span,
 .cen_div .toolbar .row_div .secondDept_span,
 .cen_div .toolbar .row_div .date_span,
@@ -124,6 +125,7 @@ var nav='${param.nav}';
 var zhAlignWithLabel=false;
 var zhxzzh=10;//综合X轴字号
 $(function(){
+	initRecentlyCBB();
 	initFirstDeptCBB();
 	initSecondDeptCBB();
 	initPatrolTeamCBB();
@@ -170,6 +172,20 @@ function resizeDiv(){
 	
 	var lpbChartDiv=$("#lpb_chart_div");
 	lpbChartDiv.css("width",dataDivWidth-10+"px");
+}
+
+function initRecentlyCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择"});
+	data.push({"value":1,"text":"今日"});
+	data.push({"value":2,"text":"昨日"});
+	data.push({"value":3,"text":"最近7日"});
+	recentlyCBB=$("#cen_div #recently_cbb").combobox({
+		width:100,
+		valueField:"value",
+		textField:"text",
+		data:data
+	});
 }
 
 function initFirstDeptCBB(){
@@ -231,7 +247,7 @@ function initPatrolTeamCBB(){
 		textField:"text",
 		data:data,
 		onSelect:function(){
-			loadPssCBBData();
+			loadPatrolStaffCBBData();
 		}
 	});
 }
@@ -247,6 +263,7 @@ function loadPatrolTeamCBBData(){
 			for(var i=0;i<rows.length;i++){
 				data.push({"value":rows[i].id,"text":rows[i].name});
 			}
+			patrolTeamCBB.combobox("loadData",data);
 		}
 	,"json");
 }
@@ -293,16 +310,7 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var plName=$("#toolbar #plName").val();
-			var paName=$("#toolbar #paName").val();
-			var pdName=$("#toolbar #pdName").val();
-			var pdaNo=$("#toolbar #pdaNo").val();
-			var pdpName=$("#toolbar #pdpName").val();
-			var pdpUnit=$("#toolbar #pdpUnit").val();
-			var startTime=startTimeDTB.datetimebox("getValue");
-			var endTime=endTimeDTB.datetimebox("getValue");
-			tab1.datagrid("load",{plName:plName,paName:paName,pdName:pdName,pdaNo:pdaNo,
-				pdpName:pdpName,pdpUnit:pdpUnit,startTime:startTime,endTime:endTime});
+			getCenAnaData();
 		}
 	});
 }
@@ -312,17 +320,21 @@ function setComboLocation(num){
 	var marginLeft=0;
 	switch (num) {
 	case 0:
-	case 1:
-		marginTop=10;
-		marginLeft=100;
-		break;
-	case 2:
-	case 3:
-	case 4:
 		marginTop=10;
 		marginLeft=70;
 		break;
+	case 1:
+	case 2:
+		marginTop=10;
+		marginLeft=100;
+		break;
+	case 3:
+	case 4:
 	case 5:
+		marginTop=10;
+		marginLeft=70;
+		break;
+	case 6:
 		marginTop=10;
 		marginLeft=35;
 		break;
@@ -332,8 +344,13 @@ function setComboLocation(num){
 }
 
 function getCenAnaData(){
+	var recently=recentlyCBB.combobox("getValue");
+	var ptId=patrolTeamCBB.combobox("getValue");
+	var staffId=patrolStaffCBB.combobox("getValue");
+	var startDate=startDateDB.datebox("getValue");
+	var endDate=endDateDB.datebox("getValue");
 	$.post(patrolMgmtPath+"getCenAnaData",
-		{ptId:2},
+		{recently:recently,ptId:ptId,staffId:staffId,startDate:startDate,endDate:endDate},
 		function(data){
 			var reachDayCount=data.reachDayCount;
 			var sumDayCount=data.sumDayCount;
@@ -516,6 +533,8 @@ function initAPBChartDiv(xAxisDataList,seriesDataList){
 <div class="cen_div" id="cen_div">
 	<div class="toolbar" id="toolbar">
 		<div class="row_div">
+			<span class="recently_span">最近：</span>
+			<input id="recently_cbb"/>
 			<span class="firstDept_span">一级部门：</span>
 			<input id="firstDept_cbb"/>
 			<span class="secondDept_span">二级部门：</span>

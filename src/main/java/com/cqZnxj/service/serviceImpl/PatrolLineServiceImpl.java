@@ -107,8 +107,8 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 	}
 
 	@Override
-	public List<String> selectXAxisData(Integer ptId) {
+	public List<String> selectXAxisData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		return patrolLineDao.selectXAxisData(ptId);
+		return patrolLineDao.selectXAxisData(recently, ptId, staffId, startDate, endDate);
 	}
 }

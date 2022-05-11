@@ -114,6 +114,23 @@
 		select pp.*,pt.name ptName from patrol_plan pp,patrol_team pt where pp.ptId=pt.id and pp.id=#{id}
 	</select>
 	<select id="getSumDayCount" resultType="java.lang.String">
-		select sum(timestampdiff(day,startDate,endDate)+1) from patrol_plan where startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
+		select sum(timestampdiff(day,pp.startDate,pp.endDate)+1) from patrol_plan pp,patrol_team pt where pp.ptId=pt.id
+		<if test="recently!=''&amp;recently!=null">
+			<if test="recently==1">
+				and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 0 DAY) and current_date()
+			</if>
+			<if test="recently==2">
+				and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 1 DAY) and current_date()
+			</if>
+			<if test="recently==3">
+				and pp.startDate between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date()
+			</if>
+		</if>
+		<if test="ptId!=''&amp;ptId!=null">
+			and pt.id=#{ptId}
+		</if>
+		<if test="staffId!=''&amp;staffId!=null">
+			 and CONCAT(',',pt.staffIds,',') like CONCAT('%,',#{staffId},',%')
+		</if>
 	</select>
 </mapper>

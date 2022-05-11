@@ -14,10 +14,10 @@ public interface LinePatRecService {
 
 	List<LinePatRec> getTodayList();
 
-	float getReachPercent(Integer ptId);
+	float getReachPercent(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
 	List<LinePatRec> selectBarChartData(Integer ptId);
 
-	int getReachDayCount(Integer ptId);
+	int getReachDayCount(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
 }

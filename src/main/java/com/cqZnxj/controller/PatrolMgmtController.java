@@ -605,16 +605,16 @@ public class PatrolMgmtController {
 
 	@RequestMapping(value="/getCenAnaData")
 	@ResponseBody
-	public Map<String, Object> getCenAnaData(Integer ptId) {
+	public Map<String, Object> getCenAnaData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 
-		int reachDayCount=linePatRecService.getReachDayCount(ptId);
-		int sumDayCount=patrolPlanService.getSumDayCount(ptId);
-		float lineReachPercent=linePatRecService.getReachPercent(ptId);
-		float areaReachPercent=areaPatRecService.getReachPercent(ptId);
+		int reachDayCount=linePatRecService.getReachDayCount(recently,ptId,staffId,startDate,endDate);
+		int sumDayCount=patrolPlanService.getSumDayCount(recently,ptId,staffId,startDate,endDate);
+		float lineReachPercent=linePatRecService.getReachPercent(recently,ptId,staffId,startDate,endDate);
+		float areaReachPercent=areaPatRecService.getReachPercent(recently,ptId,staffId,startDate,endDate);
 		
-		List<String> lpXAxisDataList=patrolLineService.selectXAxisData(ptId);
+		List<String> lpXAxisDataList=patrolLineService.selectXAxisData(recently,ptId,staffId,startDate,endDate);
 		List<Integer> lpSeriesDataList=new ArrayList<Integer>();
 		List<LinePatRec> lpbcdList=linePatRecService.selectBarChartData(ptId);
 		for (int i = 0; i < lpXAxisDataList.size(); i++) {

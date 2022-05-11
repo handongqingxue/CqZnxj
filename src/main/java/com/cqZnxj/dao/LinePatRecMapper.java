@@ -23,10 +23,10 @@ public interface LinePatRecMapper {
 
 	int updateFinishById(@Param("id") int id);
 
-	List<Map<String, Object>> getIfFinishCount(@Param("ptId") Integer ptId);
+	List<Map<String, Object>> getIfFinishCount(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	List<LinePatRec> selectBarChartData(@Param("ptId") Integer ptId);
 
-	int getReachDayCount(@Param("ptId") Integer ptId);
+	int getReachDayCount(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 }

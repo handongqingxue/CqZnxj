@@ -25,6 +25,6 @@ public interface PatrolLineMapper {
 
 	PatrolLine selectById(Integer id);
 
-	List<String> selectXAxisData(@Param("ptId") Integer ptId);
+	List<String> selectXAxisData(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 }

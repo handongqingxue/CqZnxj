@@ -96,6 +96,6 @@
 		select pa.* from patrol_area pa,pat_line_area_acc_set plaas where pa.id=plaas.paId and plaas.plId=#{plId}
 	</select>
 	<select id="selectXAxisData" resultType="java.lang.String">
-		select pa.name paName from patrol_plan pp,pat_line_area_acc_set plaas,patrol_area pa where CONCAT(',',pp.plIds,',') like CONCAT('%,',plaas.plId,',%') and pp.startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 7 DAY) and pp.endDate&lt;=current_date() and plaas.paId=pa.id and pp.ptId=#{ptId}
+		select DISTINCT pa.name paName from patrol_plan pp,pat_line_area_acc_set plaas,patrol_area pa where CONCAT(',',pp.plIds,',') like CONCAT('%,',plaas.plId,',%') and pp.startDate&gt;=DATE_SUB(CURDATE(), INTERVAL 7 DAY) and pp.endDate&lt;=current_date() and plaas.paId=pa.id and pp.ptId=#{ptId}
 	</select>
 </mapper>
