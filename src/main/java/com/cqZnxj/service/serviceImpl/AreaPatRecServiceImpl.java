@@ -53,8 +53,8 @@ public class AreaPatRecServiceImpl implements AreaPatRecService {
 	}
 
 	@Override
-	public List<AreaPatRec> selectBarChartData(Integer ptId) {
+	public List<AreaPatRec> selectBarChartData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		return areaPatRecDao.selectBarChartData(ptId);
+		return areaPatRecDao.selectBarChartData(recently, ptId, staffId, startDate, endDate);
 	}
 }

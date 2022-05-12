@@ -14,6 +14,6 @@ public interface AreaPatRecService {
 
 	float getReachPercent(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
-	List<AreaPatRec> selectBarChartData(Integer ptId);
+	List<AreaPatRec> selectBarChartData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
 }

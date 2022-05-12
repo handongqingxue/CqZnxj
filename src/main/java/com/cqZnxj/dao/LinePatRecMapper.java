@@ -25,7 +25,7 @@ public interface LinePatRecMapper {
 
 	List<Map<String, Object>> getIfFinishCount(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
-	List<LinePatRec> selectBarChartData(@Param("ptId") Integer ptId);
+	List<LinePatRec> selectBarChartData(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	int getReachDayCount(@Param("recently") Integer recently, @Param("ptId") Integer ptId, @Param("staffId") Integer staffId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 

@@ -59,9 +59,9 @@ public class LinePatRecServiceImpl implements LinePatRecService {
 	}
 
 	@Override
-	public List<LinePatRec> selectBarChartData(Integer ptId) {
+	public List<LinePatRec> selectBarChartData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		return linePatRecDao.selectBarChartData(ptId);
+		return linePatRecDao.selectBarChartData(recently, ptId, staffId, startDate, endDate);
 	}
 
 	@Override

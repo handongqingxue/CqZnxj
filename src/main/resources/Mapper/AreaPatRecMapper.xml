@@ -93,6 +93,23 @@
 		 group by apr.finish
 	</select>
 	<select id="selectBarChartData" resultType="com.cqZnxj.entity.AreaPatRec">
-		select pa.name paName,finishAccCount/patAccCount*100 finishPercent from area_pat_rec apr,patrol_area pa where apr.paId=pa.id and date_format(apr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date() and ptId=#{ptId}
+		select pa.name paName,finishAccCount/patAccCount*100 finishPercent from area_pat_rec apr,patrol_team pt,patrol_area pa where apr.ptId=pt.id and apr.paId=pa.id
+		<if test="recently!=''&amp;recently!=null">
+			<if test="recently==1">
+			 	and date_format(apr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 0 DAY) and current_date()
+			</if>
+			<if test="recently==2">
+			 	and date_format(apr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 1 DAY) and current_date()
+			</if>
+			<if test="recently==3">
+			 	and date_format(apr.createTime,'%Y-%m-%d') between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and current_date()
+			</if>
+		</if>
+		<if test="ptId!=''&amp;ptId!=null">
+		   and pt.id=#{ptId}
+		</if>
+		<if test="staffId!=''&amp;staffId!=null">
+		   and CONCAT(',',pt.staffIds,',') like CONCAT('%,',#{staffId},',%')
+		</if>
 	</select>
 </mapper>

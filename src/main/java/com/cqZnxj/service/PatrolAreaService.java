@@ -23,6 +23,6 @@ public interface PatrolAreaService {
 
 	List<PatrolArea> selectPhListByPlId(Integer plId);
 
-	List<String> selectXAxisData(Integer ptId);
+	List<String> selectXAxisData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate);
 
 }

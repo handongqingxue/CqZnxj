@@ -161,8 +161,8 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	}
 
 	@Override
-	public List<String> selectXAxisData(Integer ptId) {
+	public List<String> selectXAxisData(Integer recently, Integer ptId, Integer staffId, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		return patrolAreaDao.selectXAxisData(ptId);
+		return patrolAreaDao.selectXAxisData(recently, ptId, staffId, startDate, endDate);
 	}
 }

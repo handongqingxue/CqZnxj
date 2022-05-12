@@ -616,7 +616,7 @@ public class PatrolMgmtController {
 		
 		List<String> lpXAxisDataList=patrolLineService.selectXAxisData(recently,ptId,staffId,startDate,endDate);
 		List<Integer> lpSeriesDataList=new ArrayList<Integer>();
-		List<LinePatRec> lpbcdList=linePatRecService.selectBarChartData(ptId);
+		List<LinePatRec> lpbcdList=linePatRecService.selectBarChartData(recently,ptId,staffId,startDate,endDate);
 		for (int i = 0; i < lpXAxisDataList.size(); i++) {
 			String xAxisName = lpXAxisDataList.get(i);
 			for (int j = 0; j < lpbcdList.size(); j++) {
@@ -629,9 +629,9 @@ public class PatrolMgmtController {
 			}
 		}
 		
-		List<String> apXAxisDataList=patrolAreaService.selectXAxisData(ptId);
+		List<String> apXAxisDataList=patrolAreaService.selectXAxisData(recently,ptId,staffId,startDate,endDate);
 		List<Integer> apSeriesDataList=new ArrayList<Integer>();
-		List<AreaPatRec> apbcdList=areaPatRecService.selectBarChartData(ptId);
+		List<AreaPatRec> apbcdList=areaPatRecService.selectBarChartData(recently,ptId,staffId,startDate,endDate);
 		for (int i = 0; i < apXAxisDataList.size(); i++) {
 			String xAxisName = apXAxisDataList.get(i);
 			for (int j = 0; j < apbcdList.size(); j++) {
