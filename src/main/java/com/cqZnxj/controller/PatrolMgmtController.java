@@ -47,12 +47,22 @@ public class PatrolMgmtController {
 	private StaffService staffService;
 	public static final String MODULE_NAME="patrolMgmt";
 	
+	/**
+	 * 跳转到巡检区域添加页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/area/new")
 	public String goAreaNew(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/area/new";
 	}
 	
+	/**
+	 * 跳转到巡检区域编辑页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/area/edit")
 	public String goAreaEdit(HttpServletRequest request) {
 
@@ -63,12 +73,22 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/area/edit";
 	}
 
+	/**
+	 * 跳转到巡检区域列表页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/area/list")
 	public String goAreaList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/area/list";
 	}
 	
+	/**
+	 * 跳转到巡检区域详情页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/area/detail")
 	public String goAreaDetail(HttpServletRequest request) {
 
@@ -79,12 +99,22 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/area/detail";
 	}
 
+	/**
+	 * 跳转到巡检记录列表页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/rec/list")
 	public String goRecList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/rec/list";
 	}
-	
+
+	/**
+	 * 跳转到巡检记录详情页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/rec/detail")
 	public String goRecDetail(HttpServletRequest request) {
 
@@ -95,6 +125,11 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/rec/detail";
 	}
 
+	/**
+	 * 跳转到巡更统计分析页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/cen/info")
 	public String goCenInfo(HttpServletRequest request) {
 		
@@ -102,18 +137,33 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/cen/info";
 	}
 
+	/**
+	 * 跳转到巡检路线列表页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/line/list")
 	public String goLineList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/line/list";
 	}
-	
+
+	/**
+	 * 跳转到巡检计划添加页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/plan/new")
 	public String goPlanNew(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/plan/new";
 	}
-	
+
+	/**
+	 * 跳转到巡检计划编辑页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/plan/edit")
 	public String goPlanEdit(HttpServletRequest request) {
 
@@ -124,12 +174,22 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/plan/edit";
 	}
 
+	/**
+	 * 跳转到巡检计划列表页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/plan/list")
 	public String goPlanList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/plan/list";
 	}
-	
+
+	/**
+	 * 跳转到巡检计划详情页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/plan/detail")
 	public String goPlanDetail(HttpServletRequest request) {
 
@@ -139,13 +199,23 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/plan/detail";
 	}
-	
+
+	/**
+	 * 跳转到巡检班组添加页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/team/new")
 	public String goTeamNew(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/team/new";
 	}
-	
+
+	/**
+	 * 跳转到巡检班组编辑页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/team/edit")
 	public String goTeamEdit(HttpServletRequest request) {
 
@@ -156,12 +226,22 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/team/edit";
 	}
 
+	/**
+	 * 跳转到巡检班组列表页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/team/list")
 	public String goTeamList(HttpServletRequest request) {
 		
 		return MODULE_NAME+"/team/list";
 	}
-	
+
+	/**
+	 * 跳转到巡检班组详情页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/team/detail")
 	public String goTeamDetail(HttpServletRequest request) {
 
@@ -172,6 +252,11 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/team/detail";
 	}
 	
+	/**
+	 * 添加巡检路线
+	 * @param pl
+	 * @return
+	 */
 	@RequestMapping(value="/newLine")
 	@ResponseBody
 	public Map<String, Object> newLine(PatrolLine pl) {
@@ -190,6 +275,11 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 
+	/**
+	 * 删除巡检路线
+	 * @param ids
+	 * @return
+	 */
 	@RequestMapping(value="/deleteLine",produces="plain/text; charset=UTF-8")
 	@ResponseBody
 	public String deleteLine(String ids) {
@@ -210,6 +300,11 @@ public class PatrolMgmtController {
 		return json;
 	}
 	
+	/**
+	 * 编辑巡检路线
+	 * @param pl
+	 * @return
+	 */
 	@RequestMapping(value="/editLine")
 	@ResponseBody
 	public Map<String, Object> editLine(PatrolLine pl) {
@@ -228,6 +323,11 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 	
+	/**
+	 * 添加巡检路线、区域、设备台账关系
+	 * @param plaas
+	 * @return
+	 */
 	@RequestMapping(value="/newPatLineAreaAccSet")
 	@ResponseBody
 	public Map<String, Object> newPatLineAreaAccSet(PatLineAreaAccSet plaas) {
@@ -246,6 +346,11 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 
+	/**
+	 * 删除巡检路线、区域、设备台账关系
+	 * @param ids
+	 * @return
+	 */
 	@RequestMapping(value="/deletePatLineAreaAccSet",produces="plain/text; charset=UTF-8")
 	@ResponseBody
 	public String deletePatLineAreaAccSet(String ids) {
@@ -266,6 +371,11 @@ public class PatrolMgmtController {
 		return json;
 	}
 	
+	/**
+	 * 编辑巡检路线、区域、设备台账关系
+	 * @param plaas
+	 * @return
+	 */
 	@RequestMapping(value="/editPatLineAreaAccSet")
 	@ResponseBody
 	public Map<String, Object> editPatLineAreaAccSet(PatLineAreaAccSet plaas) {
@@ -284,6 +394,16 @@ public class PatrolMgmtController {
 		return jsonMap;
 	}
 	
+	/**
+	 * 查询巡检路线、区域、设备台账关系列表
+	 * @param plName
+	 * @param paName
+	 * @param page
+	 * @param rows
+	 * @param sort
+	 * @param order
+	 * @return
+	 */
 	@RequestMapping(value="/queryPatLineAreaAccSetList")
 	@ResponseBody
 	public Map<String, Object> queryPatLineAreaAccSetList(String plName,String paName,

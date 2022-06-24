@@ -30,6 +30,14 @@ public class MainController {
 		
 		return "login";
 	}
+	
+	//https://blog.csdn.net/qq_19642249/article/details/53845315?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-53845315-blog-114814468.pc_relevant_multi_platform_whitelistv1&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-53845315-blog-114814468.pc_relevant_multi_platform_whitelistv1&utm_relevant_index=1
+	//https://blog.csdn.net/weixin_35728532/article/details/116159700
+	@RequestMapping(value="/goBaiDuMapTest")
+	public String goBaiDuMapTest() {
+		
+		return "baiDuMapTest";
+	}
 
 	@RequestMapping(value="/queryDeptTreeList")
 	@ResponseBody
