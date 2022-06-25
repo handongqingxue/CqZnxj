@@ -33,7 +33,7 @@
 }
 .show_tracking_div{
 	width: 1500px;
-	height: 610px;
+	height: 810px;
 	margin: 100px auto 0;
 	background-color: #fff;
 	border-radius:5px;
@@ -428,7 +428,7 @@ function initShowTrackingDialog(){
 	$("#show_tracking_dialog_div").dialog({
 		title:"轨迹查看",
 		width:setFitWidthInParent("#show_tracking_div","show_tracking_dialog_div"),
-		height:550,
+		height:750,
 		top:5,
 		left:dialogLeft,
 		buttons:[
