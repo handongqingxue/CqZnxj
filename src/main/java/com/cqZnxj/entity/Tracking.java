@@ -21,6 +21,18 @@ public class Tracking {
 	public void setPdaId(Integer pdaId) {
 		this.pdaId = pdaId;
 	}
+	public String getPdaNo() {
+		return pdaNo;
+	}
+	public void setPdaNo(String pdaNo) {
+		this.pdaNo = pdaNo;
+	}
+	public String getPdName() {
+		return pdName;
+	}
+	public void setPdName(String pdName) {
+		this.pdName = pdName;
+	}
 	public Float getLongitude() {
 		return longitude;
 	}
@@ -83,6 +95,8 @@ public class Tracking {
 	}
 	private String tagId;
 	private Integer pdaId;
+	private String pdaNo;
+	private String pdName;
 	private Float longitude;
 	private Float latitude;
 	private String x;

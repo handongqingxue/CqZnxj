@@ -100,6 +100,12 @@ var gjckCanvasHeight;//=gjckCanvasMaxHeight;
 var widthScale;
 var heightScale;
 var lineWidth=2;
+var rectWidth=80;
+var rectHeight=20;
+var arSpace=3;
+var atSpace=8;
+var fontSize=10;
+var fontMarginLeft=5;
 var trackingList;
 var loadingGJ=false;
 
@@ -279,7 +285,7 @@ function initGJCKCanvas(){
 				if(i>=1){
 					var tr1=trackingList[i-1];
 					var tr2=trackingList[i];
-					setPointLocation(gjckCanvasContext,tr1.x,tr1.y,tr2.x,tr2.y);
+					setPointLocation(gjckCanvasContext,tr1.x,tr1.y,tr1.pdaNo,tr1.pdName,tr2.x,tr2.y,tr2.pdaNo,tr2.pdName,i);
 					//if(i==trackingList.length-1)
 						//setEntityLocation(gjckCanvasContext,tr2.x,tr2.y,staffName,tr2.floor);
 				}
@@ -293,13 +299,32 @@ function initGJCKCanvas(){
 	}
 }
 
-function setPointLocation(context,x1,y1,x2,y2){
+function setPointLocation(context,x1,y1,pdaNo1,pdName1,x2,y2,pdaNo2,pdName2,index){
 	context.strokeStyle = 'red';//点填充
 	context.fillStyle='red';
 	context.lineWidth=lineWidth;
 	context.beginPath();
 	context.moveTo(x1/widthScale, gjckCanvasHeight-y1/heightScale);//起始位置
 	context.lineTo(x2/widthScale, gjckCanvasHeight-y2/heightScale);//停止位置
+	
+	context.lineWidth = "1";
+	context.fillStyle = "blue";
+	context.fillRect(x1/widthScale-rectWidth/2,gjckCanvasHeight-y1/heightScale-rectHeight-arSpace,rectWidth,rectHeight);
+
+	context.font=fontSize+"px bold 黑体";
+	context.fillStyle = "#fff";
+	context.fillText(pdName1+pdaNo1,x1/widthScale-rectWidth/2+fontMarginLeft,gjckCanvasHeight-y1/heightScale-atSpace);
+	
+	if(index==trackingList.length-1){
+		context.lineWidth = "1";
+		context.fillStyle = "blue";
+		context.fillRect(x2/widthScale-rectWidth/2,gjckCanvasHeight-y2/heightScale-rectHeight-arSpace,rectWidth,rectHeight);
+
+		context.font=fontSize+"px bold 黑体";
+		context.fillStyle = "#fff";
+		context.fillText(pdName2+pdaNo2,x2/widthScale-rectWidth/2+fontMarginLeft,gjckCanvasHeight-y2/heightScale-atSpace);
+	}
+	
 	context.stroke();
 }
 

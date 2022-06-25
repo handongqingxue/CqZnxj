@@ -86,6 +86,6 @@
 		</trim>
 	</insert>
 	<select id="selectCanvasData" resultType="com.cqZnxj.entity.Tracking">
-		select * from tracking where areaId=#{areaId} and tagId=#{tagId} order by timeYMDHms
+		select t.*,pda.`no` pdaNo,pd.`name` pdName from tracking t,patrol_device_account pda,patrol_device pd where t.pdaId=pda.id and pda.pdId=pd.id and t.areaId=#{areaId} and t.tagId=#{tagId} order by t.timeYMDHms
 	</select>
 </mapper>
