@@ -10,4 +10,6 @@ public interface TrackingMapper {
 
 	List<Tracking> selectCanvasData(@Param("areaId") Integer areaId, @Param("tagId") Integer tagId, @Param("timeStart") String timeStart, @Param("timeEnd") String timeEnd);
 
+	int add(Tracking tra);
+
 }

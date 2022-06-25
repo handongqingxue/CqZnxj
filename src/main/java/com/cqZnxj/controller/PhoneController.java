@@ -47,6 +47,8 @@ public class PhoneController {
 	@Autowired
 	private PatLineAreaAccSetService patLineAreaAccSetService;
 	@Autowired
+	private TrackingService trackingService;
+	@Autowired
 	private StaffService staffService;
 
 	@RequestMapping(value="/login")
@@ -163,7 +165,7 @@ public class PhoneController {
 	
 	@RequestMapping(value="/saveDevParPatRec")
 	@ResponseBody
-	public Map<String, Object> saveDevParPatRec(@RequestParam(value="photo_file",required=false) MultipartFile photo_file,DevParPatRec dppr) {
+	public Map<String, Object> saveDevParPatRec(@RequestParam(value="photo_file",required=false) MultipartFile photo_file,DevParPatRec dppr,Tracking tra) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
@@ -233,6 +235,8 @@ public class PhoneController {
 		}
 			
 		if(count>0) {
+			trackingService.add(tra);
+			
 			jsonMap.put("message", "ok");
 			jsonMap.put("info", "保存设备参数巡检记录成功！");
 		}

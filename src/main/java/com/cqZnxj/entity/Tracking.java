@@ -15,6 +15,24 @@ public class Tracking {
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
+	public Integer getPdaId() {
+		return pdaId;
+	}
+	public void setPdaId(Integer pdaId) {
+		this.pdaId = pdaId;
+	}
+	public Float getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
+	}
+	public Float getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
 	public String getX() {
 		return x;
 	}
@@ -64,6 +82,9 @@ public class Tracking {
 		this.timeYMDHms = timeYMDHms;
 	}
 	private String tagId;
+	private Integer pdaId;
+	private Float longitude;
+	private Float latitude;
 	private String x;
 	private String y;
 	private String z;

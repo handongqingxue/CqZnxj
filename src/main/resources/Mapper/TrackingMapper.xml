@@ -3,7 +3,89 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqZnxj.dao.TrackingMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.Tracking">
+		insert into tracking
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="areaId!=null">
+				areaId,
+			</if>
+			<if test="tagId!=null">
+				tagId,
+			</if>
+			<if test="pdaId!=null">
+				pdaId,
+			</if>
+			<if test="longitude!=null">
+				longitude,
+			</if>
+			<if test="latitude!=null">
+				latitude,
+			</if>
+			<if test="x!=null">
+				x,
+			</if>
+			<if test="y!=null">
+				y,
+			</if>
+			<if test="z!=null">
+				z,
+			</if>
+			<if test="floor!=null">
+				floor,
+			</if>
+			<if test="speed!=null">
+				speed,
+			</if>
+			<if test="silent!=null">
+				silent,
+			</if>
+			<if test="timeLong!=null">
+				timeLong,
+			</if>
+				timeYMDHms,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="areaId!=null">
+				#{areaId},
+			</if>
+			<if test="tagId!=null">
+				#{tagId},
+			</if>
+			<if test="pdaId!=null">
+				#{pdaId},
+			</if>
+			<if test="longitude!=null">
+				#{longitude},
+			</if>
+			<if test="latitude!=null">
+				#{latitude},
+			</if>
+			<if test="x!=null">
+				#{x},
+			</if>
+			<if test="y!=null">
+				#{y},
+			</if>
+			<if test="z!=null">
+				#{z},
+			</if>
+			<if test="floor!=null">
+				#{floor},
+			</if>
+			<if test="speed!=null">
+				#{speed},
+			</if>
+			<if test="silent!=null">
+				#{silent},
+			</if>
+			<if test="timeLong!=null">
+				#{timeLong},
+			</if>
+				now(),
+		</trim>
+	</insert>
 	<select id="selectCanvasData" resultType="com.cqZnxj.entity.Tracking">
-		select * from tracking where areaId=#{areaId} and tagId=#{tagId} order by timeLong
+		select * from tracking where areaId=#{areaId} and tagId=#{tagId} order by timeYMDHms
 	</select>
 </mapper>

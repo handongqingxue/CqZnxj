@@ -20,6 +20,8 @@ public class MainController {
 	private DeptService deptService;
 	@Autowired
 	private StaffService staffService;
+	@Autowired
+	private TrackingService trackingService;
 	
 	/**
 	 * Ìø×ªµ½µÇÂ¼Ò³
@@ -35,6 +37,21 @@ public class MainController {
 	//https://blog.csdn.net/weixin_35728532/article/details/116159700
 	@RequestMapping(value="/goBaiDuMapTest")
 	public String goBaiDuMapTest() {
+		
+		float areaLongitudeStart=(float)112.380482;
+		float areaLongitudeEnd=(float)120.380482;
+		float areaLatitudeStart=(float)36.87649;
+		float areaLatitudeEnd=(float)41.87649;
+		float mapWidth=500;
+		float mapHeight=300;
+		List<Tracking> trackingList = trackingService.selectCanvasData(1, 2, null, null);
+		for (int i = 0; i < trackingList.size(); i++) {
+			Tracking tracking = trackingList.get(i);
+			float x = Float.valueOf(tracking.getX());
+			float y = Float.valueOf(tracking.getY());
+			System.out.println("x==="+x);
+			System.out.println("y==="+y);
+		}
 		
 		return "baiDuMapTest";
 	}
