@@ -5,6 +5,10 @@
 %>
 <script type="text/javascript"
 	src="<%=basePath %>resource/js/jquery-3.3.1.js"></script>
+<script type="text/javascript"
+	src="<%=basePath %>resource/layui/layui.js"></script>
+<link rel="stylesheet"
+	href="<%=basePath %>/resource/layui/css/layui.css">
 <link href="<%=basePath %>resource/jquery-easyui-1.3.6/themes/icon.css" rel="stylesheet"
 	type="text/css" />
 <link href="<%=basePath %>resource/jquery-easyui-1.3.6/themes/default/easyui.css"
