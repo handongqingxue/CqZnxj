@@ -35,6 +35,12 @@ public class DeviceMgmtController {
 	public static final String MODULE_NAME="deviceMgmt";
 	//http://localhost:8080/CqZnxj/deviceMgmt/type/list
 	
+	@RequestMapping(value="/dept/new")
+	public String goDeptNew(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/dept/new";
+	}
+	
 	@RequestMapping(value="/dept/list")
 	public String goDeptList(HttpServletRequest request) {
 		
@@ -145,6 +151,24 @@ public class DeviceMgmtController {
 		request.setAttribute("pdp", pdp);
 		
 		return MODULE_NAME+"/param/detail";
+	}
+	
+	@RequestMapping(value="/newDept")
+	@ResponseBody
+	public Map<String, Object> newDept(Dept dept) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int count=deptService.add(dept);
+		if(count>0) {
+			jsonMap.put("message", "ok");
+			jsonMap.put("info", "创建部门成功！");
+		}
+		else {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "创建部门失败！");
+		}
+		return jsonMap;
 	}
 	
 	@RequestMapping(value="/queryDeptList")

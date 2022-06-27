@@ -10,23 +10,69 @@
 		select count(*) from dept where parentId=#{parentId}
 	</select>
 	<select id="queryForInt" resultType="java.lang.Integer">
-		select count(*) from dept where 1=1
+		select count(*) from dept sd left join dept fd on sd.parentId=fd.deptId where 1=1
 		<if test="deptName!=''&amp;deptName!=null">
-			and deptName like CONCAT('%',#{deptName},'%')
+			and sd.deptName like CONCAT('%',#{deptName},'%')
 		</if>
 	</select>
 	<select id="queryList" resultType="com.cqZnxj.entity.Dept">
-		select * from dept where 1=1
+		select sd.*,fd.deptName firstDeptName from dept sd left join dept fd on sd.parentId=fd.deptId where 1=1
 		<if test="deptName!=''&amp;deptName!=null">
-			and deptName like CONCAT('%',#{deptName},'%')
+			and sd.deptName like CONCAT('%',#{deptName},'%')
 		</if>
-		order by createTime
+		order by sd.createTime
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="selectByDeptId" resultType="com.cqZnxj.entity.Dept">
-		select * from dept where deptId=#{deptId}
+		select sd.*,fd.deptName firstDeptName from dept sd left join dept fd on sd.parentId=fd.deptId where sd.deptId=#{deptId}
 	</select>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.Dept">
 		select deptId,deptName from dept where parentId=#{parentId} order by createTime desc
 	</select>
+	<insert id="add" parameterType="com.cqZnxj.entity.Dept">
+		insert into dept
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId!=null">
+				deptId,
+			</if>
+			<if test="parentId!=null">
+				parentId,
+			</if>
+			<if test="deptName!=null">
+				deptName,
+			</if>
+			<if test="level!=null">
+				level,
+			</if>
+			<if test="leader!=null">
+				leader,
+			</if>
+			<if test="phone!=null">
+				phone,
+			</if>
+				createTime
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId!=null">
+				#{deptId},
+			</if>
+			<if test="parentId!=null">
+				#{parentId},
+			</if>
+			<if test="deptName!=null">
+				#{deptName},
+			</if>
+			<if test="level!=null">
+				#{level},
+			</if>
+			<if test="leader!=null">
+				#{leader},
+			</if>
+			<if test="phone!=null">
+				#{phone},
+			</if>
+				now()
+		</trim>
+	</insert>
 </mapper>

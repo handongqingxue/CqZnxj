@@ -50,4 +50,10 @@ public class DeptServiceImpl implements DeptService {
 		return deptDao.queryCBBList(parentId);
 	}
 
+	@Override
+	public int add(Dept dept) {
+		// TODO Auto-generated method stub
+		return deptDao.add(dept);
+	}
+
 }

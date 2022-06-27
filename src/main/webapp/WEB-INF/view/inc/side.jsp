@@ -172,7 +172,7 @@ function resizeSideDiv(){
 		巡检管理>巡更统计分析
 	</c:if>
 	</span>
-	<span class="client_id_span">admin</span>
+	<span class="client_id_span">${sessionScope.user.userName }</span>
 </div>
 </body>
 </html>

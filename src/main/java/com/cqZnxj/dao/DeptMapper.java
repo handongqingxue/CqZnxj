@@ -20,4 +20,6 @@ public interface DeptMapper {
 
 	List<Dept> queryCBBList(@Param("parentId") Integer parentId);
 
+	int add(Dept dept);
+
 }

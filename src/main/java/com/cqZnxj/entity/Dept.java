@@ -21,6 +21,18 @@ public class Dept {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+	public String getFirstDeptName() {
+		return firstDeptName;
+	}
+	public void setFirstDeptName(String firstDeptName) {
+		this.firstDeptName = firstDeptName;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 	public String getLeader() {
 		return leader;
 	}
@@ -41,6 +53,8 @@ public class Dept {
 	}
 	private Integer parentId;
 	private String deptName;
+	private String firstDeptName;
+	private Integer level;
 	private String leader;
 	private String phone;
 	private String createTime;

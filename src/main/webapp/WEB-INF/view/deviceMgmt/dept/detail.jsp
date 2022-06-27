@@ -47,7 +47,7 @@ function initDetailDialog(){
 	$("#detail_div").dialog({
 		title:"部门信息",
 		width:setFitWidthInParent("body","detail_div"),
-		height:250,
+		height:205,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -60,9 +60,7 @@ function initDetailDialog(){
 	$("#detail_div table .td1").css("width","15%");
 	$("#detail_div table .td2").css("width","30%");
 	$("#detail_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#detail_div table tr").each(function(i){
-		$(this).css("height",(i==2?90:45)+"px");
-	});
+	$("#detail_div table tr").css("height","45px");
 
 	$(".panel.window").eq(ddNum).css("margin-top","20px");
 	$(".panel.window .panel-title").eq(ddNum).css("color","#000");
@@ -105,7 +103,7 @@ function setFitWidthInParent(parent,self){
 		<table>
 		  <tr>
 			<td class="td1" align="right">
-				类名
+				名称
 			</td>
 			<td class="td2">
 				${requestScope.dept.deptName }
@@ -114,7 +112,7 @@ function setFitWidthInParent(parent,self){
 				上级部门
 			</td>
 			<td class="td2">
-				${requestScope.dept.parentId }
+				${requestScope.dept.firstDeptName }
 			</td>
 		  </tr>
 		  <tr>

@@ -31,8 +31,10 @@ a {
 <script type="text/javascript">
 var path='<%=basePath %>';
 var deviceMgmtPath=path+'deviceMgmt/';
+var nav='${param.nav}';
 $(function(){
 	initSearchLB();
+	initAddLB();
 	initTab1();
 });
 
@@ -42,6 +44,15 @@ function initSearchLB(){
 		onClick:function(){
 			var name=$("#toolbar #name").val();
 			tab1.datagrid("load",{name:name});
+		}
+	});
+}
+
+function initAddLB(){
+	$("#add_but").linkbutton({
+		iconCls:"icon-add",
+		onClick:function(){
+			location.href=deviceMgmtPath+"dept/new?nav="+nav;
 		}
 	});
 }
@@ -56,6 +67,7 @@ function initTab1(){
 		pageSize:10,
 		columns:[[
 			{field:"deptName",title:"名称",width:150},
+			{field:"firstDeptName",title:"上级部门",width:150},
 			{field:"createTime",title:"创建时间",width:180},
             {field:"deptId",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"detail?deptId="+value+"\">详情</a>";
@@ -65,7 +77,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{deptName:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"deptName",colspan:3});
+				$(this).datagrid("mergeCells",{index:0,field:"deptName",colspan:4});
 				data.total=0;
 			}
 			
@@ -102,6 +114,7 @@ function setFitWidthInParent(o){
 		<span class="name_span">部门：</span>
 		<input type="text" class="name_inp" id="name" placeholder="请输入部门名称"/>
 		<a class="search_but" id="search_but">查询</a>
+		<a id="add_but">添加</a>
 	</div>
 	<table id="tab1">
 	</table>
