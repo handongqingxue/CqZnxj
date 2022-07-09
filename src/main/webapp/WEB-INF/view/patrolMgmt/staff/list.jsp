@@ -38,15 +38,10 @@
 }
 .tab1_div .toolbar .row_div .sdn_span,
 .tab1_div .toolbar .row_div .name_span,
-.tab1_div .toolbar .row_div .pdaNo_span,
-.tab1_div .toolbar .row_div .name_span,
-.tab1_div .toolbar .row_div .createTime_span,
 .tab1_div .toolbar .row_div .search_but{
 	margin-left: 13px;
 }
 .tab1_div .toolbar .row_div .sdn_inp,
-.tab1_div .toolbar .row_div .name_inp,
-.tab1_div .toolbar .row_div .pdaNo_inp,
 .tab1_div .toolbar .row_div .name_inp{
 	width: 120px;
 	height: 25px;
@@ -66,8 +61,6 @@ var deptId;
 var nav='${param.nav}';
 $(function(){
 	initTree();
-	initCreateTimeStDTB();
-	initCreateTimeEtDTB();
 	initSearchLB();
 	initAddLB();
 	initRemoveLB();
@@ -111,18 +104,6 @@ function initTree(){
     });
 }
 
-function initCreateTimeStDTB(){
-	createTimeStDTB=$("#createTimeSt_dtb").datetimebox({
-        required:false
-    });
-}
-
-function initCreateTimeEtDTB(){
-	createTimeEtDTB=$("#createTimeEt_dtb").datetimebox({
-        required:false
-    });
-}
-
 function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
@@ -135,17 +116,14 @@ function initSearchLB(){
 function loadTab1Data(){
 	var secondDeptName=$("#toolbar #sdn_inp").val();
 	var name=$("#toolbar #name_inp").val();
-	var createTimeStart=createTimeStDTB.datetimebox("getValue");
-	var createTimeEnd=createTimeEtDTB.datetimebox("getValue");
-	tab1.datagrid("load",{deptId:deptId,secondDeptName:secondDeptName,name:name,
-		createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
+	tab1.datagrid("load",{deptId:deptId,secondDeptName:secondDeptName,name:name});
 }
 
 function initAddLB(){
 	$("#add_but").linkbutton({
 		iconCls:"icon-add",
 		onClick:function(){
-			location.href=patrolMgmtPath+"area/new?nav="+nav;
+			location.href=patrolMgmtPath+"staff/new?nav="+nav;
 		}
 	});
 }
@@ -161,18 +139,18 @@ function initRemoveLB(){
 
 function initTab1(){
 	tab1=$("#tab1").datagrid({
-		title:"巡检区域查询",
-		url:patrolMgmtPath+"queryAreaList",
+		title:"巡检人员查询",
+		url:patrolMgmtPath+"queryStaffList",
 		toolbar:"#toolbar",
 		width:setFitWidthInParent("body"),
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"name",title:"区域名称",width:150},
+			{field:"name",title:"人员姓名",width:150},
+			{field:"jobNumber",title:"工号",width:150},
+			{field:"phone",title:"电话",width:180},
 			{field:"firstDeptName",title:"一级部门",width:150},
 			{field:"secondDeptName",title:"二级部门",width:150},
-			{field:"pdaNos",title:"设备编号",width:150},
-			{field:"createTime",title:"创建时间",width:180},
             {field:"id",title:"操作",width:110,formatter:function(value,row){
             	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
             		+"<a href=\"detail?id="+value+"&nav="+nav+"\">详情</a>";
@@ -209,7 +187,7 @@ function deleteByIds(ids){
 			}
 			ids=ids.substring(1);
 			
-			$.post(patrolMgmtPath + "deleteArea",
+			$.post(patrolMgmtPath + "deleteStaff",
 				{ids:ids},
 				function(result){
 					if(result.status==1){
@@ -243,14 +221,10 @@ function setFitWidthInParent(o){
 <div class="tab1_div" id="tab1_div">
 	<div class="toolbar" id="toolbar">
 		<div class="row_div">
-			<span class="name_span">区域名称：</span>
-			<input type="text" class="name_inp" id="name_inp" placeholder="请输入区域名称"/>
+			<span class="name_span">人员姓名：</span>
+			<input type="text" class="name_inp" id="name_inp" placeholder="请输入人员姓名"/>
 			<span class="sdn_span">二级部门：</span>
 			<input type="text" class="sdn_inp" id="sdn_inp" placeholder="请输入二级部门"/>
-			<span class="createTime_span">创建时间：</span>
-			<input id="createTimeSt_dtb"/>
-			-
-			<input id="createTimeEt_dtb"/>
 			<a class="search_but" id="search_but">查询</a>
 			<a id="add_but">添加</a>
 			<a id="remove_but">删除</a>

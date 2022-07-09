@@ -12,4 +12,9 @@ public interface StaffService {
 
 	Staff selectByJobNumber(String jobNumber);
 
+	int queryForInt(String name, Integer deptId, String secondDeptName);
+
+	List<Staff> queryList(String name, Integer deptId, String secondDeptName, int page, int rows, String sort,
+			String order);
+
 }

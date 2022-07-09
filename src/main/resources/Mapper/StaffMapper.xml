@@ -15,4 +15,29 @@
 	<select id="selectByJobNumber" resultType="com.cqZnxj.entity.Staff">
 		select * from staff where jobNumber=#{jobNumber}
 	</select>
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from dept sd,dept fd,staff s where sd.deptId=s.deptId and sd.parentId=fd.deptId
+		<if test="name!=''&amp;name!=null">
+			and s.name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="deptId!=''&amp;deptId!=null">
+			and (fd.deptId=#{deptId} or sd.deptId=#{deptId})
+		</if>
+		<if test="secondDeptName!=''&amp;secondDeptName!=null">
+			and sd.deptName like CONCAT('%',#{secondDeptName},'%')
+		</if>
+	</select>
+	<select id="queryList" resultType="com.cqZnxj.entity.Staff">
+		select s.*,sd.deptName secondDeptName,fd.deptName firstDeptName from dept sd,dept fd,staff s where sd.deptId=s.deptId and sd.parentId=fd.deptId
+		<if test="name!=''&amp;name!=null">
+			and s.name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="deptId!=''&amp;deptId!=null">
+			and (fd.deptId=#{deptId} or sd.deptId=#{deptId})
+		</if>
+		<if test="secondDeptName!=''&amp;secondDeptName!=null">
+			and sd.deptName like CONCAT('%',#{secondDeptName},'%')
+		</if>
+		limit #{rowNum},#{rows}
+	</select>
 </mapper>

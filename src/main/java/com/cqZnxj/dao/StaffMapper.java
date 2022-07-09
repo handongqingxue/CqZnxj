@@ -14,4 +14,9 @@ public interface StaffMapper {
 
 	Staff selectByJobNumber(@Param("jobNumber") String jobNumber);
 
+	int queryForInt(@Param("name") String name, @Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName);
+
+	List<Staff> queryList(@Param("name") String name, @Param("deptId") Integer deptId, @Param("secondDeptName") String secondDeptName, 
+			@Param("rowNum") int rowNum, @Param("rows") int rows, String sort, String order);
+
 }

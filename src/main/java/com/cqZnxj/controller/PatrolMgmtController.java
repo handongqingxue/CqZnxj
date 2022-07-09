@@ -98,6 +98,17 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/area/detail";
 	}
+	
+	/**
+	 * 跳转到巡检人员列表页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/staff/list")
+	public String goStaffList(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/staff/list";
+	}
 
 	/**
 	 * 跳转到巡检记录列表页
@@ -515,6 +526,26 @@ public class PatrolMgmtController {
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", paList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryStaffList")
+	@ResponseBody
+	public Map<String, Object> queryStaffList(String name,Integer deptId, String secondDeptName,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = staffService.queryForInt(name,deptId, secondDeptName);
+			List<Staff> staffList=staffService.queryList(name, deptId, secondDeptName, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", staffList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

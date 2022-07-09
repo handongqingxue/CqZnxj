@@ -32,4 +32,17 @@ public class StaffServiceImpl implements StaffService {
 		// TODO Auto-generated method stub
 		return staffDao.selectByJobNumber(jobNumber);
 	}
+
+	@Override
+	public int queryForInt(String name, Integer deptId, String secondDeptName) {
+		// TODO Auto-generated method stub
+		return staffDao.queryForInt(name, deptId, secondDeptName);
+	}
+
+	@Override
+	public List<Staff> queryList(String name, Integer deptId, String secondDeptName, int page, int rows, String sort,
+			String order) {
+		// TODO Auto-generated method stub
+		return staffDao.queryList(name, deptId, secondDeptName, (page-1)*rows, rows, sort, order);
+	}
 }
