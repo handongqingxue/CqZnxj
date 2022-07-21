@@ -116,7 +116,7 @@ public class Staff {
 	private String phone;
 	private String photo;
 	private String jobNumber;
-	private String tagId;
+	private String tagId;//±Í«©∫≈
 	private String post;
 	private String security;
 	private Integer entityIconId;

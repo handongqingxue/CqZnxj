@@ -100,6 +100,17 @@ public class PatrolMgmtController {
 	}
 	
 	/**
+	 * 跳转到巡检人员添加页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/staff/new")
+	public String goStaffNew(HttpServletRequest request) {
+		
+		return MODULE_NAME+"/staff/new";
+	}
+	
+	/**
 	 * 跳转到巡检人员列表页
 	 * @param request
 	 * @return
