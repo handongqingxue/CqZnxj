@@ -134,6 +134,16 @@ public class PatrolMgmtController {
 		
 		return MODULE_NAME+"/staff/list";
 	}
+	
+	@RequestMapping(value="/staff/detail")
+	public String goStaffDetail(HttpServletRequest request) {
+
+		String uuid = request.getParameter("uuid");
+		Staff staff=staffService.selectByUuid(uuid);
+		request.setAttribute("staff", staff);
+		
+		return MODULE_NAME+"/staff/detail";
+	}
 
 	/**
 	 * 跳转到巡检记录列表页
