@@ -8,6 +8,8 @@ public interface StaffService {
 
 	int add(Staff staff);
 
+	int edit(Staff staff);
+
 	List<Staff> queryCBBList(String deptId);
 
 	List<Staff> queryCBBListByPtId(Integer ptId);
@@ -18,5 +20,7 @@ public interface StaffService {
 
 	List<Staff> queryList(String name, Integer deptId, String secondDeptName, int page, int rows, String sort,
 			String order);
+
+	Staff selectByUuid(String uuid);
 
 }

@@ -151,9 +151,9 @@ function initTab1(){
 			{field:"phone",title:"电话",width:180},
 			{field:"firstDeptName",title:"一级部门",width:150},
 			{field:"secondDeptName",title:"二级部门",width:150},
-            {field:"id",title:"操作",width:110,formatter:function(value,row){
-            	var str="<a href=\"edit?id="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
-            		+"<a href=\"detail?id="+value+"&nav="+nav+"\">详情</a>";
+            {field:"uuid",title:"操作",width:110,formatter:function(value,row){
+            	var str="<a href=\"edit?uuid="+value+"&nav="+nav+"\">编辑</a>&nbsp;&nbsp;"
+            		+"<a href=\"detail?uuid="+value+"&nav="+nav+"\">详情</a>";
             	return str;
             }}
 	    ]],

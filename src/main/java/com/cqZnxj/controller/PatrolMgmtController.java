@@ -114,6 +114,16 @@ public class PatrolMgmtController {
 		return MODULE_NAME+"/staff/new";
 	}
 	
+	@RequestMapping(value="/staff/edit")
+	public String goStaffEdit(HttpServletRequest request) {
+
+		String uuid = request.getParameter("uuid");
+		Staff staff=staffService.selectByUuid(uuid);
+		request.setAttribute("staff", staff);
+		
+		return MODULE_NAME+"/staff/edit";
+	}
+	
 	/**
 	 * 跳转到巡检人员列表页
 	 * @param request
@@ -590,6 +600,55 @@ public class PatrolMgmtController {
 			else {
 				jsonMap.put("message", "no");
 				jsonMap.put("info", "创建巡检人员失败！");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
+	@RequestMapping(value="/editStaff")
+	@ResponseBody
+	public Map<String, Object> editStaff(Staff staff,
+			@RequestParam(value="photo_file",required=false) MultipartFile photo_file) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			MultipartFile[] fileArr=new MultipartFile[1];
+			fileArr[0]=photo_file;
+			for (int i = 0; i < fileArr.length; i++) {
+				String jsonStr = null;
+				if(fileArr[i].getSize()>0) {
+					String folder=null;
+					switch (i) {
+					case 0:
+						folder="staff";
+						break;
+					}
+					jsonStr = FileUploadUtils.appUploadFile(fileArr[i],folder);
+					JSONObject fileJson = JSONObject.fromObject(jsonStr);
+					if("成功".equals(fileJson.get("msg"))) {
+						JSONObject dataJO = (JSONObject)fileJson.get("data");
+						switch (i) {
+						case 0:
+							staff.setPhoto(dataJO.get("src").toString());
+							break;
+						}
+					}
+				}
+			}
+			int count=staffService.edit(staff);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "编辑巡检人员成功！");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "编辑巡检人员失败！");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

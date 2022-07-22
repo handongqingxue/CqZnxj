@@ -65,6 +65,33 @@
 			</if>
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.cqZnxj.entity.Staff">
+		update staff set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
+			<if test="jobNumber!=null">
+				jobNumber=#{jobNumber},
+			</if>
+			<if test="tagId!=null">
+				tagId=#{tagId},
+			</if>
+			<if test="deptId!=null">
+				deptId=#{deptId},
+			</if>
+			<if test="photo!=null">
+				photo=#{photo},
+			</if>
+			<if test="remark!=null">
+				remark=#{remark},
+			</if>
+		</trim>
+		where uuid=#{uuid}
+	</update>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.Staff">
 		select id,name from staff where 1=1
 		<if test="deptId!=''&amp;deptId!=null">
@@ -101,5 +128,8 @@
 			and sd.deptName like CONCAT('%',#{secondDeptName},'%')
 		</if>
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="selectByUuid" resultType="com.cqZnxj.entity.Staff">
+		select s.*,sd.deptId secondDeptId,sd.deptName secondDeptName,fd.deptId firstDeptId,fd.deptName firstDeptName from Staff s,dept sd,dept fd where s.deptId=sd.deptId and sd.parentId=fd.deptId and s.uuid=#{uuid}
 	</select>
 </mapper>

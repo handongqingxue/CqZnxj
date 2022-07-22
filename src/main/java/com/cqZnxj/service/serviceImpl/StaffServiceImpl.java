@@ -22,6 +22,12 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Override
+	public int edit(Staff staff) {
+		// TODO Auto-generated method stub
+		return staffDao.edit(staff);
+	}
+
+	@Override
 	public List<Staff> queryCBBList(String deptId) {
 		// TODO Auto-generated method stub
 		return staffDao.queryCBBList(deptId);
@@ -50,5 +56,11 @@ public class StaffServiceImpl implements StaffService {
 			String order) {
 		// TODO Auto-generated method stub
 		return staffDao.queryList(name, deptId, secondDeptName, (page-1)*rows, rows, sort, order);
+	}
+
+	@Override
+	public Staff selectByUuid(String uuid) {
+		// TODO Auto-generated method stub
+		return staffDao.selectByUuid(uuid);
 	}
 }
