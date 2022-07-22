@@ -3,6 +3,68 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqZnxj.dao.StaffMapper">
+	<insert id="add" parameterType="com.cqZnxj.entity.Staff">
+		insert into staff
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uuid!=null">
+				uuid,
+			</if>
+			<if test="id!=null">
+				id,
+			</if>
+			<if test="name!=null">
+				name,
+			</if>
+			<if test="phone!=null">
+				phone,
+			</if>
+			<if test="jobNumber!=null">
+				jobNumber,
+			</if>
+			<if test="tagId!=null">
+				tagId,
+			</if>
+			<if test="deptId!=null">
+				deptId,
+			</if>
+			<if test="photo!=null">
+				photo,
+			</if>
+			<if test="remark!=null">
+				remark,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uuid!=null">
+				#{uuid},
+			</if>
+			<if test="id!=null">
+				#{id},
+			</if>
+			<if test="name!=null">
+				#{name},
+			</if>
+			<if test="phone!=null">
+				#{phone},
+			</if>
+			<if test="jobNumber!=null">
+				#{jobNumber},
+			</if>
+			<if test="tagId!=null">
+				#{tagId},
+			</if>
+			<if test="deptId!=null">
+				#{deptId},
+			</if>
+			<if test="photo!=null">
+				#{photo},
+			</if>
+			<if test="remark!=null">
+				#{remark},
+			</if>
+		</trim>
+	</insert>
 	<select id="queryCBBList" resultType="com.cqZnxj.entity.Staff">
 		select id,name from staff where 1=1
 		<if test="deptId!=''&amp;deptId!=null">

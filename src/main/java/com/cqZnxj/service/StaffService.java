@@ -6,6 +6,8 @@ import com.cqZnxj.entity.*;
 
 public interface StaffService {
 
+	int add(Staff staff);
+
 	List<Staff> queryCBBList(String deptId);
 
 	List<Staff> queryCBBListByPtId(Integer ptId);

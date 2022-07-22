@@ -8,6 +8,8 @@ import com.cqZnxj.entity.*;
 
 public interface StaffMapper {
 
+	int add(Staff staff);
+
 	List<Staff> queryCBBList(@Param("deptId") String deptId);
 
 	List<Staff> queryCBBListByPtId(@Param("ptId") Integer ptId);

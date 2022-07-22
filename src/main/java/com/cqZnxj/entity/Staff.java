@@ -2,7 +2,13 @@ package com.cqZnxj.entity;
 
 public class Staff {
 
-	private Integer id;
+	private String uuid;
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -111,6 +117,7 @@ public class Staff {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	private Integer id;
 	private String name;
 	private Integer sex;
 	private String phone;

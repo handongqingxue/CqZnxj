@@ -16,6 +16,12 @@ public class StaffServiceImpl implements StaffService {
 	private StaffMapper staffDao;
 
 	@Override
+	public int add(Staff staff) {
+		// TODO Auto-generated method stub
+		return staffDao.add(staff);
+	}
+
+	@Override
 	public List<Staff> queryCBBList(String deptId) {
 		// TODO Auto-generated method stub
 		return staffDao.queryCBBList(deptId);

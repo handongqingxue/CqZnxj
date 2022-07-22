@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cqZnxj.entity.*;
 import com.cqZnxj.service.*;
-import com.cqZnxj.util.JsonUtil;
-import com.cqZnxj.util.PlanResult;
+import com.cqZnxj.util.*;
+
+import net.sf.json.JSONObject;
 
 /**
  * 巡检管理类
@@ -543,6 +547,57 @@ public class PatrolMgmtController {
 		}
 		
 		return jsonMap;
+	}
+	
+	@RequestMapping(value="/newStaff")
+	@ResponseBody
+	public Map<String, Object> newStaff(Staff staff,
+			@RequestParam(value="photo_file",required=false) MultipartFile photo_file) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			MultipartFile[] fileArr=new MultipartFile[1];
+			fileArr[0]=photo_file;
+			for (int i = 0; i < fileArr.length; i++) {
+				String jsonStr = null;
+				if(fileArr[i].getSize()>0) {
+					String folder=null;
+					switch (i) {
+					case 0:
+						folder="staff";
+						break;
+					}
+					jsonStr = FileUploadUtils.appUploadFile(fileArr[i],folder);
+					JSONObject fileJson = JSONObject.fromObject(jsonStr);
+					if("成功".equals(fileJson.get("msg"))) {
+						JSONObject dataJO = (JSONObject)fileJson.get("data");
+						switch (i) {
+						case 0:
+							staff.setPhoto(dataJO.get("src").toString());
+							break;
+						}
+					}
+				}
+			}
+			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+			staff.setUuid(uuid);
+			int count=staffService.add(staff);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "创建巡检人员成功！");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "创建巡检人员失败！");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
 	}
 	
 	@RequestMapping(value="/queryStaffList")

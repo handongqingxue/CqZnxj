@@ -169,9 +169,11 @@ function checkNew(){
 	if(checkName()){
 		if(checkPhone()){
 			if(checkJobNumber()){
-				if(checkFirstDeptId()){
-					if(checkSecondDeptId()){
-						newArea();
+				if(checkTagId()){
+					if(checkFirstDeptId()){
+						if(checkSecondDeptId()){
+							newStaff();
+						}
 					}
 				}
 			}
@@ -179,19 +181,14 @@ function checkNew(){
 	}
 }
 
-function newArea(){
+function newStaff(){
 	var deptId=secondDeptCBB.combobox("getValue");
 	$("#new_div #deptId").val(deptId);
-	var pdaIdsArr=pdaCBB.combobox("getValues");
-	var pdaIds=pdaIdsArr.sort().toString();
-	if(pdaIds.substring(0,1)==",")
-		pdaIds=pdaIds.substring(1);
-	$("#new_div #pdaIds").val(pdaIds);
 	
 	var formData = new FormData($("#form1")[0]);
 	$.ajax({
 		type:"post",
-		url:patrolMgmtPath+"newArea",
+		url:patrolMgmtPath+"newStaff",
 		dataType: "json",
 		data:formData,
 		cache: false,
@@ -272,8 +269,8 @@ function checkJobNumber(){
 function focusTagId(){
 	var tagId = $("#tagId").val();
 	if(tagId=="标签号不能为空"){
-		$("#jobNumber").val("");
-		$("#jobNumber").css("color", "#555555");
+		$("#tagId").val("");
+		$("#tagId").css("color", "#555555");
 	}
 }
 
