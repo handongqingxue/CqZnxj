@@ -28,7 +28,7 @@ public class FileUploadUtils {
 			String timeStr = String.valueOf(time);
 			String[] originalFileName = myFile.getOriginalFilename().split("\\.");
 			String fileName = timeStr + "." + originalFileName[1];
-			String avaPath ="/CqZnxj/upload/"+folder+fileName;
+			String avaPath ="/CqZnxj/upload/"+folder+"/"+fileName;
 			String realPath="D:\\resource\\CqZnxj\\"+folder+"\\";
 			System.out.println(avaPath);
 			File storeFile =  new File(realPath, fileName);

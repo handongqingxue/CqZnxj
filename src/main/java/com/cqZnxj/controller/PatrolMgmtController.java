@@ -620,6 +620,31 @@ public class PatrolMgmtController {
 		}
 	}
 	
+	/**
+	 * 删除巡检人员
+	 * @param uuids
+	 * @return
+	 */
+	@RequestMapping(value="/deleteStaff",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteStaff(String uuids) {
+		//TODO 针对分类的动态进行实时调整更新
+		int count=staffService.deleteByUuids(uuids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除巡检人员失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除巡检人员成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+	
 	@RequestMapping(value="/editStaff")
 	@ResponseBody
 	public Map<String, Object> editStaff(Staff staff,

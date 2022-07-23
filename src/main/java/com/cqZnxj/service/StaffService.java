@@ -8,6 +8,8 @@ public interface StaffService {
 
 	int add(Staff staff);
 
+	int deleteByUuids(String uuids);
+
 	int edit(Staff staff);
 
 	List<Staff> queryCBBList(String deptId);

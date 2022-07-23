@@ -132,7 +132,7 @@ function initRemoveLB(){
 	removeLB=$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			deleteByIds();
+			deleteByUuids();
 		}
 	});
 }
@@ -172,7 +172,7 @@ function initTab1(){
 	});
 }
 
-function deleteByIds(ids){
+function deleteByUuids(){
 	var rows=tab1.datagrid("getSelections");
 	if (rows.length == 0) {
 		$.messager.alert("提示","请选择要删除的信息！","warning");
@@ -181,14 +181,14 @@ function deleteByIds(ids){
 	
 	$.messager.confirm("提示","确定要删除吗？",function(r){
 		if(r){
-			var ids = "";
+			var uuids = "";
 			for (var i = 0; i < rows.length; i++) {
-				ids += "," + rows[i].id;
+				uuids += "," + rows[i].uuid;
 			}
-			ids=ids.substring(1);
+			uuids=uuids.substring(1);
 			
 			$.post(patrolMgmtPath + "deleteStaff",
-				{ids:ids},
+				{uuids:uuids},
 				function(result){
 					if(result.status==1){
 						alert(result.msg);

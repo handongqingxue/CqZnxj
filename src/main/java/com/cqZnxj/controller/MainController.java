@@ -168,4 +168,13 @@ public class MainController {
 		
 		return jsonMap;
 	}
+	
+	@RequestMapping(value="/exit")
+	public String exit(HttpServletRequest request) {
+		System.out.println("ÍË³ö½Ó¿Ú");
+		Subject currentUser = SecurityUtils.getSubject();       
+	    currentUser.logout();    
+
+		return "/login";
+	}
 }

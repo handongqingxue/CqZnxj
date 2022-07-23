@@ -10,6 +10,8 @@ public interface StaffMapper {
 
 	int add(Staff staff);
 
+	int deleteByUuids(List<String> uuidList);
+
 	int edit(Staff staff);
 
 	List<Staff> queryCBBList(@Param("deptId") String deptId);

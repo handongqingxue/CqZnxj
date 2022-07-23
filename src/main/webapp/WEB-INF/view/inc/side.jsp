@@ -55,6 +55,13 @@ body{
 	color:#fff;
 	margin-left: 20px;
 }
+.top_div .exit_span{
+	margin-right: 30px;
+	float: right;
+}
+.top_div .exit_span a{
+	color:#fff;
+}
 .top_div .client_id_span{
 	margin-right: 30px;
 	color:#fff;
@@ -178,6 +185,9 @@ function resizeSideDiv(){
 	<c:if test="${param.nav eq 'xgtjfx' }">
 		巡检管理>巡更统计分析
 	</c:if>
+	</span>
+	<span class="exit_span">
+		<a href="<%=basePath%>main/exit">退出</a>
 	</span>
 	<span class="client_id_span">${sessionScope.user.userName }</span>
 </div>

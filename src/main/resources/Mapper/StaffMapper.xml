@@ -65,6 +65,12 @@
 			</if>
 		</trim>
 	</insert>
+	<delete id="deleteByUuids">
+		delete from staff where 1=1
+		<foreach collection="list" item="uuid" open=" and cast(uuid as char) in (" separator="," close=")">
+		#{uuid}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.cqZnxj.entity.Staff">
 		update staff set 
 		<trim suffixOverrides=",">

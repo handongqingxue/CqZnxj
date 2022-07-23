@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,15 @@ public class StaffServiceImpl implements StaffService {
 	public int add(Staff staff) {
 		// TODO Auto-generated method stub
 		return staffDao.add(staff);
+	}
+
+	@Override
+	public int deleteByUuids(String uuids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> uuidList = Arrays.asList(uuids.split(","));
+		count=staffDao.deleteByUuids(uuidList);
+		return count;
 	}
 
 	@Override
