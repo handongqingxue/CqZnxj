@@ -183,7 +183,7 @@ function checkEdit(){
 function editDevice(){
 	var level=levelCBB.combobox("getValue");
 	$("#edit_div #level").val(level);
-	var deptId=deptCBB.combobox("getValue");
+	var deptId=secondDeptCBB.combobox("getValue");
 	$("#edit_div #deptId").val(deptId);
 	
 	var formData = new FormData($("#form1")[0]);
@@ -319,7 +319,7 @@ function setFitWidthInParent(parent,self){
 				规格
 			</td>
 			<td class="td2">
-				<input type="text" class="specs_inp" id="specs" name="specs" value="${requestScope.pd.specs }" placeholder="请输入名称" onfocus="focusSpecs()" onblur="checkSpecs()"/>
+				<input type="text" class="specs_inp" id="specs" name="specs" value="${requestScope.pd.specs }" placeholder="请输入规格" onfocus="focusSpecs()" onblur="checkSpecs()"/>
 			</td>
 		  </tr>
 		  <tr>

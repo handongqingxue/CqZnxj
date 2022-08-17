@@ -21,6 +21,10 @@
 	margin-left: 20px;
 	font-size: 18px;
 }
+.photoUrl_img,.videoUrl_embed{
+	height:180px;
+	margin-top: 10px;
+}
 </style>
 <script type="text/javascript">
 var path='<%=basePath %>';
@@ -50,7 +54,7 @@ function initDetailDialog(){
 	$("#detail_div").dialog({
 		title:"巡检记录信息",
 		width:setFitWidthInParent("body","detail_div"),
-		height:350,
+		height:760,
 		top:dialogTop,
 		left:dialogLeft
 	});
@@ -63,7 +67,12 @@ function initDetailDialog(){
 	$("#detail_div table .td1").css("width","15%");
 	$("#detail_div table .td2").css("width","30%");
 	$("#detail_div table tr").css("border-bottom","#CAD9EA solid 1px");
-	$("#detail_div table tr").css("height","45px");
+	$("#detail_div table tr").each(function(i){
+		if(i==4||i==5)
+			$(this).css("height","250px");
+		else
+			$(this).css("height","45px");
+	});
 
 	$(".panel.window").eq(ddNum).css("margin-top","20px");
 	$(".panel.window .panel-title").eq(ddNum).css("color","#000");
@@ -160,6 +169,34 @@ function setFitWidthInParent(parent,self){
 			</td>
 			<td class="td2">
 				${requestScope.dppr.pdpType eq 1?requestScope.dppr.paramValue:requestScope.dppr.paramExceInfo }
+			</td>
+		  </tr>
+		  <tr>
+			<td class="td1" align="right">
+				照片1
+			</td>
+			<td class="td2">
+				<img class="photoUrl_img" id="photoUrl1_img" alt="" src="${requestScope.dppr.photoUrl1 }"/>
+			</td>
+			<td class="td1" align="right">
+				照片2
+			</td>
+			<td class="td2">
+				<img class="photoUrl_img" id="photoUrl2_img" alt="" src="${requestScope.dppr.photoUrl2 }"/>
+			</td>
+		  </tr>
+		  <tr>
+			<td class="td1" align="right">
+				照片3
+			</td>
+			<td class="td2">
+				<img class="photoUrl_img" id="photoUrl3_img" alt="" src="${requestScope.dppr.photoUrl3 }"/>
+			</td>
+			<td class="td1" align="right">
+				视频1
+			</td>
+			<td class="td2">
+				<embed class="videoUrl_embed" id="videoUrl1_embed" alt="" src="${requestScope.dppr.videoUrl1 }">
 			</td>
 		  </tr>
 		  <tr>

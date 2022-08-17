@@ -153,7 +153,7 @@ body .beg-login-bg {
 				<h2 class="title">智能巡检系统注册</h2>
 			</div>
 			<form class="layui-form" method="post">
-				<input type="text" id="deptId" name="deptId"/>
+				<input type="hidden" id="deptId" name="deptId"/>
 				<div class="layui-form-item">
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-inline">

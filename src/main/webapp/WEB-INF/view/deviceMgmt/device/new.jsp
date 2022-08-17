@@ -309,7 +309,7 @@ function setFitWidthInParent(parent,self){
 				规格
 			</td>
 			<td class="td2">
-				<input type="text" class="specs_inp" id="specs" name="specs" placeholder="请输入名称" onfocus="focusSpecs()" onblur="checkSpecs()"/>
+				<input type="text" class="specs_inp" id="specs" name="specs" placeholder="请输入规格" onfocus="focusSpecs()" onblur="checkSpecs()"/>
 			</td>
 		  </tr>
 		  <tr>
