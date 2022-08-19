@@ -93,12 +93,13 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 	public PatrolDeviceAccount getQrcodeInfoByNo(String no) {
 		// TODO Auto-generated method stub
 		PatrolDeviceAccount pda = patrolDeviceAccountDao.getQrcodeInfoByNo(no);
+		int patParCount=patrolDeviceParamDao.getCountByPdaId(pda.getId());
+		pda.setPatParCount(patParCount);
 		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
 		for (int i = 0; i < daprList.size(); i++) {
 			DevAccPatRec dapr = daprList.get(i);
 			if(pda.getId()==dapr.getPdaId()) {
 				pda.setFinishParCount(dapr.getFinishParCount());
-				pda.setPatParCount(dapr.getPatParCount());
 			}
 		}
 		return pda;

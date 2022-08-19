@@ -19,6 +19,8 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 	@Autowired
 	private PatrolDeviceAccountMapper patrolDeviceAccountDao;
 	@Autowired
+	private PatrolDeviceParamMapper patrolDeviceParamDao;
+	@Autowired
 	private AreaPatRecMapper areaPatRecDao;
 	@Autowired
 	private DevAccPatRecMapper devAccPatRecDao;
@@ -110,6 +112,9 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 		List<PatrolArea> paList = patrolAreaDao.selectPhListByPlId(plId);
 		List<AreaPatRec> aprList = areaPatRecDao.getTodayList();
 		List<PatrolDeviceAccount> pdaList = patrolDeviceAccountDao.selectPhListByPlId(plId);
+		List<Integer> plIdList=new ArrayList<Integer>();
+		plIdList.add(plId);
+		List<PatrolDeviceParam> pdpList=patrolDeviceParamDao.getListByPlIdList(plIdList);
 		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
 		for (int i = 0; i < paList.size(); i++) {
 			PatrolArea pa = paList.get(i);
@@ -140,17 +145,24 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 			List<PatrolDeviceAccount> paPdaList = pa.getPdaList();
 			for (int j = 0; j < paPdaList.size(); j++) {
 				PatrolDeviceAccount paPda = paPdaList.get(j);
+				for (int z = 0; z < pdpList.size(); z++) {
+					PatrolDeviceParam pdp = pdpList.get(z);
+					if(paPda.getId()==pdp.getPdaId()) {
+						int patParCount = paPda.getPatParCount();
+						patParCount++;
+						paPda.setPatParCount(patParCount);
+					}
+				}
+				
 				for (int z = 0; z < daprList.size(); z++) {
 					DevAccPatRec dapr = daprList.get(z);
 					if(paPda.getId()==dapr.getPdaId()) {
 						Boolean finish = dapr.getFinish();
 						int finishParCount = dapr.getFinishParCount();
-						int patParCount = dapr.getPatParCount();
 						String startTimeHi = dapr.getStartTimeHi();
 						String endTimeHi = dapr.getEndTimeHi();
 						paPda.setFinish(finish);
 						paPda.setFinishParCount(finishParCount);
-						paPda.setPatParCount(patParCount);
 						paPda.setStartTimeHi(startTimeHi);
 						paPda.setEndTimeHi(endTimeHi);
 					}

@@ -31,4 +31,6 @@ public interface PatrolDeviceParamMapper {
 
 	PatrolDeviceParam selectPhInfoById(@Param("id") Integer id);
 
+	int getCountByPdaId(@Param("pdaId") Integer pdaId);
+
 }
