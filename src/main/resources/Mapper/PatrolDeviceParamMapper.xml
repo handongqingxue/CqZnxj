@@ -133,6 +133,12 @@
 		#{pdaId}
 		</foreach>
 	</select>
+	<select id="getListByPlIdList" resultType="com.cqZnxj.entity.PatrolDeviceParam">
+		select pdp.*,plaas.id plId from patrol_device_param pdp,pat_line_area_acc_set plaas where CONCAT(',',plaas.pdaIds,',') like CONCAT('%,',pdp.pdaId,',%')
+		<foreach collection="plIdList" item="plId" open=" and cast(plId as char) in (" separator="," close=")">
+		#{plId}
+		</foreach>
+	</select>
 	<delete id="deleteByPdaIdList">
 		delete from patrol_device_param where 1=1
 		<foreach collection="pdaIdList" item="pdaId" open=" and cast(pdaId as char) in (" separator="," close=")">

@@ -1,5 +1,6 @@
 package com.cqZnxj.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 	private DevAccPatRecMapper devAccPatRecDao;
 	@Autowired
 	private AreaPatRecMapper areaPatRecDao;
+	@Autowired
+	private PatLineAreaAccSetMapper patLineAreaAccSetDao;
+	@Autowired
+	private PatrolDeviceParamMapper patrolDeviceParamDao;
 
 	@Override
 	public int add(PatrolLine pl) {
@@ -66,35 +71,59 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 		List<PatrolLine> plList = patrolLineDao.getPhList(ppType);
 		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
 		List<AreaPatRec> aprList = areaPatRecDao.getTodayList();
+		List<Integer> plIdList=new ArrayList<Integer>();
+		for (PatrolLine pl : plList) {
+			Integer plId=pl.getId();
+			plIdList.add(plId);
+		}
+		List<PatrolDeviceParam> pdpList=patrolDeviceParamDao.getListByPlIdList(plIdList);
+		List<PatLineAreaAccSet> plaasList=patLineAreaAccSetDao.getListByPlIdList(plIdList);
+		for (int i = 0; i < plList.size(); i++) {
+			PatrolLine pl = plList.get(i);
+			int patParCount = 0;
+			for (int j = 0; j < pdpList.size(); j++) {
+				PatrolDeviceParam pdp = pdpList.get(j);
+				if(pl.getId()==pdp.getPlId()) {
+					patParCount++;
+				}
+			}
+			pl.setPatParCount(patParCount);
+			
+			int patAccCount = 0;
+			for (int j = 0; j < plaasList.size(); j++) {
+				PatLineAreaAccSet plaas = plaasList.get(j);
+				if(pl.getId()==plaas.getPlId()) {
+					String pdaIds = plaas.getPdaIds();
+					String[] pdaIdArr = pdaIds.split(",");
+					patAccCount += pdaIdArr.length;
+				}
+			}
+			pl.setPatAccCount(patAccCount);
+		}
 		for (int i = 0; i < plList.size(); i++) {
 			PatrolLine pl = plList.get(i);
 			int finishParCount = 0;
-			int patParCount = 0;
 			for (int j = 0; j < daprList.size(); j++) {
 				DevAccPatRec dapr = daprList.get(j);
 				if(pl.getId()==dapr.getPlId()) {
 					finishParCount += dapr.getFinishParCount();
-					patParCount += dapr.getPatParCount();
 				}
 			}
 			pl.setFinishParCount(finishParCount);
-			pl.setPatParCount(patParCount);
 
 			int finishAccCount = 0;
-			int patAccCount = 0;
 			int finishAccPercent = 0;
 			for (int j = 0; j < aprList.size(); j++) {
 				AreaPatRec apr = aprList.get(j);
 				if(pl.getId()==apr.getPlId()) {
 					finishAccCount += apr.getFinishAccCount();
-					patAccCount += apr.getPatAccCount();
 				}
 			}
+			Integer patAccCount = pl.getPatAccCount();
 			if(patAccCount>0)
 				finishAccPercent=finishAccCount/patAccCount*100;
 			
 			pl.setFinishAccCount(finishAccCount);
-			pl.setPatAccCount(patAccCount);
 			pl.setFinishAccPercent(finishAccPercent);
 		}
 		return plList;

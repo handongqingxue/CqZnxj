@@ -22,6 +22,8 @@ public interface PatLineAreaAccSetMapper {
 
 	String getPdaIdsByPlIdPaId(@Param("plId") Integer plId, @Param("paId") Integer paId);
 
+	List<PatLineAreaAccSet> getListByPlIdList(@Param("plIdList") List<Integer> plIdList);
+
 	PatLineAreaAccSet getCurrentTeamInfoByPdaNo(@Param("pdaNo") String pdaNo);
 
 }

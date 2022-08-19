@@ -77,6 +77,12 @@
 	<select id="getPdaIdsByPlIdPaId" resultType="java.lang.String">
 		select pdaIds from pat_line_area_acc_set where plId=#{plId} and paId=#{paId}
 	</select>
+	<select id="getListByPlIdList" resultType="com.cqZnxj.entity.PatLineAreaAccSet">
+		select * from pat_line_area_acc_set where 1=1
+		<foreach collection="plIdList" item="plId" open=" and cast(plId as char) in(" separator="," close=")">
+		#{plId}
+		</foreach>
+	</select>
 	<select id="getCurrentTeamInfoByPdaNo" resultType="com.cqZnxj.entity.PatLineAreaAccSet">
 		select plaas.* from pat_line_area_acc_set plaas,patrol_plan pp,patrol_device_account pda where CONCAT(',',pp.plIds,',') like CONCAT('%,',plaas.plId,',%') and date_format(now(),'%Y-%m-%d') between pp.startDate and pp.endDate and CONCAT(',',plaas.pdaIds,',') like CONCAT('%,',pda.id,',%') and pda.no=#{pdaNo}
 	</select>
