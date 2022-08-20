@@ -150,7 +150,7 @@ public class PatrolAreaServiceImpl implements PatrolAreaService {
 					if(paPda.getId()==pdp.getPdaId()) {
 						int patParCount = paPda.getPatParCount();
 						patParCount++;
-						paPda.setPatParCount(patParCount);
+						paPda.setPatParCount(patParCount);//统计每个设备台账的设备参数数量
 					}
 				}
 				

@@ -81,7 +81,7 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 		for (int i = 0; i < plList.size(); i++) {
 			PatrolLine pl = plList.get(i);
 			int patParCount = 0;
-			for (int j = 0; j < pdpList.size(); j++) {
+			for (int j = 0; j < pdpList.size(); j++) {//根据路线、区域、设备台账分配情况，统计本次巡检计划中的巡项数量，该数量是每条巡检路线下的数量
 				PatrolDeviceParam pdp = pdpList.get(j);
 				if(pl.getId()==pdp.getPlId()) {
 					patParCount++;
@@ -90,7 +90,7 @@ public class PatrolLineServiceImpl implements PatrolLineService {
 			pl.setPatParCount(patParCount);
 			
 			int patAccCount = 0;
-			for (int j = 0; j < plaasList.size(); j++) {
+			for (int j = 0; j < plaasList.size(); j++) {//根据路线、区域、设备台账分配情况，统计本次巡检计划中的巡点（设备台账）数量，该数量是每条巡检路线下的数量
 				PatLineAreaAccSet plaas = plaasList.get(j);
 				if(pl.getId()==plaas.getPlId()) {
 					String pdaIds = plaas.getPdaIds();

@@ -94,7 +94,7 @@ public class PatrolDeviceAccountServiceImpl implements PatrolDeviceAccountServic
 		// TODO Auto-generated method stub
 		PatrolDeviceAccount pda = patrolDeviceAccountDao.getQrcodeInfoByNo(no);
 		int patParCount=patrolDeviceParamDao.getCountByPdaId(pda.getId());
-		pda.setPatParCount(patParCount);
+		pda.setPatParCount(patParCount);//统计该设备台账下的设备参数数量
 		List<DevAccPatRec> daprList = devAccPatRecDao.getTodayList();
 		for (int i = 0; i < daprList.size(); i++) {
 			DevAccPatRec dapr = daprList.get(i);
